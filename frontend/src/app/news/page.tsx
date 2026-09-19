@@ -1,0 +1,105 @@
+import React from 'react';
+import Link from 'next/link';
+import { apiService } from '@/services/api';
+import { Badge } from '@/components/ui/Badge';
+import { Button } from '@/components/ui/Button';
+import { ArrowRight, Calendar, User, Clock } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tin Tức & Kinh Nghiệm Ô Tô | Tây Nam Bộ Garage',
+  description:
+    'Tổng hợp kinh nghiệm bảo dưỡng xe, tin tức automotive, mẹo lái xe an toàn và hướng dẫn kỹ thuật từ các kỹ sư garage Cần Thơ.',
+};
+
+export const revalidate = 60;
+
+export default async function NewsPage() {
+  const posts = await apiService.getPosts();
+  const featured = posts[0];
+  const remaining = posts.slice(1);
+
+  return (
+    <div className="bg-[#0A0A0A] py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {/* Header */}
+        <div className="max-w-3xl space-y-4">
+          <Badge variant="gold">TIN TỨC & BẢO DƯỠNG</Badge>
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-[#F5F5F5] uppercase tracking-tight leading-tight">
+            GÓC CHUYÊN GIA <br />
+            <span className="text-gold-gradient">& KINH NGHIỆM AUTOMOTIVE</span>
+          </h1>
+          <p className="text-base text-[#A8A8A8]">
+            Chia sẻ các bài viết kỹ thuật chuyên sâu giúp nâng cao độ bền và giữ gìn giá trị cho chiếc xe ô tô của bạn.
+          </p>
+        </div>
+
+        {/* Featured Article */}
+        {featured && (
+          <div className="bg-[#161616] border border-white/10 rounded-xs overflow-hidden grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            <div className="lg:col-span-7 img-zoom-wrapper h-80 sm:h-[400px]">
+              <img
+                src={featured.image}
+                alt={featured.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="lg:col-span-5 p-6 sm:p-8 space-y-4">
+              <Badge variant="gold">{featured.category}</Badge>
+              <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F5F5] uppercase tracking-tight leading-tight">
+                {featured.title}
+              </h2>
+              <p className="text-sm text-[#A8A8A8] leading-relaxed line-clamp-3">
+                {featured.summary}
+              </p>
+              <div className="pt-4 flex items-center justify-between border-t border-white/10 text-xs text-[#666666]">
+                <span>{new Date(featured.published_at).toLocaleDateString('vi-VN')}</span>
+                <Link href={`/news/${featured.slug}`}>
+                  <Button variant="primary" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
+                    Đọc Bài Viết
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Other Articles */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <div
+              key={post.id}
+              className="bg-[#161616] border border-white/5 rounded-xs p-6 flex flex-col justify-between hover:border-[#C7A35A]/40 transition-colors group"
+            >
+              <div className="space-y-4">
+                <div className="img-zoom-wrapper h-48 rounded-xs overflow-hidden bg-[#202020]">
+                  <img
+                    src={post.image}
+                    alt={post.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <Badge variant="titanium">{post.category}</Badge>
+                <h3 className="text-lg font-bold text-[#F5F5F5] group-hover:text-[#C7A35A] transition-colors line-clamp-2">
+                  {post.title}
+                </h3>
+                <p className="text-xs text-[#A8A8A8] line-clamp-2 leading-relaxed">
+                  {post.summary}
+                </p>
+              </div>
+
+              <div className="pt-4 mt-4 border-t border-white/10 flex items-center justify-between text-xs text-[#666666]">
+                <span>{new Date(post.published_at).toLocaleDateString('vi-VN')}</span>
+                <Link href={`/news/${post.slug}`}>
+                  <Button variant="secondary" size="sm">
+                    Chi Tiết
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}

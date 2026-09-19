@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+:root {
+  --bg-deep: #0A0A0A;
+  --bg-graphite: #161616;
+  --bg-surface: #202020;
+  --bg-surface-hover: #2A2A2A;
+
+  --text-primary: #F5F5F5;
+  --text-secondary: #A8A8A8;
+  --text-muted: #666666;
+
+  --accent-gold: #C7A35A;
+  --accent-gold-hover: #D4B26A;
+  --accent-titanium: #D6D6D6;
+  --accent-red: #E53935;
+  --accent-red-hover: #C62828;
+
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-gold: rgba(199, 163, 90, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--bg-deep);
+  color: var(--text-primary);
+  font-family: var(--font-sans, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Premium Dark Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0A0A0A;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2A2A2A;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #C7A35A;
+}
+
+/* Metallic & Premium Surface Classes */
+.panel-dark {
+  background-color: #161616;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.panel-surface {
+  background-color: #202020;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.panel-glass {
+  background: rgba(22, 22, 22, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.border-metallic {
+  border-color: rgba(214, 214, 214, 0.15);
+}
+
+.border-gold-subtle {
+  border-color: rgba(199, 163, 90, 0.25);
+}
+
+/* Gold Gradient Text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #F5F5F5 0%, #C7A35A 60%, #E8D1A7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Subtle Hero Overlay Gradient */
+.hero-gradient-overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(10, 10, 10, 0.4) 0%,
+    rgba(10, 10, 10, 0.8) 60%,
+    rgba(10, 10, 10, 1) 100%
+  );
+}
+
+.radial-glow-gold {
+  background: radial-gradient(circle at 50% 0%, rgba(199, 163, 90, 0.12) 0%, rgba(10, 10, 10, 0) 70%);
+}
+
+.radial-glow-red {
+  background: radial-gradient(circle at 50% 0%, rgba(229, 57, 53, 0.15) 0%, rgba(10, 10, 10, 0) 70%);
+}
+
+/* Micro interaction image zoom wrapper */
+.img-zoom-wrapper {
+  overflow: hidden;
+}
+
+.img-zoom-wrapper img {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.img-zoom-wrapper:hover img {
+  transform: scale(1.05);
+}
+
+/* Hide scrollbars for clean horizontal tab bars */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
