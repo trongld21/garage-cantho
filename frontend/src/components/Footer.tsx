@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { MapPin, Phone, Mail, Clock, ShieldAlert, ArrowUp, Wrench } from 'lucide-react';
+import { MapPin, Phone, Clock, ShieldAlert, ArrowUp, Wrench } from 'lucide-react';
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -21,7 +21,7 @@ export default function Footer() {
               </div>
               <div>
                 <span className="text-xl font-extrabold tracking-tight text-[#F5F5F5] block leading-tight uppercase">
-                  TÂY NAM BỘ <span className="text-[#C7A35A]">GARAGE</span>
+                  TÂY ĐÔ <span className="text-[#C7A35A]">AUTO CAR</span>
                 </span>
                 <span className="text-[9px] text-[#A8A8A8] uppercase tracking-[0.2em] block font-medium">
                   European Precision Standard
@@ -35,11 +35,11 @@ export default function Footer() {
 
             <div className="pt-2">
               <a
-                href="tel:0936007840"
+                href="tel:0979707033"
                 className="inline-flex items-center space-x-2 px-4 py-2.5 bg-[#E53935]/10 border border-[#E53935]/30 text-[#E53935] font-bold text-xs uppercase rounded-xs hover:bg-[#E53935] hover:text-white transition-colors"
               >
                 <ShieldAlert className="w-4 h-4" />
-                <span>Hotline Cứu Hộ 24/7: 0936 007 840</span>
+                <span>Hotline Cứu Hộ 24/7: 0979 707 033</span>
               </a>
             </div>
           </div>
@@ -135,17 +135,17 @@ export default function Footer() {
             <div className="space-y-3 text-xs">
               <div className="flex items-start space-x-3">
                 <MapPin className="w-4 h-4 text-[#C7A35A] flex-shrink-0 mt-0.5" />
-                <span>41-46 Nguyễn Đệ, P. An Thới, Q. Bình Thủy, TP. Cần Thơ</span>
+                <span>1–2 Nguyễn Văn Lưu, Khu TĐC Văn Hóa Tây Đô, Cái Răng, Cần Thơ</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone className="w-4 h-4 text-[#C7A35A] flex-shrink-0" />
-                <a href="tel:0936007840" className="hover:text-white font-semibold">
-                  0936.007.840
+                <a href="tel:0979707033" className="hover:text-white font-semibold">
+                  0979 707 033
                 </a>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="w-4 h-4 text-[#C7A35A] flex-shrink-0" />
-                <span>contact@garagetaynambo.vn</span>
+                <span>/</span>
+                <a href="tel:0923112399" className="hover:text-white font-semibold">
+                  0923 112 399
+                </a>
               </div>
               <div className="flex items-center space-x-3">
                 <Clock className="w-4 h-4 text-[#C7A35A] flex-shrink-0" />
@@ -157,7 +157,7 @@ export default function Footer() {
 
         {/* Bottom copyright row */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs text-[#666666] space-y-4 sm:space-y-0">
-          <p>© {new Date().getFullYear()} Garage Ô Tô Tây Nam Bộ Cần Thơ. Precision. Performance. Trust.</p>
+          <p>© {new Date().getFullYear()} Tây Đô Auto Car Cần Thơ. Precision. Performance. Trust.</p>
 
           <button
             onClick={scrollToTop}

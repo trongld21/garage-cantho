@@ -8,7 +8,7 @@ import { Search } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Phụ Tùng & Đồ Chơi Xe Ô Tô Chính Hãng | Tây Nam Bộ Garage',
+  title: 'Phụ Tùng & Đồ Chơi Xe Ô Tô Chính Hãng | Tây Đô Auto Car',
   description:
     'Cửa hàng phụ tùng ô tô chính hãng Mobil 1, 3M, Steelmate, màn hình Android OLEDPro, cảm biến áp suất lốp giá tốt tại Cần Thơ.',
 };
@@ -71,7 +71,7 @@ export default async function StorePage({
               KHÔNG TÌM THẤY SẢN PHẨM PHÙ HỢP
             </h3>
             <p className="text-xs text-[#A8A8A8]">
-              Thử tìm kiếm với từ khóa khác hoặc liên hệ trực tiếp hotline 0936 007 840 để đặt hàng theo yêu cầu.
+              Thử tìm kiếm với từ khóa khác hoặc liên hệ trực tiếp hotline 0979 707 033 để đặt hàng theo yêu cầu.
             </p>
           </div>
         ) : (

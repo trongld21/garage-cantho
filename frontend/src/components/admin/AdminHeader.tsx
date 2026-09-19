@@ -10,7 +10,7 @@ export function AdminHeader() {
       <div className="flex items-center space-x-3">
         <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
         <span className="text-xs font-bold uppercase tracking-wider text-[#F5F5F5]">
-          HỆ THỐNG QUẢN TRỊ DỮ LIỆU ĐỘNG • GARAGE TÂY NAM BỘ
+          HỆ THỐNG QUẢN TRỊ DỮ LIỆU ĐỘNG • TÂY ĐÔ AUTO CAR
         </span>
       </div>
 
@@ -25,7 +25,7 @@ export function AdminHeader() {
           </div>
           <div>
             <span className="text-white font-bold block leading-tight">Quản Trị Viên</span>
-            <span className="text-[10px] text-[#A8A8A8] block">admin@garagetaynambo.vn</span>
+            <span className="text-[10px] text-[#A8A8A8] block">Tây Đô Auto Car</span>
           </div>
         </div>
       </div>

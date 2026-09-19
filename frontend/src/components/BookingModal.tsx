@@ -20,7 +20,7 @@ export default function BookingModal({
       isOpen={isOpen}
       onClose={onClose}
       title="ĐẶT LỊCH BẢO DƯỠNG TRỰC TUYẾN"
-      subtitle="Chủ động chọn khung giờ hẹn • Garage Tây Nam Bộ Cần Thơ"
+      subtitle="Chủ động chọn khung giờ hẹn • Tây Đô Auto Car Cần Thơ"
       maxWidth="2xl"
     >
       <BookingWizard onSuccessClose={onClose} initialServiceId={initialServiceId} />

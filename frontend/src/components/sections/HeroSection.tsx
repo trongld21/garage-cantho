@@ -35,7 +35,7 @@ export function HeroSection() {
             className="inline-flex items-center space-x-2 px-3.5 py-1.5 bg-[#161616]/90 border border-[#C7A35A]/40 text-[#C7A35A] text-xs font-bold uppercase tracking-[0.2em] rounded-xs"
           >
             <Award className="w-4 h-4 text-[#C7A35A]" />
-            <span>TÂY NAM BỘ GARAGE • STANDARD EUROPEAN CARE</span>
+            <span>TÂY ĐÔ AUTO CAR • STANDARD EUROPEAN CARE</span>
           </motion.div>
 
           {/* Refined European Headline */}
@@ -96,10 +96,10 @@ export function HeroSection() {
                   CỨU HỘ KHẨN CẤP 24/7
                 </span>
                 <a
-                  href="tel:0936007840"
+                  href="tel:0979707033"
                   className="text-sm font-extrabold text-[#F5F5F5] hover:text-[#C7A35A] transition-colors font-mono"
                 >
-                  0936 007 840
+                  0979 707 033
                 </a>
               </div>
             </div>

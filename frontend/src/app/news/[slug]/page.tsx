@@ -14,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const post = await apiService.getPostBySlug(slug);
-  if (!post) return { title: 'Tin tức ô tô | Garage Tây Nam Bộ' };
+  if (!post) return { title: 'Tin tức ô tô | Tây Đô Auto Car' };
 
   return {
-    title: `${post.title} | Tây Nam Bộ Garage`,
+    title: `${post.title} | Tây Đô Auto Car`,
     description: post.summary,
   };
 }

@@ -71,7 +71,7 @@ export function AdminSidebar() {
           </div>
           <div>
             <span className="text-sm font-extrabold text-[#F5F5F5] uppercase tracking-tight block leading-tight">
-              TÂY NAM BỘ <span className="text-[#C7A35A]">ADMIN</span>
+              TÂY ĐÔ <span className="text-[#C7A35A]">ADMIN</span>
             </span>
             <span className="text-[9px] text-[#A8A8A8] uppercase tracking-widest block font-medium">
               Automotive Management

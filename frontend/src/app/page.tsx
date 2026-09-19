@@ -115,7 +115,7 @@ export default async function HomePage() {
           <SectionHeading
             eyebrow="XE MUA BÁN & CHO THUÊ"
             title="DANH MỤC XE ĐÃ KIỂM ĐỊNH CHẤT LƯỢNG"
-            subtitle="Tất cả các dòng xe bán và cho thuê tại Tây Nam Bộ Garage đều trải qua 176 hạng mục kiểm tra kỹ thuật nghiêm ngặt."
+            subtitle="Tất cả các dòng xe bán và cho thuê tại Tây Đô Auto Car đều trải qua 176 hạng mục kiểm tra kỹ thuật nghiêm ngặt."
             action={
               <Link href="/cars">
                 <Button variant="outline" rightIcon={<ChevronRight className="w-4 h-4" />}>
@@ -299,9 +299,9 @@ export default async function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row items-center space-y-3 sm:space-y-0 sm:space-x-4 flex-shrink-0">
-            <a href="tel:0936007840">
+            <a href="tel:0979707033">
               <Button variant="danger" size="lg" leftIcon={<Phone className="w-5 h-5" />}>
-                GỌI 0936 007 840
+                GỌI 0979 707 033
               </Button>
             </a>
             <Link href="/rescue">
@@ -375,7 +375,7 @@ export default async function HomePage() {
             <SectionHeading
               eyebrow="LIÊN HỆ GARAGE"
               title="GHÉ THĂM XƯỞNG DỊCH VỤ TẠI CẦN THƠ"
-              subtitle="Tọa lạc tại vị trí trung tâm Bình Thủy, thuận tiện di chuyển cho quý khách hàng toàn thành phố."
+              subtitle="Tọa lạc tại Khu TĐC Văn Hóa Tây Đô, Cái Răng, thuận tiện di chuyển cho quý khách hàng toàn thành phố."
             />
 
             <div className="space-y-4 text-sm text-[#A8A8A8]">
@@ -383,7 +383,7 @@ export default async function HomePage() {
                 <MapPin className="w-5 h-5 text-[#C7A35A] flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-white block font-bold">Địa Chỉ Garage:</strong>
-                  41-46 Nguyễn Đệ, P. An Thới, Q. Bình Thủy, TP. Cần Thơ
+                  1–2 Nguyễn Văn Lưu, Khu TĐC Văn Hóa Tây Đô, Cái Răng, Cần Thơ
                 </div>
               </div>
 
@@ -408,7 +408,7 @@ export default async function HomePage() {
           <div className="lg:col-span-7 h-96 rounded-xs overflow-hidden border border-white/10 bg-[#161616]">
             <iframe
               title="Garage Location Map"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.847528392191!2d105.7538!3d10.0452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDAyJzQyLjciTiAxMDXCsDQ1JzEzLjciRQ!5e0!3m2!1svi!2s!4v1650000000000!5m2!1svi!2s"
+              src="https://www.google.com/maps?q=1-2%20Nguy%E1%BB%85n%20V%C4%83n%20L%C6%B0u%2C%20Khu%20T%C4%90C%20V%C4%83n%20H%C3%B3a%20T%C3%A2y%20%C4%90%C3%B4%2C%20C%C3%A1i%20R%C4%83ng%2C%20C%E1%BA%A7n%20Th%C6%A1&amp;output=embed"
               width="100%"
               height="100%"
               style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(1.2)' }}

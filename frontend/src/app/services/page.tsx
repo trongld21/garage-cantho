@@ -8,7 +8,7 @@ import { ArrowRight, Wrench, ShieldCheck, Clock, CheckCircle2 } from 'lucide-rea
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Dịch Vụ Garage Ô Tô Chuyên Nghiệp | Tây Nam Bộ Garage Cần Thơ',
+  title: 'Dịch Vụ Garage Ô Tô Chuyên Nghiệp | Tây Đô Auto Car Cần Thơ',
   description:
     'Danh mục dịch vụ bảo dưỡng, sửa chữa ô tô tổng hợp, rửa khoang máy hơi nước nóng, đồng sơn 3M, nâng cấp phụ kiện theo tiêu chuẩn Châu Âu tại Cần Thơ.',
 };
@@ -29,7 +29,7 @@ export default async function ServicesPage() {
             <span className="text-gold-gradient">AUTOMOTIVE CHÂU ÂU</span>
           </h1>
           <p className="text-base sm:text-lg text-[#A8A8A8] font-normal leading-relaxed">
-            Mọi quy trình từ chẩn đoán, bảo dưỡng đến phục hồi thân xe tại Garage Tây Nam Bộ đều được thực hiện bởi đội ngũ kỹ sư giàu kinh nghiệm với trang thiết bị chuyên dụng hiện đại.
+            Mọi quy trình từ chẩn đoán, bảo dưỡng đến phục hồi thân xe tại Tây Đô Auto Car đều được thực hiện bởi đội ngũ kỹ sư giàu kinh nghiệm với trang thiết bị chuyên dụng hiện đại.
           </p>
         </div>
 

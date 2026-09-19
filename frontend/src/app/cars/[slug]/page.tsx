@@ -14,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const car = await apiService.getCarBySlug(slug);
-  if (!car) return { title: 'Thông tin xe | Garage Tây Nam Bộ' };
+  if (!car) return { title: 'Thông tin xe | Tây Đô Auto Car' };
 
   return {
-    title: `${car.title} | Tây Nam Bộ Garage Showroom`,
+    title: `${car.title} | Tây Đô Auto Car Showroom`,
     description: car.summary,
   };
 }
@@ -117,7 +117,7 @@ export default async function CarDetailPage({
 
             {/* CTAs */}
             <div className="pt-2 space-y-3">
-              <a href="tel:0936007840" className="block w-full">
+              <a href="tel:0979707033" className="block w-full">
                 <Button variant="primary" size="lg" leftIcon={<Phone className="w-5 h-5" />} className="w-full">
                   {car.listing_type === 'sale' ? 'Đăng Ký Lái Thử / Xem Xe' : 'Liên Hệ Đặt Thuê Xe'}
                 </Button>

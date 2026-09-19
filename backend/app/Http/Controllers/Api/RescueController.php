@@ -22,7 +22,7 @@ class RescueController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Yêu cầu cứu hộ khẩn cấp 24/7 đã được tiếp nhận! Đội xe cứu hộ Tây Nam Bộ đang chuyển thông tin tới tài xế gần nhất.',
+            'message' => 'Yêu cầu cứu hộ khẩn cấp 24/7 đã được tiếp nhận! Đội xe cứu hộ Tây Đô Auto Car đang chuyển thông tin tới tài xế gần nhất.',
             'data' => $rescue
         ], 201);
     }

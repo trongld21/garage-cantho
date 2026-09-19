@@ -19,7 +19,7 @@ export function TestimonialsSection() {
       car: 'Chủ xe Mercedes-Benz GLC 300',
       rating: 5,
       comment:
-        'Mình từng bị hỏng bình ắc quy lúc 10h đêm trên cầu Cần Thơ. Đội cứu hộ Tây Nam Bộ có mặt rất nhanh chỉ trong 20 phút, xử lý kích bình di động cực kỳ chuyên nghiệp và an toàn.',
+        'Mình từng bị hỏng bình ắc quy lúc 10h đêm trên cầu Cần Thơ. Đội cứu hộ Tây Đô Auto Car có mặt rất nhanh chỉ trong 20 phút, xử lý kích bình di động cực kỳ chuyên nghiệp và an toàn.',
     },
     {
       name: 'Anh Lê Hoàng Nam',
@@ -36,7 +36,7 @@ export function TestimonialsSection() {
         <SectionHeading
           eyebrow="ĐÁNH GIÁ KHÁCH HÀNG"
           title="SỰ HÀI LÒNG CỦA KHÁCH HÀNG LÀ THƯỚC ĐO THÀNH CÔNG"
-          subtitle="Hơn 5.000+ chủ xe tại Cần Thơ & Miền Tây đã tin tưởng lựa chọn Tây Nam Bộ Garage làm điểm đến chăm sóc xế cưng."
+          subtitle="Hơn 5.000+ chủ xe tại Cần Thơ & Miền Tây đã tin tưởng lựa chọn Tây Đô Auto Car làm điểm đến chăm sóc xế cưng."
           centered
         />
 

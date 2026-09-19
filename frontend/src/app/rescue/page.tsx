@@ -147,15 +147,15 @@ export default function RescuePage() {
                 GỌI KHẨN CẤP NGAY BÂY GIỜ
               </span>
               <a
-                href="tel:0936007840"
+                href="tel:0979707033"
                 className="text-2xl sm:text-3xl font-extrabold text-[#F5F5F5] hover:text-[#E53935] transition-colors font-mono"
               >
-                0936 007 840
+                0979 707 033
               </a>
             </div>
           </div>
 
-          <a href="tel:0936007840" className="w-full sm:w-auto">
+          <a href="tel:0979707033" className="w-full sm:w-auto">
             <Button variant="danger" size="lg" className="w-full">
               GỌI ĐỘI CỨU HỘ NGAY
             </Button>
@@ -204,7 +204,7 @@ export default function RescuePage() {
 
               <Input
                 label="Số điện thoại liên hệ *"
-                placeholder="Ví dụ: 0936 007 840"
+                placeholder="Ví dụ: 0979 707 033"
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}

@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Showroom Mua Bán & Cho Thuê Xe Ô Tô | Tây Nam Bộ Garage',
+  title: 'Showroom Mua Bán & Cho Thuê Xe Ô Tô | Tây Đô Auto Car',
   description:
     'Danh mục xe ô tô 4-7 chỗ đã kiểm định 176 hạng mục kỹ thuật cần bán và cho thuê tự lái / có tài tại Cần Thơ.',
 };
@@ -32,7 +32,7 @@ export default async function CarsPage({
             <span className="text-gold-gradient">TIÊU CHUẨN CAO CẤP</span>
           </h1>
           <p className="text-base text-[#A8A8A8]">
-            Tất cả các dòng xe bán và cho thuê tại Garage Tây Nam Bộ đều được cam kết không đâm đụng, không ngập nước thủy kích và có hồ sơ bảo dưỡng rõ ràng.
+            Tất cả các dòng xe bán và cho thuê tại Tây Đô Auto Car đều được cam kết không đâm đụng, không ngập nước thủy kích và có hồ sơ bảo dưỡng rõ ràng.
           </p>
         </div>
 

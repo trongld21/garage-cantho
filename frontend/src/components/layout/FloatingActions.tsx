@@ -13,7 +13,7 @@ export default function FloatingActions() {
       {/* Mobile Bottom Action Bar */}
       <div className="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-lg border-t border-white/10 p-2 grid grid-cols-3 gap-2">
         <a
-          href="tel:0936007840"
+          href="tel:0979707033"
           className="flex flex-col items-center justify-center py-2 bg-[#161616] text-[#F5F5F5] border border-white/10 rounded-xs active:bg-[#202020] transition-colors"
         >
           <Phone className="w-4 h-4 text-[#C7A35A] mb-1" />

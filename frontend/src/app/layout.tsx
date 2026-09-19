@@ -5,7 +5,7 @@ import Footer from '@/components/Footer';
 import FloatingActions from '@/components/layout/FloatingActions';
 
 export const metadata: Metadata = {
-  title: 'Garage Ô Tô Tây Nam Bộ Cần Thơ | Dịch Vụ - Phụ Tùng - Cứu Hộ 24/7',
+  title: 'Tây Đô Auto Car Cần Thơ | Dịch Vụ - Phụ Tùng - Cứu Hộ 24/7',
   description:
     'Trung tâm sửa chữa ô tô cao cấp phong cách Châu Âu tại Cần Thơ. Chuyên sửa chữa tổng hợp, rửa khoang máy hơi nước nóng, đồng sơn 3M, bọc da nội thất, mua bán cho thuê xe và cứu hộ khẩn cấp 24/7.',
   keywords: [
@@ -17,13 +17,12 @@ export const metadata: Metadata = {
     'đồng sơn xe ô tô',
     'cho thuê xe tự lái Cần Thơ',
   ],
-  authors: [{ name: 'Garage Ô Tô Tây Nam Bộ' }],
+  authors: [{ name: 'Tây Đô Auto Car' }],
   openGraph: {
-    title: 'Garage Ô Tô Tây Nam Bộ Cần Thơ | Standard European Automotive Care',
+    title: 'Tây Đô Auto Car Cần Thơ | Standard European Automotive Care',
     description:
       'Chăm sóc chiếc xe như cách bạn trân trọng hành trình. Dịch vụ garage ô tô cao cấp, chuyên nghiệp và uy tín hàng đầu Cần Thơ.',
-    url: 'https://garagetaynambo.vn',
-    siteName: 'Garage Ô Tô Tây Nam Bộ',
+    siteName: 'Tây Đô Auto Car',
     locale: 'vi_VN',
     type: 'website',
   },
@@ -37,23 +36,16 @@ export default function RootLayout({
   const jsonLdSchema = {
     '@context': 'https://schema.org',
     '@type': 'AutoRepair',
-    name: 'Garage Ô Tô Tây Nam Bộ Cần Thơ',
+    name: 'Tây Đô Auto Car Cần Thơ',
     image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738',
-    '@id': 'https://garagetaynambo.vn',
-    url: 'https://garagetaynambo.vn',
-    telephone: '0936007840',
+    telephone: ['0979707033', '0923112399'],
     priceRange: '$$$',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: '41-46 Nguyễn Đệ, P. An Thới, Q. Bình Thủy',
+      streetAddress: '1–2 Nguyễn Văn Lưu, Khu TĐC Văn Hóa Tây Đô, Cái Răng',
       addressLocality: 'Cần Thơ',
       postalCode: '940000',
       addressCountry: 'VN',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 10.0452,
-      longitude: 105.7469,
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',

@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle2 } from 'lucide-react';
+import { MapPin, Phone, Clock, Send, CheckCircle2 } from 'lucide-react';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -52,7 +52,7 @@ export default function ContactPage() {
             <span className="text-gold-gradient">& GỬI YÊU CẦU TƯ VẤN</span>
           </h1>
           <p className="text-base text-[#A8A8A8]">
-            Đội ngũ chăm sóc khách hàng của Garage Ô Tô Tây Nam Bộ luôn sẵn sàng lắng nghe và tư vấn giải pháp tốt nhất cho chiếc xe của bạn.
+            Đội ngũ chăm sóc khách hàng của Tây Đô Auto Car luôn sẵn sàng lắng nghe và tư vấn giải pháp tốt nhất cho chiếc xe của bạn.
           </p>
         </div>
 
@@ -61,7 +61,7 @@ export default function ContactPage() {
           {/* Info Side */}
           <div className="lg:col-span-5 space-y-6">
             <h2 className="text-2xl font-bold text-[#F5F5F5] uppercase tracking-tight">
-              TRUNG TÂM DỊCH VỤ TÂY NAM BỘ
+              TÂY ĐÔ AUTO CAR
             </h2>
 
             <div className="space-y-4 text-sm text-[#A8A8A8]">
@@ -69,7 +69,7 @@ export default function ContactPage() {
                 <MapPin className="w-5 h-5 text-[#C7A35A] flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-white block font-bold">Địa Chỉ Garage:</strong>
-                  41-46 Nguyễn Đệ, P. An Thới, Q. Bình Thủy, TP. Cần Thơ
+                  1–2 Nguyễn Văn Lưu, Khu TĐC Văn Hóa Tây Đô, Cái Răng, Cần Thơ
                 </div>
               </div>
 
@@ -77,19 +77,15 @@ export default function ContactPage() {
                 <Phone className="w-5 h-5 text-[#C7A35A] flex-shrink-0 mt-0.5" />
                 <div>
                   <strong className="text-white block font-bold">Hotline Tổng Đài & Cứu Hộ:</strong>
-                  <a href="tel:0936007840" className="text-[#C7A35A] font-bold text-base hover:underline">
-                    0936.007.840 (24/7)
+                  <a href="tel:0979707033" className="text-[#C7A35A] font-bold text-base hover:underline">
+                    0979 707 033 (24/7)
+                  </a>
+                  <a href="tel:0923112399" className="block text-[#C7A35A] font-bold text-base hover:underline">
+                    0923 112 399
                   </a>
                 </div>
               </div>
 
-              <div className="flex items-start space-x-4 p-5 bg-[#161616] rounded-xs border border-white/5">
-                <Mail className="w-5 h-5 text-[#C7A35A] flex-shrink-0 mt-0.5" />
-                <div>
-                  <strong className="text-white block font-bold">Email Hỗ Trợ:</strong>
-                  contact@garagetaynambo.vn
-                </div>
-              </div>
 
               <div className="flex items-start space-x-4 p-5 bg-[#161616] rounded-xs border border-white/5">
                 <Clock className="w-5 h-5 text-[#C7A35A] flex-shrink-0 mt-0.5" />
@@ -184,7 +180,7 @@ export default function ContactPage() {
         <div className="h-96 rounded-xs overflow-hidden border border-white/10 bg-[#161616]">
           <iframe
             title="Garage Location Map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.847528392191!2d105.7538!3d10.0452!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTDCsDAyJzQyLjciTiAxMDXCsDQ1JzEzLjciRQ!5e0!3m2!1svi!2s!4v1650000000000!5m2!1svi!2s"
+            src="https://www.google.com/maps?q=1-2%20Nguy%E1%BB%85n%20V%C4%83n%20L%C6%B0u%2C%20Khu%20T%C4%90C%20V%C4%83n%20H%C3%B3a%20T%C3%A2y%20%C4%90%C3%B4%2C%20C%C3%A1i%20R%C4%83ng%2C%20C%E1%BA%A7n%20Th%C6%A1&amp;output=embed"
             width="100%"
             height="100%"
             style={{ border: 0, filter: 'invert(90%) hue-rotate(180deg) contrast(1.2)' }}

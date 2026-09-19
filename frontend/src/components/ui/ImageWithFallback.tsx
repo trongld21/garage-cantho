@@ -36,7 +36,7 @@ export function ImageWithFallback({
       <div className={`w-full h-full bg-[#202020] border border-white/10 flex flex-col items-center justify-center p-4 text-center space-y-2 ${className}`}>
         {icons[fallbackType]}
         <span className="text-[10px] text-[#A8A8A8] font-bold uppercase tracking-widest">
-          GARAGE TÂY NAM BỘ AUTOMOTIVE
+          TÂY ĐÔ AUTO CAR AUTOMOTIVE
         </span>
       </div>
     );

@@ -43,7 +43,7 @@ export function WhyChooseUsSection() {
     <section className="bg-[#0A0A0A] py-20 md:py-28 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeading
-          eyebrow="TẠI SẠO CHỌN TÂY NAM BỘ GARAGE"
+          eyebrow="TẠI SẠO CHỌN TÂY ĐÔ AUTO CAR"
           title="CAM KẾT CHẤT LƯỢNG TIÊU CHUẨN CAO CẤP"
           subtitle="Chúng tôi không chỉ sửa chữa xe, mà tạo ra sự an tâm và tự tin tối đa cho bạn trên mỗi chặng đường."
         />

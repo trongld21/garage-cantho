@@ -14,10 +14,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const product = await apiService.getProductBySlug(slug);
-  if (!product) return { title: 'Sản phẩm phụ tùng | Garage Tây Nam Bộ' };
+  if (!product) return { title: 'Sản phẩm phụ tùng | Tây Đô Auto Car' };
 
   return {
-    title: `${product.name} | Phụ Tùng Tây Nam Bộ Garage`,
+    title: `${product.name} | Phụ Tùng Tây Đô Auto Car`,
     description: product.summary,
   };
 }
@@ -99,9 +99,9 @@ export default async function ProductDetailPage({
 
             {/* Action Buttons */}
             <div className="pt-4 space-y-3 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
-              <a href="tel:0936007840" className="w-full sm:w-auto">
+              <a href="tel:0979707033" className="w-full sm:w-auto">
                 <Button variant="primary" size="lg" leftIcon={<Phone className="w-5 h-5" />} className="w-full">
-                  Gọi 0936 007 840 Đặt Giữ Hàng
+                  Gọi 0979 707 033 Đặt Giữ Hàng
                 </Button>
               </a>
 

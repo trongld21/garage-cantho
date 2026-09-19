@@ -7,7 +7,7 @@ import { ArrowRight, Calendar, User, Clock } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Tin Tức & Kinh Nghiệm Ô Tô | Tây Nam Bộ Garage',
+  title: 'Tin Tức & Kinh Nghiệm Ô Tô | Tây Đô Auto Car',
   description:
     'Tổng hợp kinh nghiệm bảo dưỡng xe, tin tức automotive, mẹo lái xe an toàn và hướng dẫn kỹ thuật từ các kỹ sư garage Cần Thơ.',
 };

@@ -79,7 +79,7 @@ let mockRescuesState: RescueItem[] = [
     id: 1,
     request_id: 'RESCUE-992102',
     customer_name: 'Phạm Minh Tuấn',
-    phone: '0936007840',
+    phone: '0900000000',
     car_model: 'Hyundai Accent 2021',
     issue_type: 'Hết bình ắc quy',
     issue_description: 'Xe chết máy hoàn toàn ở chân cầu Hưng Lợi, cần kích bình gấp.',
@@ -96,7 +96,7 @@ let mockRescuesState: RescueItem[] = [
     car_model: 'Kia Cerato 2020',
     issue_type: 'Xẹp lốp',
     issue_description: 'Cán đinh thủng lốp trước bên tài.',
-    location: '41-46 Nguyễn Đệ, Q. Bình Thủy, Cần Thơ',
+    location: '1–2 Nguyễn Văn Lưu, Khu TĐC Văn Hóa Tây Đô, Cái Răng, Cần Thơ',
     status: 'received',
     created_at: new Date(Date.now() - 900000).toISOString(),
   },
@@ -110,7 +110,7 @@ let mockServicesState: ServiceItem[] = [
     category: 'bảo dưỡng',
     summary: 'Kiểm tra gầm, máy, hệ thống điện, thay dầu nhớt định kỳ và khắc phục mọi sự cố ô tô.',
     description:
-      'Garage Ô Tô Tây Nam Bộ cung cấp quy trình kiểm định 30 hạng mục nghiêm ngặt chuẩn Châu Âu.',
+      'Tây Đô Auto Car cung cấp quy trình kiểm định 30 hạng mục nghiêm ngặt chuẩn Châu Âu.',
     price_range: 'Từ 500.000đ',
     image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?auto=format&fit=crop&w=1200&q=80',
     is_featured: true,
@@ -570,7 +570,7 @@ export const apiService = {
       mockBookingsState.unshift(newBooking);
       return {
         status: 'success',
-        message: 'Đặt lịch thành công! Garage Tây Nam Bộ sẽ liên hệ xác nhận trong vòng 15 phút.',
+        message: 'Đặt lịch thành công! Tây Đô Auto Car sẽ liên hệ xác nhận trong vòng 15 phút.',
         booking_id: newBooking.booking_id,
         data: newBooking,
       };

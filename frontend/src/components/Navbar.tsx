@@ -66,7 +66,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex justify-between items-center">
           <div className="flex items-center space-x-6">
             <span className="hidden sm:inline-block text-[#C7A35A]">
-              GARAGE Ô TÔ TÂY NAM BỘ • TP. CẦN THƠ
+              TÂY ĐÔ AUTO CAR • TP. CẦN THƠ
             </span>
             <span className="text-white/40 hidden md:inline">|</span>
             <span className="text-xs">
@@ -76,11 +76,11 @@ export default function Navbar() {
 
           <div className="flex items-center space-x-4">
             <a
-              href="tel:0936007840"
+              href="tel:0979707033"
               className="flex items-center space-x-1.5 text-[#E53935] font-bold hover:text-red-400 transition"
             >
               <ShieldAlert className="w-3.5 h-3.5 animate-pulse" />
-              <span>HOTLINE CỨU HỘ 24/7: 0936 007 840</span>
+              <span>HOTLINE CỨU HỘ 24/7: 0979 707 033</span>
             </a>
           </div>
         </div>
@@ -102,7 +102,7 @@ export default function Navbar() {
             </div>
             <div>
               <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[#F5F5F5] block leading-tight group-hover:text-[#C7A35A] transition-colors uppercase">
-                TÂY NAM BỘ <span className="text-[#C7A35A]">GARAGE</span>
+                TÂY ĐÔ <span className="text-[#C7A35A]">AUTO CAR</span>
               </span>
               <span className="text-[9px] text-[#A8A8A8] uppercase tracking-[0.2em] block font-medium">
                 Precision • Performance • Trust
@@ -225,7 +225,7 @@ export default function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="text-lg font-bold text-[#F5F5F5] tracking-tight uppercase"
               >
-                TÂY NAM BỘ <span className="text-[#C7A35A]">GARAGE</span>
+                TÂY ĐÔ <span className="text-[#C7A35A]">AUTO CAR</span>
               </Link>
               <button
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -275,11 +275,11 @@ export default function Navbar() {
             {/* Mobile Bottom Emergency & Action */}
             <div className="pt-6 border-t border-white/10 space-y-4">
               <a
-                href="tel:0936007840"
+                href="tel:0979707033"
                 className="flex items-center justify-center space-x-2 py-3.5 bg-[#E53935] text-white font-bold text-sm uppercase rounded-xs"
               >
                 <Phone className="w-4 h-4" />
-                <span>Gọi Cứu Hộ: 0936 007 840</span>
+                <span>Gọi Cứu Hộ: 0979 707 033</span>
               </a>
 
               <Button

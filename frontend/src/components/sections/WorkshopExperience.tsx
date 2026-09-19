@@ -23,7 +23,7 @@ export function WorkshopExperience() {
             <SectionHeading
               eyebrow="CƠ SỞ VẬT CHẤT & THIẾT BỊ"
               title="XƯỞNG DỊCH VỤ HIỆN ĐẠI BẬC NHẤT CẦN THƠ"
-              subtitle="Tây Nam Bộ Garage đầu tư đồng bộ trang thiết bị chẩn đoán & sửa chữa nhập khẩu trực tiếp từ Châu Âu và Hàn Quốc."
+              subtitle="Tây Đô Auto Car đầu tư đồng bộ trang thiết bị chẩn đoán & sửa chữa nhập khẩu trực tiếp từ Châu Âu và Hàn Quốc."
             />
 
             <div className="space-y-4 pt-2">

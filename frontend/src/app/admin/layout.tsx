@@ -4,8 +4,8 @@ import { AdminHeader } from '@/components/admin/AdminHeader';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Admin Dashboard | Garage Ô Tô Tây Nam Bộ Cần Thơ',
-  description: 'Hệ thống quản trị dữ liệu động Garage Ô Tô Tây Nam Bộ',
+  title: 'Admin Dashboard | Tây Đô Auto Car Cần Thơ',
+  description: 'Hệ thống quản trị dữ liệu động Tây Đô Auto Car',
 };
 
 export default function AdminLayout({

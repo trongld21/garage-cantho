@@ -15,10 +15,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const service = await apiService.getServiceBySlug(slug);
-  if (!service) return { title: 'Dịch vụ ô tô | Garage Tây Nam Bộ' };
+  if (!service) return { title: 'Dịch vụ ô tô | Tây Đô Auto Car' };
 
   return {
-    title: `${service.name} | Tây Nam Bộ Garage Cần Thơ`,
+    title: `${service.name} | Tây Đô Auto Car Cần Thơ`,
     description: service.summary,
   };
 }
