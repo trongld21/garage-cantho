@@ -1,0 +1,14 @@
+.git
+**/.DS_Store
+**/node_modules
+**/.next
+**/vendor
+**/.env
+**/.env.*
+**/*.sqlite
+**/*.sqlite-*
+backend/storage/logs/*
+backend/storage/framework/cache/data/*
+backend/storage/framework/sessions/*
+backend/storage/framework/views/*
+backend/bootstrap/cache/*.php
