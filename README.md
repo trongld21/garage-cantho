@@ -30,8 +30,22 @@ Nếu tạo thủ công bằng **New → Web Service**, chọn:
 | Docker Command | Để trống |
 
 Không đặt Root Directory là `frontend` hoặc `backend`: Docker cần cả hai.
-Không cần nhập biến môi trường để chạy demo. API URL `/api` được đặt lúc build;
+Giao diện công khai chạy được không cần thêm biến môi trường. Để đăng nhập admin, cấu hình theo mục bên dưới. API URL `/api` được đặt lúc build;
 APP_KEY được tạo lúc khởi động. Không upload `.env` local.
+
+### Tạo tài khoản admin trên Render
+
+Tài khoản MySQL local không được đưa lên database SQLite của Render. Nếu đăng nhập trả `422` với thông báo “Email hoặc mật khẩu không đúng”, kiểm tra tài khoản trên đúng môi trường.
+
+Sau khi deploy phiên bản có `admin:bootstrap`, mở **Render → garage-cantho-demo → Environment**, thêm:
+
+- `ADMIN_EMAIL`: `admin@taydoautocar.com`
+- `ADMIN_INITIAL_PASSWORD`: mật khẩu ban đầu riêng, tối thiểu 12 ký tự gồm chữ hoa, chữ thường, số và ký tự đặc biệt. Nhập dưới dạng giá trị biến môi trường, không thêm dấu nháy bao ngoài.
+- `ADMIN_NAME`: `Quản trị Tây Đô` (tùy chọn).
+
+Lưu và redeploy. Startup tạo admin nếu email chưa tồn tại; log chỉ báo kết quả, không in mật khẩu. Mở `/admin/login`, dùng email và mật khẩu vừa cấu hình, rồi đổi mật khẩu theo yêu cầu.
+
+Khởi động lại với database còn nguyên **không ghi đè** mật khẩu đã đổi và không nâng quyền tài khoản thường trùng email. Render demo dùng SQLite tạm thời: nếu database bị tạo lại, admin được khởi tạo lại từ biến môi trường và phải đổi mật khẩu lại. Cần database lưu bền vững khi sử dụng thực tế. Không đặt mật khẩu trong `render.yaml`, Dockerfile hoặc source code.
 
 ### Kiểm tra sau deploy
 

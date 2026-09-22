@@ -5,6 +5,8 @@ cd /app/backend
 export APP_URL="${RENDER_EXTERNAL_URL:-${APP_URL:-http://localhost:10000}}"
 export APP_KEY="${APP_KEY:-$(php -r 'echo "base64:".base64_encode(random_bytes(32));')}"
 
+php artisan config:clear
+
 # This demo has an ephemeral SQLite database. Seed only a new database.
 if [[ "${DB_CONNECTION}" != "sqlite" ]]; then
     echo "This demo startup script requires DB_CONNECTION=sqlite." >&2
@@ -17,6 +19,7 @@ if [[ ! -s "$DB_DATABASE" ]]; then
 else
     php artisan migrate --force
 fi
+php artisan admin:bootstrap
 php artisan optimize
 
 php artisan serve --host=127.0.0.1 --port=8000 --no-reload &
