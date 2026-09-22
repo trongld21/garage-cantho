@@ -16,13 +16,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="block text-xs font-semibold text-[#A8A8A8] uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
             {label}
           </label>
         )}
         <div className="relative flex items-center">
           {leftIcon && (
-            <div className="absolute left-3.5 text-[#A8A8A8] pointer-events-none">
+            <div className="absolute left-3.5 text-[var(--text-secondary)] pointer-events-none">
               {leftIcon}
             </div>
           )}
@@ -30,7 +30,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={twMerge(
               clsx(
-                'w-full h-12 bg-[#202020] text-[#F5F5F5] placeholder-[#666666] text-sm px-4 rounded-xs border border-white/10 transition-colors focus:outline-none focus:border-[#C7A35A]',
+                'w-full h-12 bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm px-4 rounded-xs border border-[var(--border-subtle)] transition-colors focus:outline-none focus:border-[var(--accent-gold)]',
                 leftIcon && 'pl-10',
                 error && 'border-[#E53935] focus:border-[#E53935]',
                 className
@@ -42,7 +42,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {error ? (
           <p className="text-xs text-[#E53935] font-medium">{error}</p>
         ) : helperText ? (
-          <p className="text-xs text-[#666666]">{helperText}</p>
+          <p className="text-xs text-[var(--text-muted)]">{helperText}</p>
         ) : null}
       </div>
     );

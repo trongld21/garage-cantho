@@ -37,12 +37,12 @@ export default async function ProductDetailPage({
   }
 
   return (
-    <div className="bg-[#0A0A0A] py-16 md:py-24">
+    <div className="bg-[var(--bg-deep)] py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Back Link */}
         <Link
           href="/store"
-          className="inline-flex items-center space-x-2 text-xs text-[#A8A8A8] hover:text-[#C7A35A] uppercase tracking-wider transition-colors"
+          className="inline-flex items-center space-x-2 text-xs text-[var(--text-secondary)] hover:text-[var(--accent-gold)] uppercase tracking-wider transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Quay Lại Cửa Hàng Phụ Tùng</span>
@@ -52,7 +52,7 @@ export default async function ProductDetailPage({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left: Product Image */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="bg-[#161616] border border-white/10 rounded-xs overflow-hidden h-96 sm:h-[450px]">
+            <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs overflow-hidden h-96 sm:h-[450px]">
               <img
                 src={product.image}
                 alt={product.name}
@@ -70,30 +70,30 @@ export default async function ProductDetailPage({
                 <Badge variant="emerald">Còn Hàng trong kho ({product.stock})</Badge>
               </div>
 
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-[#F5F5F5] uppercase tracking-tight">
+              <h1 className="text-2xl sm:text-4xl font-extrabold text-[var(--text-primary)] uppercase tracking-tight">
                 {product.name}
               </h1>
             </div>
 
             {/* Price Box */}
-            <div className="p-6 bg-[#161616] border border-white/10 rounded-xs space-y-2">
-              <span className="text-[10px] text-[#A8A8A8] uppercase tracking-widest block">Giá Khuyến Mãi</span>
+            <div className="p-6 bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs space-y-2">
+              <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest block">Giá Khuyến Mãi</span>
               <div className="flex items-baseline space-x-4">
-                <span className="text-3xl font-extrabold text-[#C7A35A] font-mono">
+                <span className="text-3xl font-extrabold text-[var(--accent-gold)] font-mono">
                   {product.sale_price
                     ? product.sale_price.toLocaleString('vi-VN')
                     : product.price.toLocaleString('vi-VN')}{' '}
                   đ
                 </span>
                 {product.sale_price && (
-                  <span className="text-sm text-[#666666] line-through font-mono">
+                  <span className="text-sm text-[var(--text-muted)] line-through font-mono">
                     {product.price.toLocaleString('vi-VN')} đ
                   </span>
                 )}
               </div>
             </div>
 
-            <p className="text-sm text-[#A8A8A8] leading-relaxed">
+            <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
               {product.description}
             </p>
 
@@ -115,20 +115,20 @@ export default async function ProductDetailPage({
         </div>
 
         {/* Specifications & Fitment Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-12 border-t border-white/10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 pt-12 border-t border-[var(--border-subtle)]">
           {/* Specifications */}
           {product.specifications && (
             <div className="lg:col-span-7 space-y-4">
-              <h3 className="text-xl font-bold text-[#F5F5F5] uppercase tracking-tight flex items-center space-x-2">
-                <Package className="w-5 h-5 text-[#C7A35A]" />
+              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex items-center space-x-2">
+                <Package className="w-5 h-5 text-[var(--accent-gold)]" />
                 <span>THÔNG SỐ KỸ THUẬT SẢN PHẨM</span>
               </h3>
 
-              <div className="bg-[#161616] border border-white/5 divide-y divide-white/5 rounded-xs">
+              <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] divide-y divide-white/5 rounded-xs">
                 {Object.entries(product.specifications).map(([key, val]) => (
                   <div key={key} className="p-4 flex items-center justify-between text-xs">
-                    <span className="text-[#A8A8A8] font-medium">{key}</span>
-                    <strong className="text-[#F5F5F5]">{val}</strong>
+                    <span className="text-[var(--text-secondary)] font-medium">{key}</span>
+                    <strong className="text-[var(--text-primary)]">{val}</strong>
                   </div>
                 ))}
               </div>
@@ -138,15 +138,15 @@ export default async function ProductDetailPage({
           {/* Compatible Vehicles */}
           {product.compatible_vehicles && (
             <div className="lg:col-span-5 space-y-4">
-              <h3 className="text-xl font-bold text-[#F5F5F5] uppercase tracking-tight flex items-center space-x-2">
-                <Car className="w-5 h-5 text-[#C7A35A]" />
+              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex items-center space-x-2">
+                <Car className="w-5 h-5 text-[var(--accent-gold)]" />
                 <span>CÁC DÒNG XE TƯƠNG THÍCH</span>
               </h3>
 
-              <div className="bg-[#161616] border border-white/5 p-6 rounded-xs space-y-3">
+              <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] p-6 rounded-xs space-y-3">
                 {product.compatible_vehicles.map((v) => (
-                  <div key={v} className="flex items-center space-x-2 text-xs text-[#F5F5F5]">
-                    <Check className="w-4 h-4 text-[#C7A35A]" />
+                  <div key={v} className="flex items-center space-x-2 text-xs text-[var(--text-primary)]">
+                    <Check className="w-4 h-4 text-[var(--accent-gold)]" />
                     <span>{v}</span>
                   </div>
                 ))}

@@ -556,25 +556,12 @@ export const apiService = {
   },
 
   async createBooking(payload: BookingPayload) {
-    try {
-      const res = await client.post('/bookings', payload);
-      return res.data;
-    } catch {
-      const newBooking: BookingItem = {
-        ...payload,
-        id: Date.now(),
-        booking_id: `TNB-${Math.floor(100000 + Math.random() * 900000)}`,
-        status: 'pending',
-        created_at: new Date().toISOString(),
-      };
-      mockBookingsState.unshift(newBooking);
-      return {
-        status: 'success',
-        message: 'Đặt lịch thành công! Tây Đô Auto Car sẽ liên hệ xác nhận trong vòng 15 phút.',
-        booking_id: newBooking.booking_id,
-        data: newBooking,
-      };
-    }
+    const res = await client.post('/bookings', payload);
+    if (!res.data?.data?.id) throw new Error('Booking was not acknowledged by the server');
+    return {
+      ...res.data,
+      booking_id: res.data.booking_id || `TNB-${res.data.data.id}`,
+    };
   },
 
   async updateBookingStatus(id: number, status: BookingItem['status']): Promise<BookingItem> {

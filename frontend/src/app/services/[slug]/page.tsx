@@ -1,11 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { accessoryServices } from '@/lib/offerings';
+import { BookingButton } from '@/components/home/BookingButton';
 import { apiService } from '@/services/api';
 import { SectionHeading } from '@/components/ui/SectionHeading';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Check, Calendar, HelpCircle, ArrowLeft } from 'lucide-react';
+import { Check, HelpCircle, ArrowLeft } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({
@@ -14,7 +15,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = await apiService.getServiceBySlug(slug);
+  const service = accessoryServices.find(item => item.slug === slug) ?? await apiService.getServiceBySlug(slug);
   if (!service) return { title: 'Dịch vụ ô tô | Tây Đô Auto Car' };
 
   return {
@@ -31,16 +32,16 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = await apiService.getServiceBySlug(slug);
+  const service = accessoryServices.find(item => item.slug === slug) ?? await apiService.getServiceBySlug(slug);
 
   if (!service) {
     notFound();
   }
 
   return (
-    <div className="bg-[#0A0A0A] pb-24">
+    <div className="bg-[var(--bg-deep)] pb-24">
       {/* Service Detail Hero */}
-      <section className="relative py-20 md:py-28 bg-[#161616] border-b border-white/10 overflow-hidden">
+      <section className="relative py-20 md:py-28 bg-[var(--bg-graphite)] border-b border-[var(--border-subtle)] overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
           <img
             src={service.image}
@@ -52,7 +53,7 @@ export default async function ServiceDetailPage({
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
           <Link
             href="/services"
-            className="inline-flex items-center space-x-2 text-xs text-[#A8A8A8] hover:text-[#C7A35A] uppercase tracking-wider transition-colors"
+            className="inline-flex items-center space-x-2 text-xs text-[var(--text-secondary)] hover:text-[var(--accent-gold)] uppercase tracking-wider transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Quay Lại Danh Mục Dịch Vụ</span>
@@ -60,25 +61,21 @@ export default async function ServiceDetailPage({
 
           <div className="space-y-3 max-w-4xl">
             <Badge variant="gold">{service.category}</Badge>
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#F5F5F5] uppercase tracking-tight leading-tight">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[var(--text-primary)] uppercase tracking-tight leading-tight">
               {service.name}
             </h1>
-            <p className="text-base sm:text-lg text-[#A8A8A8] font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-relaxed">
               {service.summary}
             </p>
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
-            <div className="p-4 bg-[#202020] border border-white/10 rounded-xs">
-              <span className="text-[10px] text-[#A8A8A8] uppercase tracking-widest block">Chi Phí Ước Tính</span>
-              <span className="text-xl font-extrabold text-[#C7A35A]">{service.price_range}</span>
+            <div className="p-4 bg-[var(--bg-surface)] border border-[var(--border-subtle)] rounded-xs">
+              <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest block">Chi Phí Ước Tính</span>
+              <span className="text-xl font-extrabold text-[var(--accent-gold)]">{service.price_range}</span>
             </div>
 
-            <Link href="/services">
-              <Button variant="primary" size="lg" leftIcon={<Calendar className="w-5 h-5" />}>
-                Đặt Lịch Dịch Vụ
-              </Button>
-            </Link>
+            <BookingButton>Đặt lịch tư vấn & lắp đặt</BookingButton>
           </div>
         </div>
       </section>
@@ -88,22 +85,22 @@ export default async function ServiceDetailPage({
         {/* Description & Image Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
           <div className="lg:col-span-7 space-y-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#F5F5F5] uppercase tracking-tight">
+            <h2 className="text-2xl sm:text-3xl font-bold text-[var(--text-primary)] uppercase tracking-tight">
               GIỚI THIỆU TỔNG QUAN DỊCH VỤ
             </h2>
-            <p className="text-sm sm:text-base text-[#A8A8A8] leading-relaxed whitespace-pre-line">
+            <p className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed whitespace-pre-line">
               {service.description}
             </p>
 
             {service.benefits && service.benefits.length > 0 && (
               <div className="pt-4 space-y-3">
-                <h3 className="text-sm font-bold text-[#C7A35A] uppercase tracking-wider">
+                <h3 className="text-sm font-bold text-[var(--accent-gold)] uppercase tracking-wider">
                   LỢI ÍCH KHI THỰC HIỆN TẠI GARAGE:
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {service.benefits.map((b) => (
-                    <div key={b} className="flex items-start space-x-2 text-xs text-[#F5F5F5]">
-                      <Check className="w-4 h-4 text-[#C7A35A] flex-shrink-0 mt-0.5" />
+                    <div key={b} className="flex items-start space-x-2 text-xs text-[var(--text-primary)]">
+                      <Check className="w-4 h-4 text-[var(--accent-gold)] flex-shrink-0 mt-0.5" />
                       <span>{b}</span>
                     </div>
                   ))}
@@ -112,7 +109,7 @@ export default async function ServiceDetailPage({
             )}
           </div>
 
-          <div className="lg:col-span-5 img-zoom-wrapper rounded-xs border border-white/10 overflow-hidden h-80 sm:h-[400px]">
+          <div className="lg:col-span-5 img-zoom-wrapper rounded-xs border border-[var(--border-subtle)] overflow-hidden h-80 sm:h-[400px]">
             <img
               src={service.image}
               alt={service.name}
@@ -134,15 +131,15 @@ export default async function ServiceDetailPage({
               {service.process_steps.map((step) => (
                 <div
                   key={step.step}
-                  className="bg-[#161616] border border-white/5 p-6 rounded-xs space-y-3 hover:border-[#C7A35A]/40 transition-colors"
+                  className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] p-6 rounded-xs space-y-3 hover:border-[var(--accent-gold)]/40 transition-colors"
                 >
-                  <span className="w-8 h-8 bg-[#C7A35A] text-[#0A0A0A] font-extrabold flex items-center justify-center text-sm rounded-xs font-mono">
+                  <span className="w-8 h-8 bg-[var(--accent-gold)] text-[var(--bg-deep)] font-extrabold flex items-center justify-center text-sm rounded-xs font-mono">
                     0{step.step}
                   </span>
-                  <h4 className="text-base font-bold text-[#F5F5F5] uppercase tracking-tight">
+                  <h4 className="text-base font-bold text-[var(--text-primary)] uppercase tracking-tight">
                     {step.title}
                   </h4>
-                  <p className="text-xs text-[#A8A8A8] leading-relaxed">{step.desc}</p>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{step.desc}</p>
                 </div>
               ))}
             </div>
@@ -151,15 +148,15 @@ export default async function ServiceDetailPage({
 
         {/* Pricing Table */}
         {service.pricing_table && service.pricing_table.length > 0 && (
-          <div className="bg-[#161616] border border-white/10 p-8 rounded-xs space-y-6">
-            <h3 className="text-xl font-bold text-[#F5F5F5] uppercase tracking-tight">
+          <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] p-8 rounded-xs space-y-6">
+            <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight">
               BẢNG GIÁ THAM KHẢO DỊCH VỤ
             </h3>
             <div className="divide-y divide-white/10">
               {service.pricing_table.map((row) => (
                 <div key={row.name} className="py-4 flex items-center justify-between text-sm">
-                  <span className="text-[#F5F5F5] font-semibold">{row.name}</span>
-                  <span className="text-[#C7A35A] font-bold font-mono">{row.price}</span>
+                  <span className="text-[var(--text-primary)] font-semibold">{row.name}</span>
+                  <span className="text-[var(--accent-gold)] font-bold font-mono">{row.price}</span>
                 </div>
               ))}
             </div>
@@ -169,15 +166,15 @@ export default async function ServiceDetailPage({
         {/* FAQ Accordion */}
         {service.faqs && service.faqs.length > 0 && (
           <div className="space-y-8">
-            <h3 className="text-xl font-bold text-[#F5F5F5] uppercase tracking-tight flex items-center space-x-2">
-              <HelpCircle className="w-5 h-5 text-[#C7A35A]" />
+            <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex items-center space-x-2">
+              <HelpCircle className="w-5 h-5 text-[var(--accent-gold)]" />
               <span>CÂU HỎI THƯỜNG GẶP</span>
             </h3>
             <div className="space-y-4">
               {service.faqs.map((faq) => (
-                <div key={faq.q} className="p-6 bg-[#161616] border border-white/5 rounded-xs space-y-2">
-                  <h4 className="text-base font-bold text-[#F5F5F5]">{faq.q}</h4>
-                  <p className="text-xs text-[#A8A8A8] leading-relaxed">{faq.a}</p>
+                <div key={faq.q} className="p-6 bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs space-y-2">
+                  <h4 className="text-base font-bold text-[var(--text-primary)]">{faq.q}</h4>
+                  <p className="text-xs text-[var(--text-secondary)] leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>

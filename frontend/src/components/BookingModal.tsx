@@ -19,7 +19,7 @@ export default function BookingModal({
     <Modal
       isOpen={isOpen}
       onClose={onClose}
-      title="ĐẶT LỊCH BẢO DƯỠNG TRỰC TUYẾN"
+      title="ĐẶT LỊCH TƯ VẤN & LẮP ĐẶT"
       subtitle="Chủ động chọn khung giờ hẹn • Tây Đô Auto Car Cần Thơ"
       maxWidth="2xl"
     >

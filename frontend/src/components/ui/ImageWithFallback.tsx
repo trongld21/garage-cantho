@@ -25,17 +25,17 @@ export function ImageWithFallback({
   };
 
   const icons = {
-    car: <Car className="w-8 h-8 text-[#C7A35A]" />,
-    service: <Wrench className="w-8 h-8 text-[#C7A35A]" />,
-    product: <Package className="w-8 h-8 text-[#C7A35A]" />,
+    car: <Car className="w-8 h-8 text-[var(--accent-gold)]" />,
+    service: <Wrench className="w-8 h-8 text-[var(--accent-gold)]" />,
+    product: <Package className="w-8 h-8 text-[var(--accent-gold)]" />,
     rescue: <ShieldAlert className="w-8 h-8 text-[#E53935]" />,
   };
 
   if (hasError) {
     return (
-      <div className={`w-full h-full bg-[#202020] border border-white/10 flex flex-col items-center justify-center p-4 text-center space-y-2 ${className}`}>
+      <div className={`w-full h-full bg-[var(--bg-surface)] border border-[var(--border-subtle)] flex flex-col items-center justify-center p-4 text-center space-y-2 ${className}`}>
         {icons[fallbackType]}
-        <span className="text-[10px] text-[#A8A8A8] font-bold uppercase tracking-widest">
+        <span className="text-[10px] text-[var(--text-secondary)] font-bold uppercase tracking-widest">
           TÂY ĐÔ AUTO CAR AUTOMOTIVE
         </span>
       </div>

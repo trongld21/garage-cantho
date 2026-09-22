@@ -22,7 +22,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full space-y-1.5">
         {label && (
-          <label className="block text-xs font-semibold text-[#A8A8A8] uppercase tracking-wider">
+          <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
             {label}
           </label>
         )}
@@ -31,7 +31,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             ref={ref}
             className={twMerge(
               clsx(
-                'w-full h-12 bg-[#202020] text-[#F5F5F5] text-sm px-4 pr-10 rounded-xs border border-white/10 transition-colors focus:outline-none focus:border-[#C7A35A] appearance-none cursor-pointer',
+                'w-full h-12 bg-[var(--bg-surface)] text-[var(--text-primary)] text-sm px-4 pr-10 rounded-xs border border-[var(--border-subtle)] transition-colors focus:outline-none focus:border-[var(--accent-gold)] appearance-none cursor-pointer',
                 error && 'border-[#E53935] focus:border-[#E53935]',
                 className
               )
@@ -39,18 +39,18 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             {...props}
           >
             {placeholder && (
-              <option value="" disabled className="bg-[#202020] text-[#666666]">
+              <option value="" disabled className="bg-[var(--bg-surface)] text-[var(--text-muted)]">
                 {placeholder}
               </option>
             )}
             {options.map((opt) => (
-              <option key={opt.value} value={opt.value} className="bg-[#202020] text-[#F5F5F5]">
+              <option key={opt.value} value={opt.value} className="bg-[var(--bg-surface)] text-[var(--text-primary)]">
                 {opt.label}
               </option>
             ))}
             {children}
           </select>
-          <div className="absolute right-3.5 text-[#A8A8A8] pointer-events-none">
+          <div className="absolute right-3.5 text-[var(--text-secondary)] pointer-events-none">
             <ChevronDown className="w-4 h-4" />
           </div>
         </div>

@@ -12,7 +12,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
   return (
     <div
       className={twMerge(
-        clsx('animate-pulse bg-[#202020] rounded-xs', className)
+        clsx('animate-pulse bg-[var(--bg-surface)] rounded-xs', className)
       )}
       {...props}
     />
@@ -21,7 +21,7 @@ export function Skeleton({ className, ...props }: SkeletonProps) {
 
 export function CardSkeleton() {
   return (
-    <div className="bg-[#161616] border border-white/5 rounded-xs overflow-hidden p-4 space-y-4">
+    <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs overflow-hidden p-4 space-y-4">
       <Skeleton className="w-full h-48 rounded-xs" />
       <Skeleton className="w-1/3 h-4" />
       <Skeleton className="w-3/4 h-6" />

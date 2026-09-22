@@ -34,8 +34,8 @@ export function SectionHeading({
             viewport={{ once: true }}
             className="flex items-center space-x-2"
           >
-            <span className="w-8 h-[2px] bg-[#C7A35A]" />
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#C7A35A]">
+            <span className="w-8 h-[2px] bg-[var(--accent-gold)]" />
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[var(--accent-gold)]">
               {eyebrow}
             </span>
           </motion.div>
@@ -45,7 +45,7 @@ export function SectionHeading({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F5F5F5] uppercase leading-tight"
+          className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[var(--text-primary)] uppercase leading-tight"
         >
           {title}
         </motion.h2>
@@ -55,7 +55,7 @@ export function SectionHeading({
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-base sm:text-lg text-[#A8A8A8] font-normal leading-relaxed"
+            className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-relaxed"
           >
             {subtitle}
           </motion.p>

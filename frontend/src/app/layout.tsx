@@ -2,26 +2,23 @@ import type { Metadata } from 'next';
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import { SiteTheme } from '@/components/layout/SiteTheme';
 import FloatingActions from '@/components/layout/FloatingActions';
 
 export const metadata: Metadata = {
-  title: 'Tây Đô Auto Car Cần Thơ | Dịch Vụ - Phụ Tùng - Cứu Hộ 24/7',
+  title: 'Tây Đô Auto Car Cần Thơ | Phụ Kiện & Đồ Chơi Ô Tô',
   description:
-    'Trung tâm sửa chữa ô tô cao cấp phong cách Châu Âu tại Cần Thơ. Chuyên sửa chữa tổng hợp, rửa khoang máy hơi nước nóng, đồng sơn 3M, bọc da nội thất, mua bán cho thuê xe và cứu hộ khẩn cấp 24/7.',
+    'Chuyên cung cấp và lắp đặt phụ kiện, đồ chơi ô tô tại Cần Thơ: màn hình Android, đèn ô tô, âm thanh xe hơi, camera và phụ kiện nội ngoại thất.',
   keywords: [
-    'garage ô tô Cần Thơ',
-    'sửa chữa ô tô Cần Thơ',
-    'bảo dưỡng xe ô tô',
-    'cứu hộ ô tô 24/7 Cần Thơ',
-    'phụ tùng ô tô chính hãng',
-    'đồng sơn xe ô tô',
-    'cho thuê xe tự lái Cần Thơ',
+    'phụ kiện ô tô Cần Thơ', 'đồ chơi ô tô Cần Thơ',
+    'màn hình Android ô tô', 'đèn ô tô', 'âm thanh xe hơi',
+    'camera hành trình', 'nâng cấp nội ngoại thất ô tô',
   ],
   authors: [{ name: 'Tây Đô Auto Car' }],
   openGraph: {
-    title: 'Tây Đô Auto Car Cần Thơ | Standard European Automotive Care',
+    title: 'Tây Đô Auto Car | Phụ Kiện & Đồ Chơi Ô Tô',
     description:
-      'Chăm sóc chiếc xe như cách bạn trân trọng hành trình. Dịch vụ garage ô tô cao cấp, chuyên nghiệp và uy tín hàng đầu Cần Thơ.',
+      'Màn hình, đèn, âm thanh, camera và phụ kiện nội ngoại thất. Tư vấn nâng cấp theo dòng xe và nhu cầu tại Cần Thơ.',
     siteName: 'Tây Đô Auto Car',
     locale: 'vi_VN',
     type: 'website',
@@ -35,7 +32,7 @@ export default function RootLayout({
 }>) {
   const jsonLdSchema = {
     '@context': 'https://schema.org',
-    '@type': 'AutoRepair',
+    '@type': 'AutomotiveBusiness',
     name: 'Tây Đô Auto Car Cần Thơ',
     image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738',
     telephone: ['0979707033', '0923112399'],
@@ -72,10 +69,12 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#0A0A0A] text-[#F5F5F5] min-h-screen flex flex-col antialiased selection:bg-[#C7A35A] selection:text-[#0A0A0A] pb-16 md:pb-0">
+        <SiteTheme>
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
         <FloatingActions />
+        </SiteTheme>
       </body>
     </html>
   );

@@ -120,18 +120,18 @@ export default function RescuePage() {
   };
 
   return (
-    <div className="bg-[#0A0A0A] py-12 md:py-20">
+    <div className="bg-[var(--bg-deep)] py-12 md:py-20">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
         {/* Emergency Header */}
         <div className="text-center space-y-4">
           <Badge variant="red" size="md">
             TRUNG TÂM CỨU HỘ KHẨN CẤP 24/7
           </Badge>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#F5F5F5] uppercase tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-[var(--text-primary)] uppercase tracking-tight">
             CỨU HỘ Ô TÔ KHẨN CẤP <br />
             <span className="text-[#E53935]">CẦN THƠ & MIỀN TÂY</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#A8A8A8] max-w-xl mx-auto">
+          <p className="text-sm sm:text-base text-[var(--text-secondary)] max-w-xl mx-auto">
             Phục vụ 24/24h kể cả ngày lễ Tết. Có mặt trong 15-30 phút ứng cứu tại chỗ hoặc kéo xe về xưởng bằng xe sàn trượt chuyên dụng.
           </p>
         </div>
@@ -143,12 +143,12 @@ export default function RescuePage() {
               <Phone className="w-6 h-6" />
             </div>
             <div>
-              <span className="text-[10px] text-[#A8A8A8] uppercase tracking-widest block font-bold">
+              <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest block font-bold">
                 GỌI KHẨN CẤP NGAY BÂY GIỜ
               </span>
               <a
                 href="tel:0979707033"
-                className="text-2xl sm:text-3xl font-extrabold text-[#F5F5F5] hover:text-[#E53935] transition-colors font-mono"
+                className="text-2xl sm:text-3xl font-extrabold text-[var(--text-primary)] hover:text-[#E53935] transition-colors font-mono"
               >
                 0979 707 033
               </a>
@@ -164,16 +164,16 @@ export default function RescuePage() {
 
         {/* Live Status Feedback Screen */}
         {statusState ? (
-          <div className="p-8 bg-[#161616] border border-emerald-500/30 rounded-xs text-center space-y-6">
+          <div className="p-8 bg-[var(--bg-graphite)] border border-emerald-500/30 rounded-xs text-center space-y-6">
             <div className="w-16 h-16 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
               <CheckCircle2 className="w-8 h-8" />
             </div>
             <div className="space-y-2">
               <Badge variant="emerald">MÃ YÊU CẦU: {statusState.requestId}</Badge>
-              <h2 className="text-2xl font-bold text-[#F5F5F5] uppercase tracking-tight">
+              <h2 className="text-2xl font-bold text-[var(--text-primary)] uppercase tracking-tight">
                 GARAGE ĐÃ ĐIỀU XE CỨU HỘ
               </h2>
-              <p className="text-sm text-[#A8A8A8] max-w-md mx-auto">
+              <p className="text-sm text-[var(--text-secondary)] max-w-md mx-auto">
                 {statusState.message} Nhân viên cứu hộ sẽ gọi trực tiếp số ĐT của bạn để xác nhận vị trí trong ít phút.
               </p>
             </div>
@@ -187,9 +187,9 @@ export default function RescuePage() {
           /* Online Request Form */
           <form
             onSubmit={handleSubmit}
-            className="p-8 bg-[#161616] border border-white/10 rounded-xs space-y-6"
+            className="p-8 bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs space-y-6"
           >
-            <h3 className="text-lg font-bold text-[#F5F5F5] uppercase tracking-tight border-b border-white/10 pb-4">
+            <h3 className="text-lg font-bold text-[var(--text-primary)] uppercase tracking-tight border-b border-[var(--border-subtle)] pb-4">
               FORM GỬI THÔNG TIN VỊ TRÍ CỨU HỘ
             </h3>
 
@@ -232,14 +232,14 @@ export default function RescuePage() {
             {/* Location & GPS Button */}
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-semibold text-[#A8A8A8] uppercase tracking-wider">
+                <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                   Vị Trí Hiện Tại Mắc Kẹt *
                 </label>
                 <button
                   type="button"
                   onClick={handleFetchLocation}
                   disabled={isLocating}
-                  className="inline-flex items-center space-x-1.5 text-xs font-bold text-[#C7A35A] hover:underline"
+                  className="inline-flex items-center space-x-1.5 text-xs font-bold text-[var(--accent-gold)] hover:underline"
                 >
                   {isLocating ? (
                     <Loader2 className="w-3.5 h-3.5 animate-spin" />
@@ -257,11 +257,11 @@ export default function RescuePage() {
                 error={errors.location}
                 leftIcon={<MapPin className="w-4 h-4" />}
               />
-              {locationStatus && <p className="text-xs text-[#C7A35A]">{locationStatus}</p>}
+              {locationStatus && <p className="text-xs text-[var(--accent-gold)]">{locationStatus}</p>}
             </div>
 
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-[#A8A8A8] uppercase tracking-wider">
+              <label className="block text-xs font-semibold text-[var(--text-secondary)] uppercase tracking-wider">
                 Mô Tả Thêm Tình Trạng Hỏng Hóc
               </label>
               <textarea
@@ -269,7 +269,7 @@ export default function RescuePage() {
                 placeholder="Ví dụ: Xe lật nghiêng, bó phanh, vô lăng cứng không quay được..."
                 value={formData.issue_description}
                 onChange={(e) => setFormData({ ...formData, issue_description: e.target.value })}
-                className="w-full bg-[#202020] text-[#F5F5F5] placeholder-[#666666] text-sm p-4 rounded-xs border border-white/10 focus:outline-none focus:border-[#C7A35A]"
+                className="w-full bg-[var(--bg-surface)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm p-4 rounded-xs border border-[var(--border-subtle)] focus:outline-none focus:border-[var(--accent-gold)]"
               />
             </div>
 
