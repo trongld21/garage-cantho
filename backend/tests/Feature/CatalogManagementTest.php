@@ -4,6 +4,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 class CatalogManagementTest extends TestCase {
     use RefreshDatabase;
+    protected function setUp(): void {
+        parent::setUp();
+        $user = \App\Models\User::factory()->create(['is_admin' => true]);
+        $this->actingAs($user);
+    }
     public function test_service_crud_is_reflected_in_public_catalog(): void {
         $data = ['name'=>'Camera mới', 'slug'=>'camera-moi', 'category'=>'Camera & an toàn', 'summary'=>'Tư vấn camera', 'description'=>'Lắp đặt camera', 'price_range'=>'Liên hệ', 'is_featured'=>true];
         $id = $this->postJson('/api/admin/services', $data)->assertCreated()->json('data.id');

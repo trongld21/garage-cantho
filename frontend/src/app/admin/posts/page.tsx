@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
+import { ArticleEditor } from '@/components/admin/ArticleEditor';
 import { Modal } from '@/components/ui/Modal';
 import { Plus, Edit2, Trash2, Newspaper, RefreshCw } from 'lucide-react';
 
@@ -172,6 +173,7 @@ export default function AdminPostsPage() {
       {/* Add / Edit Modal */}
       {editingPost && (
         <Modal
+          maxWidth="4xl"
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
           title={editingPost.id ? 'CHỈNH SỬA BÀI VIẾT' : 'SOẠN THẢO BÀI VIẾT MỚI'}
@@ -233,12 +235,7 @@ export default function AdminPostsPage() {
 
             <div className="space-y-1">
               <label className="block text-xs font-semibold text-[#A8A8A8] uppercase">Nội Dung Bài Viết</label>
-              <textarea
-                rows={6}
-                value={editingPost.content || ''}
-                onChange={(e) => setEditingPost({ ...editingPost, content: e.target.value })}
-                className="w-full bg-[#202020] text-white text-xs p-3 rounded-xs border border-white/10"
-              />
+              <ArticleEditor key={editingPost.id ?? 'new'} value={editingPost.content || ''} onChange={content => setEditingPost(previous => ({ ...previous, content }))} disabled={saving} />
             </div>
 
             <label className="flex gap-2 text-white"><input type="checkbox" checked={editingPost.is_published ?? true} onChange={e => setEditingPost({ ...editingPost, is_published: e.target.checked })} />Xuất bản trên website</label>

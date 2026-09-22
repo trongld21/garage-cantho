@@ -50,7 +50,7 @@ APP_KEY được tạo lúc khởi động. Không upload `.env` local.
 - Render Free ngủ sau 15 phút không có truy cập; lần mở tiếp theo có thể cần
   khoảng một phút. Xem https://render.com/docs/free.
 - CRUD dịch vụ, sản phẩm, bài viết và quản lý lịch hẹn lưu trực tiếp vào database.
-  Nhóm API quản trị vẫn chưa có xác thực; bản demo chưa phù hợp để mở quản trị công khai.
+  API quản trị yêu cầu đăng nhập admin, CSRF và đổi mật khẩu ban đầu. Tạo tài khoản riêng bằng `php artisan admin:create <email>`; xem hướng dẫn trong `frontend/README.md`.
 - PHP chạy bằng server tích hợp cho demo ít truy cập; khi triển khai thực tế
   cần chuyển sang PHP-FPM/FrankenPHP và database lưu bền vững.
 

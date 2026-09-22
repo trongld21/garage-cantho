@@ -1,6 +1,27 @@
 import axios from 'axios';
 import { ServiceItem, ProductItem, CarItem, PostItem, BookingPayload, BookingItem } from '@/types';
 const client = axios.create({ baseURL: typeof window === 'undefined' ? (process.env.API_INTERNAL_URL || 'http://127.0.0.1:8000/api') : (process.env.NEXT_PUBLIC_API_URL || '/api'), headers: { Accept: 'application/json' }, timeout: 10000 });
+// Admin requests always use the same-origin proxy and Laravel session/CSRF protection.
+if (typeof window !== 'undefined') {
+  client.interceptors.request.use(async config => {
+    if (config.url?.startsWith('/admin/')) {
+      config.baseURL = '/api';
+      config.withCredentials = true;
+      if (!['get', 'head', 'options'].includes(config.method || 'get')) {
+        const response = await axios.get('/api/auth/csrf', { withCredentials: true, timeout: 10000 });
+        config.headers.set('X-CSRF-TOKEN', response.data.csrf_token);
+      }
+    }
+    return config;
+  });
+  client.interceptors.response.use(response => response, error => {
+    if (error.config?.url?.startsWith('/admin/')) {
+      if (error.response?.status === 401 || error.response?.status === 419) window.dispatchEvent(new Event('admin-session-expired'));
+      if (error.response?.data?.code === 'password_change_required') window.dispatchEvent(new Event('admin-password-required'));
+    }
+    return Promise.reject(error);
+  });
+}
 export function apiError(error: unknown): string {
   if (axios.isAxiosError(error)) {
     const errors = error.response?.data?.errors;
@@ -10,6 +31,7 @@ export function apiError(error: unknown): string {
   return 'Không thể hoàn tất thao tác. Vui lòng thử lại.';
 }
 export const apiService = {
+  async getEditorConfig(): Promise<{ license_key: string }> { return (await client.get('/admin/editor-config')).data.data; },
   async getServices(category?: string, featured?: boolean): Promise<ServiceItem[]> { return (await client.get('/services', { params: { category, featured } })).data.data; },
   async getServiceBySlug(slug: string): Promise<ServiceItem | null> { try { return (await client.get(`/services/${encodeURIComponent(slug)}`)).data.data; } catch (error) { if (axios.isAxiosError(error) && error.response?.status === 404) return null; throw error; } },
   async saveService(data: Partial<ServiceItem>): Promise<ServiceItem> { const result = (data.id ? await client.put(`/admin/services/${data.id}`, data) : await client.post('/admin/services', data)).data.data; if (typeof window !== 'undefined') window.dispatchEvent(new Event('services-updated')); return result; },

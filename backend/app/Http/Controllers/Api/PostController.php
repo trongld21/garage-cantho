@@ -38,7 +38,7 @@ class PostController extends Controller
             'category' => 'required|string|max:255',
             'summary' => 'nullable|string',
             'image' => 'nullable|url|max:255',
-            'content' => 'nullable|string',
+            'content' => 'nullable|string|max:200000',
             'is_published' => 'boolean',
             'published_at' => 'nullable|date',
             'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', \Illuminate\Validation\Rule::unique('posts', 'slug')->ignore($id)],

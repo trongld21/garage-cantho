@@ -25,4 +25,11 @@ class Post extends Model
         'is_published' => 'boolean',
         'published_at' => 'datetime',
     ];
+    protected function content(): \Illuminate\Database\Eloquent\Casts\Attribute
+    {
+        return \Illuminate\Database\Eloquent\Casts\Attribute::make(
+            get: fn ($value) => \App\Support\ArticleHtml::clean($value),
+            set: fn ($value) => \App\Support\ArticleHtml::clean($value),
+        );
+    }
 }

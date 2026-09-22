@@ -200,3 +200,20 @@ body {
 @media(max-width:1200px){.auto-header-hours{display:none}}
 @media(max-width:900px){.auto-home>.auto-section>.auto-section-heading,.auto-home>.auto-section>.auto-container>.auto-section-heading{flex-direction:column;align-items:center}.auto-home>.auto-section>.auto-section-heading>a,.auto-home>.auto-section>.auto-container>.auto-section-heading>a{position:static}.auto-service-directory>.auto-container{grid-template-columns:1fr;gap:25px}}
 @media(max-width:767px){.auto-home .auto-section-heading h2{font-size:21px}.auto-gallery-tabs,.auto-collection-tabs{gap:6px}.auto-gallery-tabs button,.auto-collection-tabs button{font-size:10px;padding:10px 12px}.auto-service-photo{height:135px;margin:0 -15px 18px}.auto-service-number{top:147px}.auto-service-directory{padding-block:35px}.auto-service-directory h2{font-size:24px}.auto-service-links{gap:10px}.auto-service-links a{padding:12px;font-size:11px;gap:8px}.auto-service-links a>svg:last-child{display:none}}
+
+/* Rich article content and the admin editor share readable typography. */
+.article-editor { color: #202124; color-scheme: light; --ck-z-default: 100; --ck-z-panel: 1100; }
+.article-editor .ck-editor__editable { min-height: 320px; max-height: 60vh; overflow-y: auto; }
+.article-content p, .article-content ul, .article-content ol, .article-content figure, .article-content blockquote { margin-block: 1em; }
+.article-content h2 { font-size: 1.6em; font-weight: 700; margin-block: 1.4em .6em; }
+.article-content h3, .article-content h4 { font-size: 1.25em; font-weight: 700; margin-block: 1.2em .6em; }
+.article-content ul { list-style: disc; padding-left: 1.6em; }
+.article-content ol { list-style: decimal; padding-left: 1.6em; }
+.article-content a { color: #dd1018; text-decoration: underline; overflow-wrap: anywhere; }
+.article-content blockquote { padding: .8em 1.2em; border-left: 3px solid #dd1018; background: #8881; }
+.article-content img { max-width: 100%; height: auto; margin-inline: auto; }
+.article-content figcaption { text-align: center; font-size: .85em; opacity: .8; }
+.article-content figure.table { overflow-x: auto; }
+.article-content table { width: 100%; border-collapse: collapse; margin-block: 1em; }
+.article-content td, .article-content th { padding: .65em; border: 1px solid #8885; }
+.article-content { overflow-wrap: anywhere; }

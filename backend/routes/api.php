@@ -14,7 +14,7 @@ Route::get('/services/{slug}', [ServiceController::class, 'show']);
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/{slug}', [ProductController::class, 'show']);
 
-Route::post('/bookings', [BookingController::class, 'store']);
+Route::post('/bookings', [BookingController::class, 'store'])->middleware('throttle:6,1');
 
 Route::get('/cars', [CarListingController::class, 'index']);
 Route::get('/cars/{id}', [CarListingController::class, 'show']);
@@ -24,7 +24,8 @@ Route::get('/posts/{slug}', [PostController::class, 'show']);
 
 
 // Admin Management Endpoints
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware(['web', \App\Http\Middleware\RequireAdmin::class, 'auth.session', \App\Http\Middleware\RequirePasswordChange::class])->group(function () {
+    Route::get('/editor-config', fn () => response()->json(['data' => ['license_key' => config('services.ckeditor.license_key')]]));
     // Bookings Admin
     Route::get('/bookings', [BookingController::class, 'index']);
     Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus']);
@@ -51,4 +52,14 @@ Route::prefix('admin')->group(function () {
     Route::post('/posts', [PostController::class, 'store']);
     Route::put('/posts/{id}', [PostController::class, 'update']);
     Route::delete('/posts/{id}', [PostController::class, 'destroy']);
+});
+
+Route::prefix('auth')->middleware('web')->group(function () {
+    Route::get('/csrf', [\App\Http\Controllers\Api\AuthController::class, 'csrf']);
+    Route::post('/login', [\App\Http\Controllers\Api\AuthController::class, 'login'])->middleware('throttle:admin-login');
+    Route::middleware([\App\Http\Middleware\RequireAdmin::class, 'auth.session'])->group(function () {
+        Route::get('/me', [\App\Http\Controllers\Api\AuthController::class, 'me']);
+        Route::post('/logout', [\App\Http\Controllers\Api\AuthController::class, 'logout']);
+        Route::put('/password', [\App\Http\Controllers\Api\AuthController::class, 'password'])->middleware('throttle:6,1');
+    });
 });

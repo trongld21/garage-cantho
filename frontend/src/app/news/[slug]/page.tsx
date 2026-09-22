@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { apiService } from '@/services/api';
 import { Badge } from '@/components/ui/Badge';
-import { Button } from '@/components/ui/Button';
-import { ArrowLeft, User, Calendar, Clock, Tag, Share2 } from 'lucide-react';
+import { ArticleShare } from '@/components/ArticleShare';
+import { siteUrl } from '@/lib/site-url';
+import { ArrowLeft, User, Calendar, Clock, Tag } from 'lucide-react';
 import type { Metadata } from 'next';
 
 export async function generateMetadata({
@@ -16,7 +17,11 @@ export async function generateMetadata({
   const post = await apiService.getPostBySlug(slug);
   if (!post) return { title: 'Tin tức ô tô | Tây Đô Auto Car' };
 
+  const url = await siteUrl(`/news/${encodeURIComponent(post.slug)}`);
   return {
+    alternates: { canonical: url },
+    openGraph: { type: 'article', url, title: post.title, description: post.summary, images: post.image ? [{ url: post.image, alt: post.title }] : [], publishedTime: post.published_at, authors: post.author ? [post.author] : [] },
+    twitter: { card: 'summary_large_image', title: post.title, description: post.summary, images: post.image ? [post.image] : [] },
     title: `${post.title} | Tây Đô Auto Car`,
     description: post.summary,
   };
@@ -36,6 +41,7 @@ export default async function NewsDetailPage({
     notFound();
   }
 
+  const url = await siteUrl(`/news/${encodeURIComponent(post.slug)}`);
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
@@ -90,9 +96,8 @@ export default async function NewsDetailPage({
         </div>
 
         {/* Main Body */}
-        <div className="text-sm sm:text-base text-[var(--text-secondary)] leading-relaxed space-y-6 whitespace-pre-line">
-          {post.content}
-        </div>
+        <div className="article-content text-sm sm:text-base text-[var(--text-primary)] leading-relaxed" dangerouslySetInnerHTML={{ __html: post.content }} />
+        <ArticleShare title={post.title} url={url} />
 
         {/* Article Tags */}
         {post.tags && post.tags.length > 0 && (
