@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { apiService } from '@/services/api';
+import { apiService, apiError } from '@/services/api';
 import { ServiceItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -14,31 +14,37 @@ export default function AdminServicesPage() {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingService, setEditingService] = useState<Partial<ServiceItem> | null>(null);
 
   const loadServices = async () => {
+    setError('');
     setIsLoading(true);
     try {
       const data = await apiService.getServices();
       setServices(data);
     } catch (err) {
-      console.error(err);
+      setError(apiError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadServices();
+    let active = true;
+    apiService.getServices().then(data => { if (active) setServices(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const handleOpenAddModal = () => {
     setEditingService({
       name: '',
       slug: '',
-      category: 'bảo dưỡng',
+      category: 'Màn hình',
       summary: '',
       description: '',
       price_range: 'Báo giá',
@@ -49,27 +55,34 @@ export default function AdminServicesPage() {
   };
 
   const handleOpenEditModal = (service: ServiceItem) => {
-    setEditingService(service);
+    setEditingService({ ...service, category: ['Màn hình', 'Đèn ô tô', 'Âm thanh', 'Camera & an toàn', 'Nội thất', 'Ngoại thất'].includes(service.category) ? service.category : 'Nội thất' });
     setIsModalOpen(true);
   };
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingService) return;
+    if (saving) return;
+    setSaving(true); setError('');
+    try {
     await apiService.saveService(editingService);
     setIsModalOpen(false);
     loadServices();
+    } catch (err) { setError(apiError(err)); } finally { setSaving(false); }
   };
 
   const handleDelete = async (id: number) => {
     if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này?')) {
+      try {
       await apiService.deleteService(id);
       loadServices();
+      } catch (err) { setError(apiError(err)); }
     }
   };
 
   return (
     <div className="space-y-6">
+      {error && <p role="alert" className="text-red-400">{error}</p>}
       {/* Title & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
@@ -167,6 +180,7 @@ export default function AdminServicesPage() {
           title={editingService.id ? 'CHỈNH SỬA DỊCH VỤ' : 'THÊM DỊCH VỤ MỚI'}
         >
           <form onSubmit={handleSave} className="space-y-4">
+            {error && <p role="alert" className="text-red-400">{error}</p>}
             <Input
               label="Tên Dịch Vụ *"
               value={editingService.name || ''}
@@ -184,16 +198,9 @@ export default function AdminServicesPage() {
 
               <Select
                 label="Danh Mục *"
-                value={editingService.category || 'bảo dưỡng'}
+                value={editingService.category || 'Màn hình'}
                 onChange={(e) => setEditingService({ ...editingService, category: e.target.value })}
-                options={[
-                  { value: 'bảo dưỡng', label: 'Bảo dưỡng' },
-                  { value: 'sửa chữa', label: 'Sửa chữa' },
-                  { value: 'đồng sơn', label: 'Đồng sơn' },
-                  { value: 'chăm sóc xe', label: 'Chăm sóc xe' },
-                  { value: 'độ xe', label: 'Độ xe' },
-                  { value: 'cứu hộ', label: 'Cứu hộ' },
-                ]}
+                options={[{"value": "Màn hình", "label": "Màn hình"}, {"value": "Đèn ô tô", "label": "Đèn ô tô"}, {"value": "Âm thanh", "label": "Âm thanh"}, {"value": "Camera & an toàn", "label": "Camera & an toàn"}, {"value": "Nội thất", "label": "Nội thất"}, {"value": "Ngoại thất", "label": "Ngoại thất"}]}
               />
             </div>
 
@@ -242,7 +249,7 @@ export default function AdminServicesPage() {
                 <span>Hiển thị nổi bật trang chủ</span>
               </label>
 
-              <Button type="submit" variant="primary" size="md">
+              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Dịch Vụ
               </Button>
             </div>

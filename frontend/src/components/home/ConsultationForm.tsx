@@ -1,10 +1,11 @@
 'use client';
 import { useState } from 'react';
 import { ArrowUpRight, CheckCircle2 } from 'lucide-react';
-import { accessoryServices } from '@/lib/offerings';
+import { useServices } from '@/lib/use-services';
 import { apiService } from '@/services/api';
 
 export function ConsultationForm() {
+  const accessoryServices = useServices();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState('');
   const [receipt, setReceipt] = useState('');
@@ -29,5 +30,5 @@ export function ConsultationForm() {
     } finally { setPending(false); }
   }
   if (receipt) return <div className="auto-form-success" role="status"><CheckCircle2 size={35} /><h3>Đã nhận yêu cầu tư vấn</h3><p>Mã yêu cầu: {receipt}. Garage sẽ liên hệ để xác nhận lịch hẹn.</p><button className="auto-button" onClick={() => setReceipt('')}>Gửi yêu cầu khác</button></div>;
-  return <form className="auto-consult-form" onSubmit={submit}><h3>ĐĂNG KÝ TƯ VẤN</h3><p>Để lại thông tin và thời gian bạn muốn ghé garage.</p><div className="auto-form-grid"><label>Họ và tên *<input name="name" autoComplete="name" placeholder="Nhập họ tên" required maxLength={255} /></label><label>Số điện thoại *<input name="phone" type="tel" autoComplete="tel" placeholder="Nhập số điện thoại" required maxLength={20} /></label></div><label>Dịch vụ quan tâm<select name="service">{accessoryServices.map(service => <option key={service.slug}>{service.name}</option>)}</select></label><div className="auto-form-grid"><label>Ngày hẹn *<input name="date" type="date" required min={today} /></label><label>Khung giờ *<select name="time" required>{['08:00', '09:00', '10:00', '11:00', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00'].map(t => <option key={t}>{t}</option>)}</select></label></div><label>Nội dung cần tư vấn<textarea name="note" rows={2} placeholder="Dòng xe, phụ kiện hoặc dịch vụ bạn cần…" maxLength={3000} /></label>{error && <p className="auto-form-error" role="alert">{error}</p>}<button className="auto-button" disabled={pending}>{pending ? 'Đang gửi yêu cầu…' : 'Gửi yêu cầu tư vấn'}<ArrowUpRight size={17} /></button><small>Thông tin được sử dụng để liên hệ tư vấn và xác nhận lịch hẹn.</small></form>;
+  return <form className="auto-consult-form" onSubmit={submit}><h3>ĐĂNG KÝ TƯ VẤN</h3><p>Để lại thông tin và thời gian bạn muốn ghé garage.</p><div className="auto-form-grid"><label>Họ và tên *<input name="name" autoComplete="name" placeholder="Nhập họ tên" required maxLength={255} /></label><label>Số điện thoại *<input name="phone" type="tel" autoComplete="tel" placeholder="Nhập số điện thoại" required maxLength={20} /></label></div><label>Dịch vụ quan tâm<select name="service" required><option value="">Chọn dịch vụ cần tư vấn</option>{accessoryServices.map(service => <option key={service.slug}>{service.name}</option>)}</select></label><div className="auto-form-grid"><label>Ngày hẹn *<input name="date" type="date" required min={today} /></label><label>Khung giờ *<select name="time" required>{['08:00', '09:00', '10:00', '11:00', '13:30', '14:30', '15:30', '16:30', '17:30', '19:00'].map(t => <option key={t}>{t}</option>)}</select></label></div><label>Nội dung cần tư vấn<textarea name="note" rows={2} placeholder="Dòng xe, phụ kiện hoặc dịch vụ bạn cần…" maxLength={3000} /></label>{error && <p className="auto-form-error" role="alert">{error}</p>}<button className="auto-button" disabled={pending}>{pending ? 'Đang gửi yêu cầu…' : 'Gửi yêu cầu tư vấn'}<ArrowUpRight size={17} /></button><small>Thông tin được sử dụng để liên hệ tư vấn và xác nhận lịch hẹn.</small></form>;
 }

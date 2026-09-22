@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { apiService } from '@/services/api';
+import { apiService, apiError } from '@/services/api';
 import { PostItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -14,24 +14,30 @@ export default function AdminPostsPage() {
   const [posts, setPosts] = useState<PostItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingPost, setEditingPost] = useState<Partial<PostItem>>({});
 
   const loadPosts = async () => {
+    setError('');
     setIsLoading(true);
     try {
-      const data = await apiService.getPosts();
+      const data = await apiService.getAdminPosts();
       setPosts(data);
     } catch (err) {
-      console.error(err);
+      setError(apiError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadPosts();
+    let active = true;
+    apiService.getAdminPosts().then(data => { if (active) setPosts(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const handleOpenAddModal = () => {
@@ -55,20 +61,27 @@ export default function AdminPostsPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingPost) return;
+    if (saving) return;
+    setSaving(true); setError('');
+    try {
     await apiService.savePost(editingPost);
     setIsModalOpen(false);
     loadPosts();
+    } catch (err) { setError(apiError(err)); } finally { setSaving(false); }
   };
 
   const handleDelete = async (id: number) => {
     if (confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
+      try {
       await apiService.deletePost(id);
       loadPosts();
+      } catch (err) { setError(apiError(err)); }
     }
   };
 
   return (
     <div className="space-y-6">
+      {error && <p role="alert" className="text-red-400">{error}</p>}
       {/* Title & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
@@ -77,7 +90,7 @@ export default function AdminPostsPage() {
             DANH MỤC BÀI VIẾT BIÊN TẬP
           </h1>
           <p className="text-xs text-[#A8A8A8]">
-            Đăng bài chia sẻ kinh nghiệm ô tô, hướng dẫn bảo dưỡng và tin tức ngành.
+            Đăng bài chia sẻ kinh nghiệm ô tô, hướng dẫn lắp đặt phụ kiện và tin tức ngành.
           </p>
         </div>
 
@@ -164,6 +177,7 @@ export default function AdminPostsPage() {
           title={editingPost.id ? 'CHỈNH SỬA BÀI VIẾT' : 'SOẠN THẢO BÀI VIẾT MỚI'}
         >
           <form onSubmit={handleSave} className="space-y-4">
+            {error && <p role="alert" className="text-red-400">{error}</p>}
             <Input
               label="Tiêu Đề Bài Viết *"
               value={editingPost.title || ''}
@@ -186,7 +200,7 @@ export default function AdminPostsPage() {
                 options={[
                   { value: 'Kinh nghiệm xe', label: 'Kinh nghiệm xe' },
                   { value: 'Dịch vụ', label: 'Dịch vụ' },
-                  { value: 'Bảo dưỡng', label: 'Bảo dưỡng' },
+                  { value: 'Phụ kiện', label: 'Phụ kiện' },
                   { value: 'Tin tức', label: 'Tin tức' },
                 ]}
               />
@@ -227,8 +241,9 @@ export default function AdminPostsPage() {
               />
             </div>
 
+            <label className="flex gap-2 text-white"><input type="checkbox" checked={editingPost.is_published ?? true} onChange={e => setEditingPost({ ...editingPost, is_published: e.target.checked })} />Xuất bản trên website</label>
             <div className="pt-4 border-t border-white/10 flex justify-end">
-              <Button type="submit" variant="primary" size="md">
+              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Bài Viết
               </Button>
             </div>

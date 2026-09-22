@@ -9,10 +9,10 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Tin Tức & Kinh Nghiệm Ô Tô | Tây Đô Auto Car',
   description:
-    'Tổng hợp kinh nghiệm bảo dưỡng xe, tin tức automotive, mẹo lái xe an toàn và hướng dẫn kỹ thuật từ các kỹ sư garage Cần Thơ.',
+    'Tổng hợp kinh nghiệm lắp đặt phụ kiện xe, tin tức automotive, mẹo lái xe an toàn và hướng dẫn kỹ thuật từ các kỹ sư garage Cần Thơ.',
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function NewsPage() {
   const posts = await apiService.getPosts();
@@ -24,7 +24,7 @@ export default async function NewsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
         {/* Header */}
         <div className="max-w-3xl space-y-4">
-          <Badge variant="gold">TIN TỨC & BẢO DƯỠNG</Badge>
+          <Badge variant="gold">TIN TỨC & LẮP ĐẶT PHỤ KIỆN</Badge>
           <h1 className="text-4xl sm:text-6xl font-extrabold text-[var(--text-primary)] uppercase tracking-tight leading-tight">
             GÓC CHUYÊN GIA <br />
             <span className="text-gold-gradient">& KINH NGHIỆM AUTOMOTIVE</span>

@@ -17,12 +17,12 @@ export async function generateMetadata({
   if (!product) return { title: 'Sản phẩm phụ tùng | Tây Đô Auto Car' };
 
   return {
-    title: `${product.name} | Phụ Tùng Tây Đô Auto Car`,
+    title: `${product.name} | Phụ Kiện Tây Đô Auto Car`,
     description: product.summary,
   };
 }
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function ProductDetailPage({
   params,
@@ -45,7 +45,7 @@ export default async function ProductDetailPage({
           className="inline-flex items-center space-x-2 text-xs text-[var(--text-secondary)] hover:text-[var(--accent-gold)] uppercase tracking-wider transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>Quay Lại Cửa Hàng Phụ Tùng</span>
+          <span>Quay Lại Cửa Hàng Phụ Kiện</span>
         </Link>
 
         {/* Product Overview Layout */}

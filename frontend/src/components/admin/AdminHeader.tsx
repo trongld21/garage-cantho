@@ -16,7 +16,7 @@ export function AdminHeader() {
 
       <div className="flex items-center space-x-4">
         <Badge variant="emerald" size="sm">
-          API & DATABASE ONLINE
+          PHỤ KIỆN Ô TÔ
         </Badge>
 
         <div className="flex items-center space-x-2 pl-4 border-l border-white/10 text-xs">

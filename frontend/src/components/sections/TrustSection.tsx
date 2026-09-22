@@ -21,14 +21,14 @@ export function TrustSection() {
     {
       icon: <PackageCheck className="w-8 h-8 text-[#C7A35A]" />,
       count: '100%',
-      label: 'Phụ Tùng Chính Hãng',
+      label: 'Phụ Kiện Chính Hãng',
       desc: 'Nguồn gốc xuất xứ rõ ràng, tem nhãn đầy đủ',
     },
     {
       icon: <ShieldAlert className="w-8 h-8 text-[#E53935]" />,
-      count: '24/7',
-      label: 'Cứu Hộ Khẩn Cấp',
-      desc: 'Đội xe ứng cứu lưu động có mặt trong 15-30 phút',
+      count: 'Tận tâm',
+      label: 'Tư Vấn Phụ Kiện',
+      desc: 'Tư vấn thiết bị theo dòng xe và ngân sách',
     },
     {
       icon: <FileText className="w-8 h-8 text-[#C7A35A]" />,

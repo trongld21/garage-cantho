@@ -27,25 +27,18 @@ export function AdminSidebar() {
       exact: true,
     },
     {
-      name: 'Đặt Lịch Bảo Dưỡng',
+      name: 'Lịch Tư Vấn / Lắp Đặt',
       href: '/admin/bookings',
       icon: <CalendarCheck className="w-4 h-4" />,
       badge: 'Lịch Mới',
     },
     {
-      name: 'Cứu Hộ Khẩn Cấp 24/7',
-      href: '/admin/rescues',
-      icon: <ShieldAlert className="w-4 h-4 text-[#E53935]" />,
-      badge: 'Khẩn Cấp',
-      isDanger: true,
-    },
-    {
-      name: 'Dịch Vụ Garage',
+      name: 'Dịch Vụ Lắp Đặt',
       href: '/admin/services',
       icon: <Wrench className="w-4 h-4" />,
     },
     {
-      name: 'Cửa Hàng Phụ Tùng',
+      name: 'Phụ Kiện Ô Tô',
       href: '/admin/store',
       icon: <ShoppingBag className="w-4 h-4" />,
     },
@@ -93,8 +86,7 @@ export function AdminSidebar() {
                 className={`flex items-center justify-between px-3.5 py-3 text-xs font-bold uppercase tracking-wider rounded-xs transition-colors ${
                   isActive
                     ? 'bg-[#C7A35A] text-[#0A0A0A]'
-                    : item.isDanger
-                    ? 'text-[#E53935] hover:bg-[#E53935]/10'
+
                     : 'text-[#A8A8A8] hover:text-[#F5F5F5] hover:bg-[#202020]'
                 }`}
               >
@@ -104,7 +96,7 @@ export function AdminSidebar() {
                 </div>
                 {item.badge && (
                   <Badge
-                    variant={isActive ? 'dark' : item.isDanger ? 'red' : 'gold'}
+                    variant={isActive ? 'dark' : 'gold'}
                     size="sm"
                   >
                     {item.badge}

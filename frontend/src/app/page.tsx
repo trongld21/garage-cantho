@@ -6,21 +6,20 @@ import { ProductCatalog } from '@/components/home/Catalog';
 import { Gallery } from '@/components/home/Gallery';
 import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
 import { apiService } from '@/services/api';
-import { accessoryServices } from '@/lib/offerings';
 import { business } from '@/lib/business';
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 function Heading({ eyebrow, title, href, label = 'Xem tất cả' }: { eyebrow: string; title: string; href?: string; label?: string }) {
   return <div className="auto-section-heading"><div><p className="auto-eyebrow">{eyebrow}</p><h2>{title}</h2></div>{href && <Link href={href}>{label}<ArrowUpRight size={17} /></Link>}</div>;
 }
 export default async function HomePage() {
-  const services = accessoryServices;
-  const products = (await apiService.getProducts()).filter(product => product.category !== 'Phụ tùng');
+  const services = await apiService.getServices();
+  const products = await apiService.getProducts();
   return <div className="auto-home">
     <HeroSection />
     <div className="auto-benefits"><div className="auto-container">{[{ Icon: Wrench, title: 'Kỹ thuật chuyên nghiệp', text: 'Chăm chút từng hạng mục' }, { Icon: ShieldCheck, title: 'Phụ kiện đa dạng', text: 'Lựa chọn theo nhu cầu' }, { Icon: Headphones, title: 'Tư vấn tận tâm', text: 'Giải pháp phù hợp với xe' }, { Icon: Phone, title: 'Tư vấn phụ kiện', text: business.phone }].map(({ Icon, title, text }) => <div key={title}><Icon size={27} strokeWidth={1.5} /><span><strong>{title}</strong><small>{text}</small></span></div>)}</div></div>
     <section id="thu-vien" className="auto-section auto-container"><Heading eyebrow="GÓC NHÌN TÂY ĐÔ AUTO CAR" title="THƯ VIỆN HÌNH ẢNH" href="/services" label="Khám phá dịch vụ" /><Gallery services={services} /><p className="auto-image-caption">Hình ảnh minh họa các nhóm dịch vụ. Nhấn vào ảnh để tìm hiểu thêm.</p></section>
-    <section id="dich-vu" className="auto-section auto-muted"><div className="auto-container"><Heading eyebrow="PHỤ KIỆN & NÂNG CẤP Ô TÔ" title="MÀN HÌNH · ĐÈN · ÂM THANH" href="/services" /><div className="auto-service-grid">{services.map((s, i) => <Link key={s.id} href={`/services/${s.slug}`} className="auto-service-card"><div className="auto-service-photo"><ImageWithFallback src={s.image} alt={s.name} loading="lazy" fallbackType="service" /></div><span className="auto-service-number">0{i + 1}</span><Wrench size={26} strokeWidth={1.4} /><h3>{s.name}</h3><p>{s.summary}</p><span className="auto-service-more">Tìm hiểu thêm<ArrowRight size={16} /></span></Link>)}</div></div></section>
+    <section id="dich-vu" className="auto-section auto-muted"><div className="auto-container"><Heading eyebrow="PHỤ KIỆN & NÂNG CẤP Ô TÔ" title="MÀN HÌNH · ĐÈN · ÂM THANH" href="/services" /><div className="auto-service-grid">{services.filter(s => s.is_featured).map((s, i) => <Link key={s.id} href={`/services/${s.slug}`} className="auto-service-card"><div className="auto-service-photo"><ImageWithFallback src={s.image} alt={s.name} loading="lazy" fallbackType="service" /></div><span className="auto-service-number">0{i + 1}</span><Wrench size={26} strokeWidth={1.4} /><h3>{s.name}</h3><p>{s.summary}</p><span className="auto-service-more">Tìm hiểu thêm<ArrowRight size={16} /></span></Link>)}</div></div></section>
     <section id="tu-van" className="auto-consult"><div className="auto-container"><div><p className="auto-eyebrow">BẠN CẦN TƯ VẤN CHO CHIẾC XE CỦA MÌNH?</p><h2>ĐÚNG NHU CẦU.<br />ĐÚNG GIẢI PHÁP.</h2><p>Chọn dịch vụ và thời gian phù hợp. Đội ngũ Tây Đô Auto Car sẽ liên hệ xác nhận, tư vấn chi tiết trước khi thực hiện.</p></div><ConsultationForm /></div></section>
     <section className="auto-section auto-container"><Heading eyebrow="TIỆN NGHI HƠN TRÊN MỖI CHUYẾN ĐI" title="PHỤ KIỆN & ĐỒ CHƠI Ô TÔ" href="/store" /><ProductCatalog products={products} collections /></section>
     {Array.from(new Set(products.map(product => product.category))).map(category => <section className="auto-section auto-category-section" key={category}><div className="auto-container"><Heading eyebrow="SẢN PHẨM THEO NHU CẦU" title={category.toLocaleUpperCase('vi')} href={`/store?category=${encodeURIComponent(category)}`} /><ProductCatalog products={products.filter(product => product.category === category).slice(0, 8)} /></div></section>)}

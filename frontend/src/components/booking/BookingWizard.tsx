@@ -6,7 +6,7 @@ import { Button } from '../ui/Button';
 import { Input } from '../ui/Input';
 import { Select } from '../ui/Select';
 import { Badge } from '../ui/Badge';
-import { accessoryServices } from '@/lib/offerings';
+import { useServices } from '@/lib/use-services';
 import { apiService } from '@/services/api';
 import { BookingPayload } from '@/types';
 import {
@@ -26,6 +26,7 @@ export interface BookingWizardProps {
 }
 
 export function BookingWizard({ onSuccessClose }: BookingWizardProps) {
+  const accessoryServices = useServices();
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [bookingResult, setBookingResult] = useState<{
@@ -35,7 +36,7 @@ export function BookingWizard({ onSuccessClose }: BookingWizardProps) {
 
   // Form State
   const [formData, setFormData] = useState<BookingPayload>({
-    service_name: accessoryServices[0].name,
+    service_name: '',
     car_model: '',
     car_year: '2022',
     license_plate: '',
@@ -66,6 +67,9 @@ export function BookingWizard({ onSuccessClose }: BookingWizardProps) {
   const handleNext = () => {
     const errs: Record<string, string> = {};
 
+    if (currentStep === 1 && !servicesList.includes(formData.service_name || '')) {
+      errs.service = 'Vui lòng chọn dịch vụ lắp đặt.';
+    }
     if (currentStep === 2) {
       if (!formData.car_model?.trim()) {
         errs.car_model = 'Vui lòng nhập hãng và dòng xe (Ví dụ: Toyota Fortuner)';
@@ -173,10 +177,12 @@ export function BookingWizard({ onSuccessClose }: BookingWizardProps) {
             className="space-y-4"
           >
             <h3 className="text-lg font-bold text-[var(--text-primary)] uppercase tracking-tight">
-              BƯỚC 1: CHỌN DỊCH VỤ CẦN BẢO DƯỠNG
+              BƯỚC 1: CHỌN DỊCH VỤ CẦN LẮP ĐẶT PHỤ KIỆN
             </h3>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {servicesList.length === 0 && <p>Chưa tải được danh mục. Vui lòng thử lại sau hoặc liên hệ hotline.</p>}
+              {errors.service && <p role="alert" className="text-red-500">{errors.service}</p>}
               {servicesList.map((srv) => {
                 const isSelected = formData.service_name === srv;
                 return (
@@ -260,7 +266,7 @@ export function BookingWizard({ onSuccessClose }: BookingWizardProps) {
             className="space-y-4"
           >
             <h3 className="text-lg font-bold text-[var(--text-primary)] uppercase tracking-tight">
-              BƯỚC 3: CHỌN NGÀY BẢO DƯỠNG
+              BƯỚC 3: CHỌN NGÀY LẮP ĐẶT PHỤ KIỆN
             </h3>
 
             <div className="space-y-2">

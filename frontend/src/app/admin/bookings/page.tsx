@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { apiService } from '@/services/api';
+import { apiService, apiError } from '@/services/api';
 import { BookingItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -10,6 +10,7 @@ import { Modal } from '@/components/ui/Modal';
 import { Search, CalendarCheck, Phone, User, Car, FileText, Check, X, RefreshCw } from 'lucide-react';
 
 export default function AdminBookingsPage() {
+  const [error, setError] = useState('');
   const [bookings, setBookings] = useState<BookingItem[]>([]);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -22,22 +23,26 @@ export default function AdminBookingsPage() {
       const data = await apiService.getBookings();
       setBookings(data);
     } catch (err) {
-      console.error(err);
+      setError(apiError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadBookings();
+    let active = true;
+    apiService.getBookings().then(data => { if (active) setBookings(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const handleUpdateStatus = async (id: number, status: BookingItem['status']) => {
+    try {
     await apiService.updateBookingStatus(id, status);
     loadBookings();
     if (selectedBooking && selectedBooking.id === id) {
       setSelectedBooking({ ...selectedBooking, status });
     }
+    } catch (err) { setError(apiError(err)); }
   };
 
   const filteredBookings = bookings.filter((b) => {
@@ -52,16 +57,16 @@ export default function AdminBookingsPage() {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6">{error && <p role="alert" className="text-red-400">{error}</p>}
       {/* Title & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
           <Badge variant="gold">QUẢN LÝ LỊCH HẸN</Badge>
           <h1 className="text-3xl font-extrabold text-[#F5F5F5] uppercase tracking-tight mt-1">
-            DANH SÁCH ĐẶT LỊCH BẢO DƯỠNG
+            DANH SÁCH ĐẶT LỊCH LẮP ĐẶT PHỤ KIỆN
           </h1>
           <p className="text-xs text-[#A8A8A8]">
-            Duyệt lịch hẹn, theo dõi tiến độ sửa chữa và cập nhật thông tin khách hàng.
+            Duyệt lịch hẹn, theo dõi tiến độ lắp đặt và cập nhật thông tin khách hàng.
           </p>
         </div>
 

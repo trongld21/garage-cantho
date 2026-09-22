@@ -27,6 +27,6 @@ class CarListing extends Model
     ];
 
     protected $casts = [
-        'price' => 'decimal:0',
+        'price' => 'integer',
     ];
 }

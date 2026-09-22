@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { accessoryServices } from '@/lib/offerings';
 import { BookingButton } from '@/components/home/BookingButton';
 import { apiService } from '@/services/api';
 import { SectionHeading } from '@/components/ui/SectionHeading';
@@ -15,7 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const service = accessoryServices.find(item => item.slug === slug) ?? await apiService.getServiceBySlug(slug);
+  const service = await apiService.getServiceBySlug(slug);
   if (!service) return { title: 'Dịch vụ ô tô | Tây Đô Auto Car' };
 
   return {
@@ -24,7 +23,7 @@ export async function generateMetadata({
   };
 }
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function ServiceDetailPage({
   params,
@@ -32,7 +31,7 @@ export default async function ServiceDetailPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const service = accessoryServices.find(item => item.slug === slug) ?? await apiService.getServiceBySlug(slug);
+  const service = await apiService.getServiceBySlug(slug);
 
   if (!service) {
     notFound();

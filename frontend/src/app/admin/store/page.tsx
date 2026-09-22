@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { apiService } from '@/services/api';
+import { apiService, apiError } from '@/services/api';
 import { ProductItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -14,31 +14,37 @@ export default function AdminStorePage() {
   const [products, setProducts] = useState<ProductItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Partial<ProductItem> | null>(null);
 
   const loadProducts = async () => {
+    setError('');
     setIsLoading(true);
     try {
       const data = await apiService.getProducts();
       setProducts(data);
     } catch (err) {
-      console.error(err);
+      setError(apiError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadProducts();
+    let active = true;
+    apiService.getProducts().then(data => { if (active) setProducts(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const handleOpenAddModal = () => {
     setEditingProduct({
       name: '',
       slug: '',
-      category: 'Phụ tùng',
+      category: 'Màn hình',
       brand: 'Chính Hãng',
       price: 1000000,
       sale_price: null,
@@ -59,26 +65,33 @@ export default function AdminStorePage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingProduct) return;
+    if (saving) return;
+    setSaving(true); setError('');
+    try {
     await apiService.saveProduct(editingProduct);
     setIsModalOpen(false);
     loadProducts();
+    } catch (err) { setError(apiError(err)); } finally { setSaving(false); }
   };
 
   const handleDelete = async (id: number) => {
     if (confirm('Bạn có chắc chắn muốn xóa sản phẩm này?')) {
+      try {
       await apiService.deleteProduct(id);
       loadProducts();
+      } catch (err) { setError(apiError(err)); }
     }
   };
 
   return (
     <div className="space-y-6">
+      {error && <p role="alert" className="text-red-400">{error}</p>}
       {/* Title & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
-          <Badge variant="gold">QUẢN LÝ PHỤ TÙNG & ĐỒ CHƠI</Badge>
+          <Badge variant="gold">QUẢN LÝ PHỤ KIỆN & ĐỒ CHƠI</Badge>
           <h1 className="text-3xl font-extrabold text-[#F5F5F5] uppercase tracking-tight mt-1">
-            DANH MỤC CỬA HÀNG PHỤ TÙNG
+            DANH MỤC CỬA HÀNG PHỤ KIỆN
           </h1>
           <p className="text-xs text-[#A8A8A8]">
             Quản lý kho linh kiện, điều chỉnh giá bán và trạng thái tồn kho.
@@ -177,6 +190,7 @@ export default function AdminStorePage() {
           title={editingProduct.id ? 'CHỈNH SỬA SẢN PHẨM' : 'THÊM SẢN PHẨM MỚI'}
         >
           <form onSubmit={handleSave} className="space-y-4">
+            {error && <p role="alert" className="text-red-400">{error}</p>}
             <Input
               label="Tên Sản Phẩm *"
               value={editingProduct.name || ''}
@@ -230,6 +244,8 @@ export default function AdminStorePage() {
               />
             </div>
 
+            <Input label="Danh mục *" required value={editingProduct.category || ''} onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })} />
+            <label className="flex gap-2 text-white"><input type="checkbox" checked={editingProduct.is_featured ?? false} onChange={e => setEditingProduct({ ...editingProduct, is_featured: e.target.checked })} />Sản phẩm nổi bật</label>
             <Input
               label="URL Hình Ảnh *"
               value={editingProduct.image || ''}
@@ -257,7 +273,7 @@ export default function AdminStorePage() {
             </div>
 
             <div className="pt-4 border-t border-white/10 flex justify-end">
-              <Button type="submit" variant="primary" size="md">
+              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Sản Phẩm
               </Button>
             </div>

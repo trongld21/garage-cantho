@@ -27,8 +27,27 @@ class BookingController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'Đặt lịch bảo dưỡng/sửa chữa thành công! Chúng tôi sẽ liên hệ lại xác nhận sớm nhất.',
+            'message' => 'Đặt lịch tư vấn/lắp đặt thành công! Chúng tôi sẽ liên hệ lại xác nhận sớm nhất.',
             'data' => $booking
         ], 201);
+    }
+
+    public function index()
+    {
+        return response()->json(['data' => Booking::latest()->get()->map(function ($booking) {
+            return array_merge($booking->toArray(), ['booking_id' => 'TNB-'.$booking->id]);
+        })]);
+    }
+    public function updateStatus(Request $request, $id)
+    {
+        $data = $request->validate(['status' => 'required|in:pending,confirmed,in_progress,completed,cancelled']);
+        $booking = Booking::findOrFail($id);
+        $booking->update($data);
+        return response()->json(['data' => $booking]);
+    }
+    public function destroy($id)
+    {
+        Booking::findOrFail($id)->delete();
+        return response()->noContent();
     }
 }

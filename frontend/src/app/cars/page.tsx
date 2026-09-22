@@ -3,7 +3,7 @@ import { CarCatalog } from '@/components/home/Catalog';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 export const metadata: Metadata = { title: 'Mua Bán & Cho Thuê Xe Ô Tô | Tây Đô Auto Car' };
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 export default async function CarsPage({ searchParams }: { searchParams: Promise<{ type?: string; brand?: string }> }) {
   const { type, brand } = await searchParams;
   const cars = await apiService.getCars();

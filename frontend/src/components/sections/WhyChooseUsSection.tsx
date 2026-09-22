@@ -19,7 +19,7 @@ export function WhyChooseUsSection() {
     },
     {
       icon: <ShieldCheck className="w-7 h-7 text-[#C7A35A]" />,
-      title: 'Phụ Tùng Chính Hãng 100%',
+      title: 'Phụ Kiện Chính Hãng 100%',
       desc: 'Cam kết phụ tùng nhập khẩu trực tiếp từ các thương hiệu hàng đầu thế giới như Mobil 1, 3M, Bosch, Denso.',
     },
     {
@@ -35,7 +35,7 @@ export function WhyChooseUsSection() {
     {
       icon: <CheckCircle2 className="w-7 h-7 text-[#C7A35A]" />,
       title: 'Bảo Hành Chu Đáo',
-      desc: 'Chế độ bảo hành minh bạch từ 6 tháng đến 3 năm cùng hỗ trợ bảo dưỡng điện tử định kỳ.',
+      desc: 'Chế độ bảo hành minh bạch từ 6 tháng đến 3 năm cùng hỗ trợ lắp đặt phụ kiện điện tử định kỳ.',
     },
   ];
 
@@ -45,7 +45,7 @@ export function WhyChooseUsSection() {
         <SectionHeading
           eyebrow="TẠI SẠO CHỌN TÂY ĐÔ AUTO CAR"
           title="CAM KẾT CHẤT LƯỢNG TIÊU CHUẨN CAO CẤP"
-          subtitle="Chúng tôi không chỉ sửa chữa xe, mà tạo ra sự an tâm và tự tin tối đa cho bạn trên mỗi chặng đường."
+          subtitle="Tư vấn và lắp đặt phụ kiện phù hợp, giúp bạn thêm tiện nghi trên mỗi chặng đường."
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

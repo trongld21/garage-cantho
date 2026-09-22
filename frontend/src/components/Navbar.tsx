@@ -3,9 +3,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Car, ChevronDown, Clock, MapPin, Menu, Phone, Search, X } from 'lucide-react';
-import { accessoryServices } from '@/lib/offerings';
+import { useServices } from '@/lib/use-services';
 import { business } from '@/lib/business';
 
+export default function Navbar() {
+  const accessoryServices = useServices();
 const links = [
   { title: 'Trang chủ', href: '/' },
   { title: 'Dịch vụ nâng cấp', href: '/services', children: accessoryServices.map(service => [service.category, `/services/${service.slug}`]) },
@@ -15,7 +17,7 @@ const links = [
   { title: 'Giới thiệu', href: '/#gioi-thieu' },
   { title: 'Liên hệ', href: '/contact' },
 ];
-export default function Navbar() {
+
   const pathname = usePathname();
   const [mobile, setMobile] = useState(false);
   return <header className="auto-header">

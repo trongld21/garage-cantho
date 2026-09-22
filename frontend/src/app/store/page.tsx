@@ -3,7 +3,7 @@ import { ProductCatalog } from '@/components/home/Catalog';
 import Link from 'next/link';
 import type { Metadata } from 'next';
 export const metadata: Metadata = { title: 'Phụ Kiện & Đồ Chơi Ô Tô | Tây Đô Auto Car' };
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 export default async function StorePage({ searchParams }: { searchParams: Promise<{ category?: string; search?: string }> }) {
   const { category, search } = await searchParams;
   const products = await apiService.getProducts();

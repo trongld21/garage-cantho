@@ -1,8 +1,8 @@
+import { apiService } from '@/services/api';
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { accessoryServices } from '@/lib/offerings';
 import { ArrowRight } from 'lucide-react';
 import type { Metadata } from 'next';
 
@@ -12,10 +12,10 @@ export const metadata: Metadata = {
     'Màn hình Android, đèn ô tô, âm thanh xe hơi, camera và phụ kiện nội ngoại thất tại Cần Thơ.',
 };
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 export default async function ServicesPage() {
-  const services = accessoryServices;
+  const services = await apiService.getServices();
 
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">

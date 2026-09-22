@@ -12,14 +12,14 @@ export function TestimonialsSection() {
       car: 'Chủ xe Porsche Macan GTS',
       rating: 5,
       comment:
-        'Dịch vụ đồng sơn và bảo dưỡng ở đây rất tỉ mỉ. Sơn sấy phòng vi tính lên màu bóng mịn 100% không khác gì sơn zin tại hãng. Kỹ thuật viên giải thích rõ ràng, rất hài lòng!',
+        'Dịch vụ nâng cấp nội thất và lắp đặt phụ kiện ở đây rất tỉ mỉ. Kỹ thuật viên giải thích rõ ràng, rất hài lòng!',
     },
     {
       name: 'Chị Nguyễn Thùy Linh',
       car: 'Chủ xe Mercedes-Benz GLC 300',
       rating: 5,
       comment:
-        'Mình từng bị hỏng bình ắc quy lúc 10h đêm trên cầu Cần Thơ. Đội cứu hộ Tây Đô Auto Car có mặt rất nhanh chỉ trong 20 phút, xử lý kích bình di động cực kỳ chuyên nghiệp và an toàn.',
+        'Mình lắp camera hành trình và cảm biến áp suất lốp tại Tây Đô Auto Car. Đội ngũ tư vấn rõ ràng, lắp đặt gọn gàng và hướng dẫn sử dụng rất dễ hiểu.',
     },
     {
       name: 'Anh Lê Hoàng Nam',

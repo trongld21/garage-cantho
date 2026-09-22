@@ -1,0 +1,62 @@
+[
+  {
+    "name": "Màn hình Android & Android Box",
+    "slug": "man-hinh-android",
+    "category": "Màn hình",
+    "summary": "Tư vấn màn hình Android, Android Box, Apple CarPlay và Android Auto phù hợp với từng dòng xe.",
+    "description": "Nâng cấp màn hình giải trí và kết nối điện thoại cho ô tô. Tây Đô tư vấn theo màn hình nguyên bản, nhu cầu dẫn đường, nghe nhạc và ngân sách của bạn. Khả năng kết nối, camera và điều khiển vô lăng được kiểm tra theo từng thiết bị và dòng xe trước khi lắp đặt.",
+    "image": "https://images.unsplash.com/photo-1506610654-064fbba4780c?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ tư vấn cấu hình",
+    "is_featured": true
+  },
+  {
+    "name": "Đèn ô tô & Nâng cấp ánh sáng",
+    "slug": "den-o-to",
+    "category": "Đèn ô tô",
+    "summary": "Đèn bi LED, bi laser, đèn gầm và các giải pháp nâng cấp ánh sáng cho xe.",
+    "description": "Lựa chọn giải pháp ánh sáng theo cụm đèn nguyên bản và nhu cầu sử dụng. Tư vấn thiết bị, phương án lắp đặt và căn chỉnh chùm sáng phù hợp, kiểm tra hệ thống điện và vận hành sau khi hoàn thiện.",
+    "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ theo dòng xe",
+    "is_featured": true
+  },
+  {
+    "name": "Âm thanh xe hơi",
+    "slug": "am-thanh-xe-hoi",
+    "category": "Âm thanh",
+    "summary": "Nâng cấp loa, loa sub, ampli và DSP theo gu nghe nhạc và không gian xe.",
+    "description": "Tư vấn hệ thống âm thanh từ nâng cấp từng thiết bị đến phối ghép loa, subwoofer, ampli và DSP. Kiểm tra tương thích với đầu phát, bố trí thiết bị và cân chỉnh âm thanh theo không gian nội thất và sở thích nghe nhạc.",
+    "image": "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ tư vấn bộ âm thanh",
+    "is_featured": true
+  },
+  {
+    "name": "Camera & Thiết bị hỗ trợ lái",
+    "slug": "camera-ho-tro-lai",
+    "category": "Camera & an toàn",
+    "summary": "Camera hành trình, camera 360, camera lùi và cảm biến áp suất lốp.",
+    "description": "Tư vấn camera và thiết bị hỗ trợ quan sát theo nhu cầu sử dụng, vị trí lắp đặt và màn hình trên xe. Hướng dẫn xem lại hình ảnh, sử dụng các chức năng và kiểm tra hoạt động thiết bị trước khi bàn giao.",
+    "image": "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ theo thiết bị",
+    "is_featured": true
+  },
+  {
+    "name": "Phụ kiện nội thất ô tô",
+    "slug": "phu-kien-noi-that",
+    "category": "Nội thất",
+    "summary": "Thảm sàn, bọc ghế, bọc vô lăng và phụ kiện tiện ích cho khoang lái.",
+    "description": "Lựa chọn phụ kiện nội thất theo kích thước, chất liệu, màu sắc và nhu cầu sử dụng. Tư vấn thảm sàn, bọc ghế, bọc vô lăng cùng các tiện ích phù hợp với từng dòng xe.",
+    "image": "https://images.unsplash.com/photo-1563720223185-11003d516935?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ theo hạng mục",
+    "is_featured": true
+  },
+  {
+    "name": "Phụ kiện ngoại thất & Đồ chơi ô tô",
+    "slug": "phu-kien-ngoai-that",
+    "category": "Ngoại thất",
+    "summary": "Phim cách nhiệt, phụ kiện trang trí và các tiện ích nâng cấp ngoại thất.",
+    "description": "Tư vấn phim cách nhiệt, phụ kiện trang trí và đồ chơi ô tô theo phong cách và nhu cầu của bạn. Kiểm tra độ phù hợp với xe và thống nhất phương án, chi phí trước khi thi công.",
+    "image": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=85",
+    "price_range": "Liên hệ tư vấn",
+    "is_featured": true
+  }
+]

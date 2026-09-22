@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CarListingController;
 use App\Http\Controllers\Api\PostController;
-use App\Http\Controllers\Api\RescueController;
 
 // Public Endpoints
 Route::get('/services', [ServiceController::class, 'index']);
@@ -23,7 +22,6 @@ Route::get('/cars/{id}', [CarListingController::class, 'show']);
 Route::get('/posts', [PostController::class, 'index']);
 Route::get('/posts/{slug}', [PostController::class, 'show']);
 
-Route::post('/rescue', [RescueController::class, 'store']);
 
 // Admin Management Endpoints
 Route::prefix('admin')->group(function () {
@@ -32,9 +30,6 @@ Route::prefix('admin')->group(function () {
     Route::patch('/bookings/{id}/status', [BookingController::class, 'updateStatus']);
     Route::delete('/bookings/{id}', [BookingController::class, 'destroy']);
 
-    // Rescues Admin
-    Route::get('/rescue', [RescueController::class, 'index']);
-    Route::patch('/rescue/{id}/status', [RescueController::class, 'updateStatus']);
 
     // Services CRUD
     Route::post('/services', [ServiceController::class, 'store']);
@@ -51,6 +46,7 @@ Route::prefix('admin')->group(function () {
     Route::put('/cars/{id}', [CarListingController::class, 'update']);
     Route::delete('/cars/{id}', [CarListingController::class, 'destroy']);
 
+    Route::get('/posts', [PostController::class, 'adminIndex']);
     // Posts CRUD
     Route::post('/posts', [PostController::class, 'store']);
     Route::put('/posts/{id}', [PostController::class, 'update']);

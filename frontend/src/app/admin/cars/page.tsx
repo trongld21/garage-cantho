@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { apiService } from '@/services/api';
+import { apiService, apiError } from '@/services/api';
 import { CarItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -14,24 +14,30 @@ export default function AdminCarsPage() {
   const [cars, setCars] = useState<CarItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
+  const [error, setError] = useState('');
+  const [saving, setSaving] = useState(false);
+
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCar, setEditingCar] = useState<Partial<CarItem> | null>(null);
 
   const loadCars = async () => {
+    setError('');
     setIsLoading(true);
     try {
       const data = await apiService.getCars();
       setCars(data);
     } catch (err) {
-      console.error(err);
+      setError(apiError(err));
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    loadCars();
+    let active = true;
+    apiService.getCars().then(data => { if (active) setCars(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    return () => { active = false; };
   }, []);
 
   const handleOpenAddModal = () => {
@@ -62,20 +68,27 @@ export default function AdminCarsPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingCar) return;
+    if (saving) return;
+    setSaving(true); setError('');
+    try {
     await apiService.saveCar(editingCar);
     setIsModalOpen(false);
     loadCars();
+    } catch (err) { setError(apiError(err)); } finally { setSaving(false); }
   };
 
   const handleDelete = async (id: number) => {
     if (confirm('Bạn có chắc chắn muốn xóa xe này khỏi danh mục?')) {
+      try {
       await apiService.deleteCar(id);
       loadCars();
+      } catch (err) { setError(apiError(err)); }
     }
   };
 
   return (
     <div className="space-y-6">
+      {error && <p role="alert" className="text-red-400">{error}</p>}
       {/* Title & Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/10 pb-6">
         <div>
@@ -184,6 +197,7 @@ export default function AdminCarsPage() {
           title={editingCar.id ? 'CHỈNH SỬA THÔNG TIN XE' : 'THÊM XE MỚI VÀO SHOWROOM'}
         >
           <form onSubmit={handleSave} className="space-y-4">
+            {error && <p role="alert" className="text-red-400">{error}</p>}
             <Input
               label="Tên Xe đầy đủ *"
               value={editingCar.title || ''}
@@ -267,7 +281,7 @@ export default function AdminCarsPage() {
             </div>
 
             <div className="pt-4 border-t border-white/10 flex justify-end">
-              <Button type="submit" variant="primary" size="md">
+              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Thông Tin Xe
               </Button>
             </div>

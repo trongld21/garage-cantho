@@ -39,7 +39,7 @@ APP_KEY được tạo lúc khởi động. Không upload `.env` local.
 - `/admin`: giao diện quản trị demo.
 - `/healthz`: kiểm tra cả Next.js và Laravel.
 - `/api/services`: dữ liệu mẫu lấy từ SQLite.
-- Thử đặt lịch/cứu hộ bằng dữ liệu giả để kiểm tra API.
+- Thử đặt lịch tư vấn/lắp đặt bằng dữ liệu giả để kiểm tra API.
 
 ### Phạm vi demo
 
@@ -49,11 +49,8 @@ APP_KEY được tạo lúc khởi động. Không upload `.env` local.
   mẫu được tạo lại. Không dùng để lưu lịch khách hàng thật.
 - Render Free ngủ sau 15 phút không có truy cập; lần mở tiếp theo có thể cần
   khoảng một phút. Xem https://render.com/docs/free.
-- Chức năng quản trị trong source gốc chưa hoàn chỉnh: nhiều route khai báo
-  nhưng controller chưa có phương thức tương ứng; frontend có fallback dữ
-  liệu trong bộ nhớ khi API lỗi. Các thay đổi quản trị đó chưa lưu bền vững,
-  và nhóm API quản trị chưa có xác thực. Đây là bản demo giao diện và các API
-  hiện có, không phải bản hoàn thiện nghiệp vụ.
+- CRUD dịch vụ, sản phẩm, bài viết và quản lý lịch hẹn lưu trực tiếp vào database.
+  Nhóm API quản trị vẫn chưa có xác thực; bản demo chưa phù hợp để mở quản trị công khai.
 - PHP chạy bằng server tích hợp cho demo ít truy cập; khi triển khai thực tế
   cần chuyển sang PHP-FPM/FrankenPHP và database lưu bền vững.
 

@@ -56,6 +56,7 @@ export interface CarItem {
 }
 
 export interface PostItem {
+  is_published?: boolean;
   id: number;
   title: string;
   slug: string;
