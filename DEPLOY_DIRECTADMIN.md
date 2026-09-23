@@ -43,10 +43,11 @@ Production dùng Next.js export tĩnh trong `public_html` và Laravel/PHP tại 
 7. Mở `https://taydoautocar.vn/deploy-hook.php?check=1`. Kết quả đúng:
 
    ```json
-   {"hook":"https-package-v1","envConfigured":true,"keyConfigured":true,"pharAvailable":true,"zlibAvailable":true,"pdoMysqlAvailable":true,"symlinkAvailable":true}
+   {"hook":"https-package-v1","envConfigured":true,"keyConfigured":true,"pharAvailable":true,"zlibAvailable":true,"pdoMysqlAvailable":true,"symlinkAvailable":true,"apiPath":"missing","storagePath":"missing","currentPath":"missing"}
    ```
 
 Nếu `pharAvailable`, `zlibAvailable`, `pdoMysqlAvailable` hoặc `symlinkAvailable` là `false`, dừng lại và liên hệ hosting bật PHP Phar, zlib, PDO MySQL hoặc symlink; hook sẽ không thể giải nén hoặc kích hoạt Laravel an toàn.
+Ba trường đường dẫn phải là `missing` ở lần deploy đầu hoặc `symlink` ở các lần sau. Nếu là `directory`/`file`, đổi tên đường dẫn tương ứng trong File Manager trước khi chạy workflow.
 
 ## 2. Tạo GitHub environment secrets
 
@@ -101,4 +102,5 @@ Sau khi đăng nhập `/admin/login` và đổi mật khẩu, xóa `ADMIN_INITIA
 - `Cannot create symlink`: hosting chặn symlink; cần nhà cung cấp bật symlink cho cùng user.
 - `Laravel activation failed`: xem `domains/taydoautocar.vn/app/shared/storage/logs/laravel.log` và kiểm tra DB/PHP extensions.
   Response có trường `detail` cho biết chính xác lệnh Laravel hoặc kết nối database bị lỗi. Nếu báo timeout/kết nối MySQL, dùng `DB_HOST=localhost` theo thông tin DirectAdmin và kiểm tra lại tên database/user có đầy đủ prefix tài khoản.
+- `Deployment failed` kèm `Refusing to overwrite .../api` hoặc `.../storage`: đường dẫn đó đang là thư mục thật. Đổi tên thư mục cũ trong File Manager rồi chạy lại; hook chỉ tạo symlink và không tự xóa dữ liệu.
 - Không xóa `public_html/deploy-hook.php`; endpoint sai chữ ký chỉ trả 404 và không cho phép đọc secret.

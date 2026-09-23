@@ -6,7 +6,17 @@ const TAYDO_HOOK_VERSION = 'https-package-v1';
 const TAYDO_CHUNK_LIMIT = 6 * 1024 * 1024;
 const TAYDO_MAX_CHUNKS = 100;
 
-if (!defined('TAYDO_DEPLOY_HOOK_LIBRARY')) deploy_main();
+if (!defined('TAYDO_DEPLOY_HOOK_LIBRARY')) {
+    try {
+        deploy_main();
+    } catch (Throwable $e) {
+        error_log($e->__toString());
+        deploy_response([
+            'error'=>'Deployment failed',
+            'detail'=>safe_error_detail($e),
+        ], 500);
+    }
+}
 
 function deploy_main(): never
 {
@@ -27,6 +37,9 @@ function deploy_main(): never
             'zlibAvailable'=>extension_loaded('zlib'),
             'pdoMysqlAvailable'=>extension_loaded('pdo_mysql'),
             'symlinkAvailable'=>function_exists('symlink'),
+            'apiPath'=>deploy_path_state($publicRoot . '/api'),
+            'storagePath'=>deploy_path_state($publicRoot . '/storage'),
+            'currentPath'=>deploy_path_state($appRoot . '/current'),
         ]);
     }
     if (strlen($key) < 32) deploy_not_found();
@@ -120,10 +133,9 @@ function activate_bundle(string $appRoot, string $publicRoot, string $envFile, s
     try { run_laravel_activation($backend); }
     catch (Throwable $e) {
         error_log($e->__toString());
-        $detail = preg_replace('/\s+/', ' ', $e->getMessage()) ?: 'Unknown activation error';
         deploy_response([
             'error'=>'Laravel activation failed',
-            'detail'=>function_exists('mb_substr') ? mb_substr($detail, 0, 1200) : substr($detail, 0, 1200),
+            'detail'=>safe_error_detail($e),
         ], 500);
     }
     link_or_fail($backend, $appRoot . '/current');
@@ -194,6 +206,8 @@ function safe_relative_path(string $path): bool { return $path!==''&&!str_contai
 function validated_release(string $release): string { if(!preg_match('/^[a-f0-9]{40}$/',$release))deploy_response(['error'=>'Invalid release'],422);return $release; }
 function ensure_directory(string $path): void { if(!is_dir($path)&&!mkdir($path,0755,true)&&!is_dir($path))throw new RuntimeException("Cannot create $path"); }
 function verify_deploy_signature(string $key,string $payload): void { $provided=strtolower((string)($_SERVER['HTTP_X_DEPLOY_SIGNATURE']??''));$expected=hash_hmac('sha256',$payload,$key);if(!preg_match('/^[a-f0-9]{64}$/',$provided)||!hash_equals($expected,$provided))deploy_response(['error'=>'Invalid signature'],401); }
+function deploy_path_state(string $path): string { if(is_link($path))return 'symlink';if(is_dir($path))return 'directory';if(is_file($path))return 'file';return 'missing'; }
+function safe_error_detail(Throwable $error): string { $detail=preg_replace('/\s+/',' ',$error->getMessage())?:'Unknown deployment error';return function_exists('mb_substr')?mb_substr($detail,0,1200):substr($detail,0,1200); }
 function load_deploy_env(string $file): void { if(!is_file($file))return;$values=parse_ini_file($file,false,INI_SCANNER_RAW);if(!is_array($values))return;foreach($values as $name=>$value)if(getenv((string)$name)===false)putenv((string)$name.'='.(string)$value); }
 function deploy_response(array $data,int $status=200): never { http_response_code($status);header('Content-Type: application/json; charset=utf-8');header('Cache-Control: no-store');echo json_encode($data,JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES);exit; }
 function deploy_not_found(): never { deploy_response(['error'=>'Not found'],404); }

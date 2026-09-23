@@ -79,7 +79,7 @@ jobs:
         run: |
           test -n "$DEPLOY_HOOK_URL"
           response="$(curl --fail-with-body --silent --show-error --get --data-urlencode 'check=1' "$DEPLOY_HOOK_URL")"
-          echo "$response" | jq -e '.hook == "https-package-v1" and .envConfigured == true and .keyConfigured == true and .pharAvailable == true and .zlibAvailable == true and .pdoMysqlAvailable == true and .symlinkAvailable == true'
+          echo "$response" | jq -e '.hook == "https-package-v1" and .envConfigured == true and .keyConfigured == true and .pharAvailable == true and .zlibAvailable == true and .pdoMysqlAvailable == true and .symlinkAvailable == true and (.apiPath == "missing" or .apiPath == "symlink") and (.storagePath == "missing" or .storagePath == "symlink") and (.currentPath == "missing" or .currentPath == "symlink")'
 
       - name: Upload signed release chunks
         env:
@@ -108,7 +108,7 @@ jobs:
         run: |
           payload="$(printf 'activate\n%s\n%s\n%s' "$GITHUB_SHA" "$chunk_total" "$archive_digest")"
           signature="$(printf '%s' "$payload" | openssl dgst -sha256 -hmac "$DEPLOY_HOOK_KEY" -hex | sed 's/^.* //')"
-          curl --fail-with-body --silent --show-error --retry 2 \
+          curl --fail-with-body --silent --show-error \
             -H "X-Deploy-Signature: $signature" \
             -F "action=activate" -F "release=$GITHUB_SHA" -F "total=$chunk_total" \
             -F "archive_digest=$archive_digest" "$DEPLOY_HOOK_URL"
