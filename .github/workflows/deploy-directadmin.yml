@@ -50,6 +50,7 @@ jobs:
           DB_CONNECTION: sqlite
           DB_DATABASE: ':memory:'
         run: |
+          cp .env.example .env
           composer install --prefer-dist --no-interaction --no-progress
           php artisan test
           php ../deploy/directadmin/hook-test.php

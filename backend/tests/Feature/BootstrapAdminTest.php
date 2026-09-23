@@ -9,15 +9,15 @@ class BootstrapAdminTest extends TestCase
     use RefreshDatabase;
     protected function setUp(): void {
         parent::setUp();
-        config(['admin.email' => 'admin@taydoautocar.com', 'admin.initial_password' => 'admin123', 'admin.name' => 'Tây Đô']);
+        config(['admin.email' => 'admin@taydoautocar.com', 'admin.initial_password' => 'Bootstrap-Admin123!', 'admin.name' => 'Tây Đô']);
     }
     public function test_bootstrap_creates_a_hashed_admin_that_can_login(): void {
         $this->artisan('admin:bootstrap')->assertSuccessful();
         $user = User::where('email','admin@taydoautocar.com')->firstOrFail();
         $this->assertTrue($user->is_admin);
         $this->assertTrue($user->must_change_password);
-        $this->assertTrue(Hash::check('admin123', $user->password));
-        $this->postJson('/api/auth/login', ['email'=>$user->email,'password'=>'admin123'])->assertOk();
+        $this->assertTrue(Hash::check('Bootstrap-Admin123!', $user->password));
+        $this->postJson('/api/auth/login', ['email'=>$user->email,'password'=>'Bootstrap-Admin123!'])->assertOk();
     }
     public function test_restart_does_not_reset_existing_password(): void {
         $this->artisan('admin:bootstrap')->assertSuccessful();
