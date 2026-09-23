@@ -68,7 +68,8 @@ jobs:
           # Archive named top-level folders only. A root `.` entry can make
           # PharData::extractTo() fail on shared-hosting PHP builds.
           tar -czf .deploy-tmp/release.tar.gz -C .deploy-tmp/package site backend
-          split -b 4M -d -a 4 .deploy-tmp/release.tar.gz .deploy-tmp/chunks/chunk-
+          # Keep each request below the common 2 MiB shared-hosting upload limit.
+          split -b 1M -d -a 4 .deploy-tmp/release.tar.gz .deploy-tmp/chunks/chunk-
           echo "archive_digest=$(sha256sum .deploy-tmp/release.tar.gz | cut -d ' ' -f 1)" >> "$GITHUB_ENV"
           echo "chunk_total=$(find .deploy-tmp/chunks -type f | wc -l | tr -d ' ')" >> "$GITHUB_ENV"
 
@@ -78,7 +79,7 @@ jobs:
         run: |
           test -n "$DEPLOY_HOOK_URL"
           response="$(curl --fail-with-body --silent --show-error --get --data-urlencode 'check=1' "$DEPLOY_HOOK_URL")"
-          echo "$response" | jq -e '.hook == "https-package-v1" and .envConfigured == true and .keyConfigured == true and .pharAvailable == true and .zlibAvailable == true and .symlinkAvailable == true'
+          echo "$response" | jq -e '.hook == "https-package-v1" and .envConfigured == true and .keyConfigured == true and .pharAvailable == true and .zlibAvailable == true and .pdoMysqlAvailable == true and .symlinkAvailable == true'
 
       - name: Upload signed release chunks
         env:

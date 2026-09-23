@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rules\Password;
 
 class BootstrapAdmin extends Command
 {
@@ -38,10 +37,10 @@ class BootstrapAdmin extends Command
         }
 
         $validation = Validator::make(['password' => $password], [
-            'password' => ['required', 'string', 'max:255', Password::min(12)->mixedCase()->numbers()->symbols()],
+            'password' => ['required', 'string', 'max:255'],
         ]);
         if ($validation->fails()) {
-            $this->error('ADMIN_INITIAL_PASSWORD phải có ít nhất 12 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.');
+            $this->error('ADMIN_INITIAL_PASSWORD không được để trống.');
             return self::FAILURE;
         }
 

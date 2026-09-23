@@ -99,7 +99,7 @@ Tài khoản MySQL local không được đưa lên database SQLite của Render
 Sau khi deploy phiên bản có `admin:bootstrap`, mở **Render → garage-cantho-demo → Environment**, thêm:
 
 - `ADMIN_EMAIL`: `admin@taydoautocar.com`
-- `ADMIN_INITIAL_PASSWORD`: mật khẩu ban đầu riêng, tối thiểu 12 ký tự gồm chữ hoa, chữ thường, số và ký tự đặc biệt. Nhập dưới dạng giá trị biến môi trường, không thêm dấu nháy bao ngoài.
+- `ADMIN_INITIAL_PASSWORD`: mật khẩu ban đầu không để trống. Nên dùng mật khẩu mạnh và riêng cho production; nhập dưới dạng giá trị biến môi trường, không thêm dấu nháy bao ngoài.
 - `ADMIN_NAME`: `Quản trị Tây Đô` (tùy chọn).
 
 Lưu và redeploy. Startup tạo admin nếu email chưa tồn tại; log chỉ báo kết quả, không in mật khẩu. Mở `/admin/login`, dùng email và mật khẩu vừa cấu hình, rồi đổi mật khẩu theo yêu cầu.

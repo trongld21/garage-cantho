@@ -25,6 +25,7 @@ function deploy_main(): never
             'keyConfigured'=>strlen($key) >= 32,
             'pharAvailable'=>class_exists(PharData::class),
             'zlibAvailable'=>extension_loaded('zlib'),
+            'pdoMysqlAvailable'=>extension_loaded('pdo_mysql'),
             'symlinkAvailable'=>function_exists('symlink'),
         ]);
     }
@@ -47,7 +48,16 @@ function receive_chunk(string $appRoot, string $key): never
     if (!preg_match('/^[a-f0-9]{64}$/', $digest)) deploy_response(['error'=>'Invalid digest'], 422);
     verify_deploy_signature($key, "chunk\n$release\n$index\n$total\n$digest");
     $upload = $_FILES['file'] ?? null;
-    if (!is_array($upload) || ($upload['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_OK || !is_uploaded_file((string)$upload['tmp_name'])) deploy_response(['error'=>'Invalid upload'], 400);
+    $uploadError = is_array($upload) ? (int)($upload['error'] ?? UPLOAD_ERR_NO_FILE) : UPLOAD_ERR_NO_FILE;
+    if ($uploadError !== UPLOAD_ERR_OK) {
+        deploy_response([
+            'error'=>'Invalid upload',
+            'uploadError'=>$uploadError,
+            'uploadMax'=>(string)ini_get('upload_max_filesize'),
+            'postMax'=>(string)ini_get('post_max_size'),
+        ], in_array($uploadError, [UPLOAD_ERR_INI_SIZE, UPLOAD_ERR_FORM_SIZE], true) ? 413 : 400);
+    }
+    if (!is_uploaded_file((string)($upload['tmp_name'] ?? ''))) deploy_response(['error'=>'Invalid upload source'], 400);
     $size = (int)($upload['size'] ?? 0);
     if ($size < 1 || $size > TAYDO_CHUNK_LIMIT) deploy_response(['error'=>'Invalid chunk size'], 413);
     if (!hash_equals($digest, hash_file('sha256', (string)$upload['tmp_name']))) deploy_response(['error'=>'Chunk digest mismatch'], 422);
@@ -108,7 +118,14 @@ function activate_bundle(string $appRoot, string $publicRoot, string $envFile, s
     rename($stage, $releasePath);
     $backend = $releasePath . '/backend'; $site = $releasePath . '/site';
     try { run_laravel_activation($backend); }
-    catch (Throwable $e) { error_log($e->__toString()); deploy_response(['error'=>'Laravel activation failed'], 500); }
+    catch (Throwable $e) {
+        error_log($e->__toString());
+        $detail = preg_replace('/\s+/', ' ', $e->getMessage()) ?: 'Unknown activation error';
+        deploy_response([
+            'error'=>'Laravel activation failed',
+            'detail'=>function_exists('mb_substr') ? mb_substr($detail, 0, 1200) : substr($detail, 0, 1200),
+        ], 500);
+    }
     link_or_fail($backend, $appRoot . '/current');
     link_or_fail($appRoot . '/current/public', $publicRoot . '/api');
     link_or_fail($appRoot . '/shared/storage/app/public', $publicRoot . '/storage');

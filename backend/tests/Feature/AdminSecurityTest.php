@@ -49,11 +49,11 @@ class AdminSecurityTest extends TestCase {
         $user=$this->admin(['must_change_password'=>true]);
         $this->actingAs($user)->getJson('/api/admin/posts')->assertForbidden()->assertJsonPath('code','password_change_required');
         $this->putJson('/api/auth/password',['current_password'=>'wrong','password'=>'New-Password123!','password_confirmation'=>'New-Password123!'])->assertUnprocessable();
-        $this->putJson('/api/auth/password',['current_password'=>'Initial-Password123!','password'=>'weak','password_confirmation'=>'weak'])->assertUnprocessable();
-        $this->putJson('/api/auth/password',['current_password'=>'Initial-Password123!','password'=>'New-Password123!','password_confirmation'=>'New-Password123!'])->assertOk();
+        $this->putJson('/api/auth/password',['current_password'=>'Initial-Password123!','password'=>'Initial-Password123!','password_confirmation'=>'Initial-Password123!'])->assertUnprocessable();
+        $this->putJson('/api/auth/password',['current_password'=>'Initial-Password123!','password'=>'new123','password_confirmation'=>'new123'])->assertOk();
         $user->refresh();
         $this->assertFalse($user->must_change_password);
-        $this->assertTrue(Hash::check('New-Password123!',$user->password));
+        $this->assertTrue(Hash::check('new123',$user->password));
         $this->getJson('/api/admin/posts')->assertOk();
     }
     public function test_html_is_sanitized_on_write_and_legacy_reads(): void {

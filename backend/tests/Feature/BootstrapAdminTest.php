@@ -36,12 +36,17 @@ class BootstrapAdminTest extends TestCase
         $this->artisan('admin:bootstrap')->assertFailed();
         $this->assertFalse($user->fresh()->is_admin);
     }
-    public function test_missing_or_weak_password_cannot_create_admin(): void {
-        foreach ([null, '', 'short', 'onlylowercase123456'] as $password) {
+    public function test_missing_password_cannot_create_admin(): void {
+        foreach ([null, ''] as $password) {
             config(['admin.initial_password' => $password]);
             $this->artisan('admin:bootstrap')->assertFailed();
         }
         $this->assertDatabaseCount('users',0);
+    }
+    public function test_short_password_is_accepted_when_explicitly_configured(): void {
+        config(['admin.initial_password' => 'admin123']);
+        $this->artisan('admin:bootstrap')->assertSuccessful();
+        $this->assertTrue(Hash::check('admin123', User::firstOrFail()->password));
     }
     public function test_unconfigured_bootstrap_is_optional(): void {
         config(['admin.email'=>null, 'admin.initial_password'=>null]);

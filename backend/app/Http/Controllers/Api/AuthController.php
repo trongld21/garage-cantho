@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 class AuthController extends Controller {
     public function csrf(Request $request) {
@@ -32,7 +31,7 @@ class AuthController extends Controller {
     public function password(Request $request) {
         $data = $request->validate([
             'current_password' => 'required|current_password:web',
-            'password' => ['required', 'string', 'confirmed', 'different:current_password', 'max:255', Password::min(12)->mixedCase()->numbers()->symbols()],
+            'password' => ['required', 'string', 'confirmed', 'different:current_password', 'max:255'],
         ]);
         $user = $request->user();
         $user->password = Hash::make($data['password']);
