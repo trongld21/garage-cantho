@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // DirectAdmin/MariaDB installations may cap indexed keys at 1000 bytes.
+        // 191 UTF-8 MB4 characters use at most 764 bytes and remain portable.
+        Schema::defaultStringLength(191);
+
         \Illuminate\Support\Facades\RateLimiter::for('admin-login', function (\Illuminate\Http\Request $request) {
             $email = $request->input('email');
             $identity = is_string($email) ? strtolower(trim($email)) : 'invalid';
