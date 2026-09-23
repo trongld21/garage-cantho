@@ -16,4 +16,11 @@ class ExampleTest extends TestCase
 
         $response->assertStatus(200);
     }
+
+    public function test_api_health_endpoint_is_available_under_api_prefix(): void
+    {
+        $this->getJson('/api/up')
+            ->assertOk()
+            ->assertJson(['status' => 'ok']);
+    }
 }

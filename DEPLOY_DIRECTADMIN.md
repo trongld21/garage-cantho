@@ -22,7 +22,6 @@ Production dùng Next.js export tĩnh trong `public_html` và Laravel/PHP tại 
    APP_KEY=<APP_KEY vừa tạo>
    APP_DEBUG=false
    APP_URL=https://taydoautocar.vn
-   API_PREFIX=
    DEPLOY_HOOK_KEY=<DEPLOY_HOOK_KEY vừa tạo>
 
    DB_CONNECTION=mysql

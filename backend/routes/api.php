@@ -7,6 +7,8 @@ use App\Http\Controllers\Api\BookingController;
 use App\Http\Controllers\Api\CarListingController;
 use App\Http\Controllers\Api\PostController;
 
+Route::get('/up', fn () => response()->json(['status' => 'ok']));
+
 // Public Endpoints
 Route::get('/services', [ServiceController::class, 'index']);
 Route::get('/services/{slug}', [ServiceController::class, 'show']);

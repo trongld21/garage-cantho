@@ -28,8 +28,8 @@ nano /home/USER/domains/DOMAIN/app/shared/.env
 ```
 
 Điền `.env` trên server; không commit hoặc upload file này vào GitHub. Tạo `APP_KEY` bằng
-`php artisan key:generate --show`, rồi chép kết quả vào `APP_KEY`. Với cách mount Laravel tại
-`/api`, giữ `API_PREFIX=` rỗng đúng như file mẫu.
+`php artisan key:generate --show`, rồi chép kết quả vào `APP_KEY`. Laravel luôn đăng ký API
+dưới prefix `/api`, phù hợp cả proxy Next.js và symlink `public_html/api` trên DirectAdmin.
 
 ### 3. GitHub Actions secrets
 
