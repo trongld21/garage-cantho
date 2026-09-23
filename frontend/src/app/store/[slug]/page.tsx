@@ -1,40 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { apiService } from '@/services/api';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Phone, ArrowLeft, Check, Package, Car } from 'lucide-react';
-import type { Metadata } from 'next';
+import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const product = await apiService.getProductBySlug(slug);
-  if (!product) return { title: 'Sản phẩm phụ tùng | Tây Đô Auto Car' };
-
-  return {
-    title: `${product.name} | Phụ Kiện Tây Đô Auto Car`,
-    description: product.summary,
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function ProductDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const product = await apiService.getProductBySlug(slug);
-
-  if (!product) {
-    notFound();
-  }
+export default function ProductDetailPage() {
+  const { data: product, loading, error } = useSlugData('store', slug => apiService.getProductBySlug(slug));
+  if (loading || error || !product) return <PageStatus loading={loading} error={error} missing={!loading && !error && !product} />;
 
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">

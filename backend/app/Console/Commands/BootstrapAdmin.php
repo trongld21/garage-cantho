@@ -40,10 +40,6 @@ class BootstrapAdmin extends Command
         $validation = Validator::make(['password' => $password], [
             'password' => ['required', 'string', 'max:255', Password::min(12)->mixedCase()->numbers()->symbols()],
         ]);
-        if ($validation->fails()) {
-            $this->error('ADMIN_INITIAL_PASSWORD cần ít nhất 12 ký tự, gồm chữ hoa, chữ thường, số và ký tự đặc biệt.');
-            return self::FAILURE;
-        }
 
         $user = new User([
             'name' => config('admin.name') ?: 'Quản trị Tây Đô',

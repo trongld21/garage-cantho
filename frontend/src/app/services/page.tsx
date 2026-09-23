@@ -1,21 +1,15 @@
+'use client';
+
 import { apiService } from '@/services/api';
 import React from 'react';
-import Link from 'next/link';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { ArrowRight } from 'lucide-react';
-import type { Metadata } from 'next';
+import { PageStatus, useApiData } from '@/lib/use-static-data';
 
-export const metadata: Metadata = {
-  title: 'Phụ Kiện & Nâng Cấp Ô Tô | Tây Đô Auto Car Cần Thơ',
-  description:
-    'Màn hình Android, đèn ô tô, âm thanh xe hơi, camera và phụ kiện nội ngoại thất tại Cần Thơ.',
-};
-
-export const dynamic = 'force-dynamic';
-
-export default async function ServicesPage() {
-  const services = await apiService.getServices();
+export default function ServicesPage() {
+  const { data: services, loading, error } = useApiData(() => apiService.getServices(), []);
+  if (loading || error) return <PageStatus loading={loading} error={error} />;
 
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">
@@ -70,11 +64,11 @@ export default async function ServicesPage() {
                   <span className="text-sm font-bold text-[var(--accent-gold)]">{service.price_range}</span>
                 </div>
 
-                <Link href={`/services/${service.slug}`}>
+                <a href={`/services/${service.slug}/`}>
                   <Button variant="secondary" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
                     Chi Tiết
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           ))}

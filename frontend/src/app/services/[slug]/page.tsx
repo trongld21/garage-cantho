@@ -1,41 +1,17 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { BookingButton } from '@/components/home/BookingButton';
 import { apiService } from '@/services/api';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import { Check, HelpCircle, ArrowLeft } from 'lucide-react';
-import type { Metadata } from 'next';
+import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const service = await apiService.getServiceBySlug(slug);
-  if (!service) return { title: 'Dịch vụ ô tô | Tây Đô Auto Car' };
-
-  return {
-    title: `${service.name} | Tây Đô Auto Car Cần Thơ`,
-    description: service.summary,
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function ServiceDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const service = await apiService.getServiceBySlug(slug);
-
-  if (!service) {
-    notFound();
-  }
+export default function ServiceDetailPage() {
+  const { data: service, loading, error } = useSlugData('services', slug => apiService.getServiceBySlug(slug));
+  if (loading || error || !service) return <PageStatus loading={loading} error={error} missing={!loading && !error && !service} />;
 
   return (
     <div className="bg-[var(--bg-deep)] pb-24">

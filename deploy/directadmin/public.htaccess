@@ -1,0 +1,29 @@
+Options -Indexes
+DirectoryIndex index.html
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Laravel is mounted as a symlink at /api and owns its own .htaccess.
+    RewriteRule ^api(?:/|$) - [L]
+
+    # Dynamic Next.js pages use one exported shell and fetch current API data.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(services|store|cars|news)/[^/]+/?$ $1/_/index.html [L]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^ 404.html [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-Frame-Options "DENY"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+    Header always set Content-Security-Policy "object-src 'none'; base-uri 'self'; frame-ancestors 'none'"
+    SetEnvIf Request_URI "^/admin(?:/|$)" IS_ADMIN_ROUTE
+    Header always set Cache-Control "no-store, private" env=IS_ADMIN_ROUTE
+</IfModule>
+

@@ -1,23 +1,16 @@
+'use client';
+
 import React from 'react';
-import Link from 'next/link';
 import { apiService } from '@/services/api';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { ArrowRight, Calendar, User, Clock } from 'lucide-react';
-import type { Metadata } from 'next';
+import { ArrowRight } from 'lucide-react';
+import { PageStatus, useApiData } from '@/lib/use-static-data';
 
-export const metadata: Metadata = {
-  title: 'Tin Tức & Kinh Nghiệm Ô Tô | Tây Đô Auto Car',
-  description:
-    'Tổng hợp kinh nghiệm lắp đặt phụ kiện xe, tin tức automotive, mẹo lái xe an toàn và hướng dẫn kỹ thuật từ các kỹ sư garage Cần Thơ.',
-};
-
-export const dynamic = 'force-dynamic';
-
-export default async function NewsPage() {
-  const posts = await apiService.getPosts();
+export default function NewsPage() {
+  const { data: posts, loading, error } = useApiData(() => apiService.getPosts(), []);
+  if (loading || error) return <PageStatus loading={loading} error={error} />;
   const featured = posts[0];
-  const remaining = posts.slice(1);
 
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">
@@ -54,11 +47,11 @@ export default async function NewsPage() {
               </p>
               <div className="pt-4 flex items-center justify-between border-t border-[var(--border-subtle)] text-xs text-[var(--text-muted)]">
                 <span>{new Date(featured.published_at).toLocaleDateString('vi-VN')}</span>
-                <Link href={`/news/${featured.slug}`}>
+                <a href={`/news/${featured.slug}/`}>
                   <Button variant="primary" size="sm" rightIcon={<ArrowRight className="w-3.5 h-3.5" />}>
                     Đọc Bài Viết
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -90,11 +83,11 @@ export default async function NewsPage() {
 
               <div className="pt-4 mt-4 border-t border-[var(--border-subtle)] flex items-center justify-between text-xs text-[var(--text-muted)]">
                 <span>{new Date(post.published_at).toLocaleDateString('vi-VN')}</span>
-                <Link href={`/news/${post.slug}`}>
+                <a href={`/news/${post.slug}/`}>
                   <Button variant="secondary" size="sm">
                     Chi Tiết
                   </Button>
-                </Link>
+                </a>
               </div>
             </div>
           ))}

@@ -1,47 +1,17 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { apiService } from '@/services/api';
 import { Badge } from '@/components/ui/Badge';
 import { ArticleShare } from '@/components/ArticleShare';
-import { siteUrl } from '@/lib/site-url';
 import { ArrowLeft, User, Calendar, Clock, Tag } from 'lucide-react';
-import type { Metadata } from 'next';
+import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await apiService.getPostBySlug(slug);
-  if (!post) return { title: 'Tin tức ô tô | Tây Đô Auto Car' };
-
-  const url = await siteUrl(`/news/${encodeURIComponent(post.slug)}`);
-  return {
-    alternates: { canonical: url },
-    openGraph: { type: 'article', url, title: post.title, description: post.summary, images: post.image ? [{ url: post.image, alt: post.title }] : [], publishedTime: post.published_at, authors: post.author ? [post.author] : [] },
-    twitter: { card: 'summary_large_image', title: post.title, description: post.summary, images: post.image ? [post.image] : [] },
-    title: `${post.title} | Tây Đô Auto Car`,
-    description: post.summary,
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function NewsDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = await apiService.getPostBySlug(slug);
-
-  if (!post) {
-    notFound();
-  }
-
-  const url = await siteUrl(`/news/${encodeURIComponent(post.slug)}`);
+export default function NewsDetailPage() {
+  const { data: post, loading, error } = useSlugData('news', slug => apiService.getPostBySlug(slug));
+  if (loading || error || !post) return <PageStatus loading={loading} error={error} missing={!loading && !error && !post} />;
+  const url = typeof window === 'undefined' ? '' : window.location.href;
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">
       <article className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">

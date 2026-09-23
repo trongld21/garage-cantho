@@ -1,5 +1,64 @@
 # garage-cantho
 
+> DirectAdmin production không có SSH được triển khai qua signed HTTPS package hook. Xem [DEPLOY_DIRECTADMIN.md](DEPLOY_DIRECTADMIN.md). Phần hướng dẫn SSH cũ bên dưới chỉ giữ lại để tham khảo cho hosting khác có shell access.
+
+## Production trên DirectAdmin
+
+Production dùng kiến trúc phù hợp shared hosting: Next.js được GitHub Actions xuất thành
+HTML/CSS/JS tĩnh trong `public_html`, còn Laravel chạy bằng PHP/MySQL tại `/api`.
+Không cần Docker, Node.js hay PM2 trên server. Dữ liệu trang được tải từ API ở trình duyệt,
+vì vậy nội dung tạo trong trang quản trị hiển thị ngay mà không cần build lại frontend.
+Chế độ này được bật bằng `NEXT_OUTPUT=export`; build Docker/Render hiện có vẫn dùng
+`standalone` mặc định.
+
+### 1. Yêu cầu hosting
+
+- PHP 8.2 trở lên (khuyến nghị 8.3), các extension `mbstring`, `pdo_mysql`, `dom`, `xml`, `curl`.
+- MySQL/MariaDB và SSH. Tài khoản SSH cần quyền ghi vào thư mục domain.
+- Apache bật `mod_rewrite`, `mod_headers` và cho phép `.htaccess`.
+- Document root mặc định dạng `/home/USER/domains/DOMAIN/public_html`.
+
+### 2. Tạo môi trường production một lần
+
+Tạo database/user trong DirectAdmin. Lần chạy workflow đầu tiên sẽ tạo
+`app/shared/.env` từ mẫu rồi chủ động dừng. Điền file này qua SSH hoặc File Manager:
+
+```bash
+nano /home/USER/domains/DOMAIN/app/shared/.env
+```
+
+Điền `.env` trên server; không commit hoặc upload file này vào GitHub. Tạo `APP_KEY` bằng
+`php artisan key:generate --show`, rồi chép kết quả vào `APP_KEY`. Với cách mount Laravel tại
+`/api`, giữ `API_PREFIX=` rỗng đúng như file mẫu.
+
+### 3. GitHub Actions secrets
+
+Trong repository, mở **Settings → Environments → New environment**, tạo `production`, rồi
+thêm các environment secrets:
+
+| Secret | Giá trị |
+| --- | --- |
+| `DA_HOST` | Hostname/IP SSH của hosting |
+| `DA_PORT` | Cổng SSH, thường là `22` |
+| `DA_USER` | Tài khoản DirectAdmin/SSH |
+| `DA_SSH_PRIVATE_KEY` | Private key dành riêng cho deploy |
+| `DA_KNOWN_HOSTS` | Dòng host key lấy bằng `ssh-keyscan -p PORT HOST` |
+| `DA_APP_PATH` | `/home/USER/domains/DOMAIN/app` |
+| `DA_PUBLIC_PATH` | `/home/USER/domains/DOMAIN/public_html` |
+| `HEALTHCHECK_URL` | URL gốc, ví dụ `https://taydoautocar.vn` |
+
+Không lưu database password, `APP_KEY` hoặc mật khẩu admin trong GitHub: các giá trị runtime
+này chỉ nằm trong `app/shared/.env` trên server. Workflow
+`.github/workflows/deploy-directadmin.yml` tự chạy khi push lên `main`, hoặc có thể chạy tay
+bằng **Actions → Deploy to DirectAdmin → Run workflow**.
+
+Mỗi deploy tạo release riêng, migrate database trước khi đổi symlink, và giữ ba release gần
+nhất. Lần đầu, workflow tạo symlink `public_html/api` và `public_html/storage`; nếu hai đường
+dẫn này đã là thư mục thật, deploy sẽ dừng để tránh ghi đè dữ liệu.
+
+Sau khi đăng nhập admin lần đầu và đổi mật khẩu, xóa `ADMIN_INITIAL_PASSWORD` khỏi `.env`,
+rồi chạy `php artisan config:cache` trong release hiện tại.
+
 ## Demo toàn bộ trên Render Free
 
 Một Docker Web Service chạy Next.js và Laravel cùng nhau. Next.js nhận cổng

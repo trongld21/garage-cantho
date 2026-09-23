@@ -1,40 +1,16 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
 import { apiService } from '@/services/api';
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
-import { Phone, ArrowLeft, ShieldCheck, Check, Calendar, Car as CarIcon, MapPin, Gauge } from 'lucide-react';
-import type { Metadata } from 'next';
+import { Phone, ArrowLeft, ShieldCheck, Check } from 'lucide-react';
+import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const car = await apiService.getCarBySlug(slug);
-  if (!car) return { title: 'Thông tin xe | Tây Đô Auto Car' };
-
-  return {
-    title: `${car.title} | Tây Đô Auto Car Showroom`,
-    description: car.summary,
-  };
-}
-
-export const dynamic = 'force-dynamic';
-
-export default async function CarDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const car = await apiService.getCarBySlug(slug);
-
-  if (!car) {
-    notFound();
-  }
+export default function CarDetailPage() {
+  const { data: car, loading, error } = useSlugData('cars', slug => apiService.getCarBySlug(slug));
+  if (loading || error || !car) return <PageStatus loading={loading} error={error} missing={!loading && !error && !car} />;
 
   return (
     <div className="bg-[var(--bg-deep)] py-16 md:py-24">
