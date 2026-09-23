@@ -28,8 +28,9 @@ nano /home/USER/domains/DOMAIN/app/shared/.env
 ```
 
 Điền `.env` trên server; không commit hoặc upload file này vào GitHub. Tạo `APP_KEY` bằng
-`php artisan key:generate --show`, rồi chép kết quả vào `APP_KEY`. Laravel luôn đăng ký API
-dưới prefix `/api`, phù hợp cả proxy Next.js và symlink `public_html/api` trên DirectAdmin.
+`php artisan key:generate --show`, rồi chép kết quả vào `APP_KEY`. URL bên ngoài luôn dùng
+prefix `/api`; Laravel tự nhận biết DirectAdmin đang mount `public` bằng symlink `/api` để
+không lặp prefix, còn local/Docker vẫn đăng ký prefix `api` bình thường.
 
 ### 3. GitHub Actions secrets
 

@@ -1,6 +1,7 @@
 # Deploy Tây Đô Auto Car lên DirectAdmin không có SSH
 
 Production dùng Next.js export tĩnh trong `public_html` và Laravel/PHP tại `/api`. Server không cần Node.js, Composer, Docker, SSH hay PM2.
+Apache loại phần mount `/api` trước khi chuyển request vào Laravel; backend tự nhận biết trường hợp này. Không thêm `API_PREFIX` vào `.env`.
 
 ## 1. Chuẩn bị DirectAdmin một lần
 
