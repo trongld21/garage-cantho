@@ -44,6 +44,8 @@ class ServiceController extends Controller
             'summary' => 'nullable|string',
             'description' => 'nullable|string',
             'image' => 'nullable|url|max:255',
+            'gallery' => 'nullable|array|max:30',
+            'gallery.*' => 'required|url|max:255',
             'price_range' => 'required|string|max:255',
             'is_featured' => 'boolean',
             'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', \Illuminate\Validation\Rule::unique('services', 'slug')->ignore($id)],
@@ -54,6 +56,27 @@ class ServiceController extends Controller
     {
         $data = $this->validatedData($request);
         return response()->json(['data' => Service::create($data)], 201);
+    }
+
+    public function uploadImages(Request $request)
+    {
+        $request->validate([
+            'images' => 'required|array|min:1|max:10',
+            'images.*' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+        ]);
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        $paths = [];
+        try {
+            foreach ($request->file('images') as $image) {
+                $path = $disk->putFile('services', $image);
+                if (!$path) throw new \RuntimeException('Không thể lưu ảnh.');
+                $paths[] = $path;
+            }
+            return response()->json(['data' => array_map(fn ($path) => url($disk->url($path)), $paths)], 201);
+        } catch (\Throwable $error) {
+            $disk->delete($paths);
+            throw $error;
+        }
     }
 
     public function update(Request $request, $id)

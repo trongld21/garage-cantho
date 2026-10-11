@@ -17,10 +17,12 @@ class Service extends Model
         'description',
         'price_range',
         'image',
+        'gallery',
         'is_featured',
     ];
 
     protected $casts = [
+        'gallery' => 'array',
         'is_featured' => 'boolean',
     ];
 

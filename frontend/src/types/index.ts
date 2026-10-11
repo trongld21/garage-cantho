@@ -1,4 +1,5 @@
 export interface ServiceItem {
+  gallery?: string[] | null;
   id: number;
   name: string;
   slug: string;

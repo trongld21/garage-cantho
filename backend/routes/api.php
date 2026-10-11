@@ -35,6 +35,7 @@ Route::prefix('admin')->middleware(['web', \App\Http\Middleware\RequireAdmin::cl
 
 
     // Services CRUD
+    Route::post('/services/images', [ServiceController::class, 'uploadImages']);
     Route::post('/services', [ServiceController::class, 'store']);
     Route::put('/services/{id}', [ServiceController::class, 'update']);
     Route::delete('/services/{id}', [ServiceController::class, 'destroy']);

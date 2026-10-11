@@ -93,6 +93,11 @@ export default function ServiceDetailPage() {
           </div>
         </div>
 
+        {!!service.gallery?.length && <section className="space-y-6">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)]">HÌNH ẢNH DỊCH VỤ</h2>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">{service.gallery.map((image, index) => <a key={image} href={image} target="_blank" rel="noreferrer"><img src={image} alt={`${service.name} - ảnh ${index + 1}`} loading="lazy" className="w-full h-48 sm:h-64 object-cover rounded-xs" /></a>)}</div>
+        </section>}
+
         {/* Workflow Process Steps */}
         {service.process_steps && service.process_steps.length > 0 && (
           <div className="space-y-12">

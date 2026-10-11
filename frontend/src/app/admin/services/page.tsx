@@ -8,7 +8,8 @@ import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { Select } from '@/components/ui/Select';
 import { Modal } from '@/components/ui/Modal';
-import { Plus, Edit2, Trash2, Wrench, RefreshCw } from 'lucide-react';
+import { ServiceImages } from '@/components/admin/ServiceImages';
+import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
 
 export default function AdminServicesPage() {
   const [services, setServices] = useState<ServiceItem[]>([]);
@@ -16,6 +17,7 @@ export default function AdminServicesPage() {
 
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +50,8 @@ export default function AdminServicesPage() {
       summary: '',
       description: '',
       price_range: 'Báo giá',
-      image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738',
+      image: '',
+      gallery: [],
       is_featured: true,
     });
     setIsModalOpen(true);
@@ -62,7 +65,7 @@ export default function AdminServicesPage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingService) return;
-    if (saving) return;
+    if (saving || uploading) return;
     setSaving(true); setError('');
     try {
     await apiService.saveService(editingService);
@@ -176,7 +179,7 @@ export default function AdminServicesPage() {
       {editingService && (
         <Modal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => { if (!saving && !uploading) setIsModalOpen(false); }}
           title={editingService.id ? 'CHỈNH SỬA DỊCH VỤ' : 'THÊM DỊCH VỤ MỚI'}
         >
           <form onSubmit={handleSave} className="space-y-4">
@@ -211,10 +214,12 @@ export default function AdminServicesPage() {
             />
 
             <Input
-              label="URL Hình Ảnh *"
+              label="URL ảnh đại diện (nếu dùng ảnh có sẵn)"
               value={editingService.image || ''}
               onChange={(e) => setEditingService({ ...editingService, image: e.target.value })}
             />
+
+            <ServiceImages image={editingService.image} gallery={editingService.gallery} disabled={saving} onBusy={setUploading} onChange={(image, gallery) => setEditingService(current => current ? { ...current, image, gallery } : current)} />
 
             <div className="space-y-1">
               <label className="block text-xs font-semibold text-[#A8A8A8] uppercase">Tóm Tắt Ngắn</label>
@@ -249,7 +254,7 @@ export default function AdminServicesPage() {
                 <span>Hiển thị nổi bật trang chủ</span>
               </label>
 
-              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
+              <Button disabled={saving || uploading} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Dịch Vụ
               </Button>
             </div>

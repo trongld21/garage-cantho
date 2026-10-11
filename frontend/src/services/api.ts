@@ -31,6 +31,11 @@ export function apiError(error: unknown): string {
   return 'Không thể hoàn tất thao tác. Vui lòng thử lại.';
 }
 export const apiService = {
+  async uploadServiceImages(files: File[]): Promise<string[]> {
+    const data = new FormData();
+    files.forEach(file => data.append('images[]', file));
+    return (await client.post('/admin/services/images', data, { timeout: 120000 })).data.data;
+  },
   async getEditorConfig(): Promise<{ license_key: string }> { return (await client.get('/admin/editor-config')).data.data; },
   async getServices(category?: string, featured?: boolean): Promise<ServiceItem[]> { return (await client.get('/services', { params: { category, featured } })).data.data; },
   async getServiceBySlug(slug: string): Promise<ServiceItem | null> { try { return (await client.get(`/services/${encodeURIComponent(slug)}`)).data.data; } catch (error) { if (axios.isAxiosError(error) && error.response?.status === 404) return null; throw error; } },
