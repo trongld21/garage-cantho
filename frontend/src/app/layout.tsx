@@ -1,9 +1,18 @@
 import type { Metadata } from 'next';
+import localFont from 'next/font/local';
 import './globals.css';
+import './premium.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { SiteTheme } from '@/components/layout/SiteTheme';
 import FloatingActions from '@/components/layout/FloatingActions';
+
+const bodyFont = localFont({
+  src: [{ path: './fonts/be-vietnam-pro-400.ttf', weight: '400' }, { path: './fonts/be-vietnam-pro-600.ttf', weight: '600' }],
+  variable: '--font-automotive-body',
+  display: 'swap',
+});
+const displayFont = localFont({ src: './fonts/barlow-condensed-800.ttf', weight: '800', variable: '--font-automotive-display', display: 'swap' });
 
 export const metadata: Metadata = {
   title: 'Tây Đô Auto Car Cần Thơ | Phụ Kiện & Đồ Chơi Ô Tô',
@@ -34,7 +43,6 @@ export default function RootLayout({
     '@context': 'https://schema.org',
     '@type': 'AutomotiveBusiness',
     name: 'Tây Đô Auto Car Cần Thơ',
-    image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738',
     telephone: ['0979707033', '0923112399'],
     priceRange: '$$$',
     address: {
@@ -61,7 +69,7 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="vi" className="dark scroll-smooth">
+    <html lang="vi" className={`dark scroll-smooth ${bodyFont.variable} ${displayFont.variable}`}>
       <head>
         <script
           type="application/ld+json"

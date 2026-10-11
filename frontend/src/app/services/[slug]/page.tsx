@@ -7,6 +7,8 @@ import { apiService } from '@/services/api';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Badge } from '@/components/ui/Badge';
 import { Check, HelpCircle, ArrowLeft } from 'lucide-react';
+import { ImageWithFallback } from '@/components/ui/ImageWithFallback';
+import { isIllustration } from '@/lib/media';
 import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
 export default function ServiceDetailPage() {
@@ -14,11 +16,11 @@ export default function ServiceDetailPage() {
   if (loading || error || !service) return <PageStatus loading={loading} error={error} missing={!loading && !error && !service} />;
 
   return (
-    <div className="bg-[var(--bg-deep)] pb-24">
+    <div className="auto-detail bg-[var(--bg-deep)] pb-24">
       {/* Service Detail Hero */}
       <section className="relative py-20 md:py-28 bg-[var(--bg-graphite)] border-b border-[var(--border-subtle)] overflow-hidden">
         <div className="absolute inset-0 z-0 opacity-20">
-          <img
+          <ImageWithFallback fallbackType="service"
             src={service.image}
             alt={service.name}
             className="w-full h-full object-cover filter blur-sm"
@@ -42,6 +44,7 @@ export default function ServiceDetailPage() {
             <p className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-relaxed">
               {service.summary}
             </p>
+            {isIllustration(service.image) && <p className="auto-image-caption">Ảnh minh họa dịch vụ, không phải công trình thực tế.</p>}
           </div>
 
           <div className="pt-4 flex flex-col sm:flex-row items-start sm:items-center space-y-4 sm:space-y-0 sm:space-x-6">
@@ -85,7 +88,7 @@ export default function ServiceDetailPage() {
           </div>
 
           <div className="lg:col-span-5 img-zoom-wrapper rounded-xs border border-[var(--border-subtle)] overflow-hidden h-80 sm:h-[400px]">
-            <img
+            <ImageWithFallback fallbackType="service"
               src={service.image}
               alt={service.name}
               className="w-full h-full object-cover"
@@ -95,7 +98,7 @@ export default function ServiceDetailPage() {
 
         {!!service.gallery?.length && <section className="space-y-6">
           <h2 className="text-2xl font-bold text-[var(--text-primary)]">HÌNH ẢNH DỊCH VỤ</h2>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">{service.gallery.map((image, index) => <a key={image} href={image} target="_blank" rel="noreferrer"><img src={image} alt={`${service.name} - ảnh ${index + 1}`} loading="lazy" className="w-full h-48 sm:h-64 object-cover rounded-xs" /></a>)}</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">{service.gallery.map((image, index) => <a key={image} href={image} target="_blank" rel="noreferrer"><ImageWithFallback fallbackType="service" src={image} alt={`${service.name} - ảnh ${index + 1}`} loading="lazy" className="w-full h-48 sm:h-64 object-cover rounded-xs" /></a>)}</div>
         </section>}
 
         {/* Workflow Process Steps */}
@@ -103,8 +106,7 @@ export default function ServiceDetailPage() {
           <div className="space-y-12">
             <SectionHeading
               eyebrow="QUY TRÌNH THỰC HIỆN"
-              title="5 BƯỚC THỰC HIỆN THEO TIÊU CHUẨN XƯỞNG DỊCH VỤ"
-              subtitle="Mỗi bước đều có biên bản kiểm tra và sự giám sát trực tiếp của Kỹ sư trưởng."
+              title={`${service.process_steps.length} BƯỚC THỰC HIỆN`}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">

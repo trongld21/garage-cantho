@@ -3,9 +3,9 @@
 import React from 'react';
 import Link from 'next/link';
 import { apiService } from '@/services/api';
-import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { Phone, ArrowLeft, Check, Package, Car } from 'lucide-react';
+import { ProductMedia } from '@/components/store/ProductMedia';
 import { PageStatus, useSlugData } from '@/lib/use-static-data';
 
 export default function ProductDetailPage() {
@@ -13,12 +13,12 @@ export default function ProductDetailPage() {
   if (loading || error || !product) return <PageStatus loading={loading} error={error} missing={!loading && !error && !product} />;
 
   return (
-    <div className="bg-[var(--bg-deep)] py-16 md:py-24">
+    <div className="auto-detail bg-[var(--bg-deep)] py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
         {/* Back Link */}
         <Link
           href="/store"
-          className="inline-flex items-center space-x-2 text-xs text-[var(--text-secondary)] hover:text-[var(--accent-gold)] uppercase tracking-wider transition-colors"
+          className="inline-flex flex-wrap items-center gap-2 text-xs text-[var(--text-secondary)] hover:text-[var(--accent-gold)] uppercase tracking-wider transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Quay Lại Cửa Hàng Phụ Kiện</span>
@@ -28,22 +28,16 @@ export default function ProductDetailPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
           {/* Left: Product Image */}
           <div className="lg:col-span-6 space-y-4">
-            <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs overflow-hidden h-96 sm:h-[450px]">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <ProductMedia key={product.id} name={product.name} image={product.image} gallery={product.gallery}/>
           </div>
 
           {/* Right: Product Details & CTAs */}
           <div className="lg:col-span-6 space-y-6">
             <div className="space-y-3">
-              <div className="flex items-center space-x-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <Badge variant="gold">{product.brand}</Badge>
                 <Badge variant="titanium">{product.category}</Badge>
-                <Badge variant="emerald">Còn Hàng trong kho ({product.stock})</Badge>
+                <Badge variant={product.stock > 0 ? 'emerald' : 'titanium'}>{product.stock > 0 ? `Còn hàng (${product.stock})` : 'Liên hệ đặt hàng'}</Badge>
               </div>
 
               <h1 className="text-2xl sm:text-4xl font-extrabold text-[var(--text-primary)] uppercase tracking-tight">
@@ -53,15 +47,13 @@ export default function ProductDetailPage() {
 
             {/* Price Box */}
             <div className="p-6 bg-[var(--bg-graphite)] border border-[var(--border-subtle)] rounded-xs space-y-2">
-              <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest block">Giá Khuyến Mãi</span>
+              <span className="text-[10px] text-[var(--text-secondary)] uppercase tracking-widest block">{product.sale_price != null && product.sale_price < product.price ? 'Giá khuyến mãi' : 'Giá sản phẩm'}</span>
               <div className="flex items-baseline space-x-4">
                 <span className="text-3xl font-extrabold text-[var(--accent-gold)] font-mono">
-                  {product.sale_price
-                    ? product.sale_price.toLocaleString('vi-VN')
-                    : product.price.toLocaleString('vi-VN')}{' '}
+                  {(product.sale_price ?? product.price).toLocaleString('vi-VN')}{' '}
                   đ
                 </span>
-                {product.sale_price && (
+                {product.sale_price != null && product.sale_price < product.price && (
                   <span className="text-sm text-[var(--text-muted)] line-through font-mono">
                     {product.price.toLocaleString('vi-VN')} đ
                   </span>
@@ -75,16 +67,12 @@ export default function ProductDetailPage() {
 
             {/* Action Buttons */}
             <div className="pt-4 space-y-3 sm:space-y-0 sm:flex sm:items-center sm:space-x-4">
-              <a href="tel:0979707033" className="w-full sm:w-auto">
-                <Button variant="primary" size="lg" leftIcon={<Phone className="w-5 h-5" />} className="w-full">
-                  Gọi 0979 707 033 Đặt Giữ Hàng
-                </Button>
+              <a href="tel:0979707033" className="auto-button w-full sm:w-auto">
+                <Phone size={18}/> Gọi tư vấn đặt hàng
               </a>
 
-              <Link href="/contact" className="w-full sm:w-auto">
-                <Button variant="outline" size="lg" className="w-full">
-                  Nhận Tư Vấn Kỹ Thuật
-                </Button>
+              <Link href="/contact" className="auto-button auto-button-outline w-full sm:w-auto">
+                Nhận tư vấn kỹ thuật
               </Link>
             </div>
           </div>
@@ -95,7 +83,7 @@ export default function ProductDetailPage() {
           {/* Specifications */}
           {product.specifications && (
             <div className="lg:col-span-7 space-y-4">
-              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex items-center space-x-2">
+              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex flex-wrap items-center gap-2">
                 <Package className="w-5 h-5 text-[var(--accent-gold)]" />
                 <span>THÔNG SỐ KỸ THUẬT SẢN PHẨM</span>
               </h3>
@@ -114,14 +102,14 @@ export default function ProductDetailPage() {
           {/* Compatible Vehicles */}
           {product.compatible_vehicles && (
             <div className="lg:col-span-5 space-y-4">
-              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex items-center space-x-2">
+              <h3 className="text-xl font-bold text-[var(--text-primary)] uppercase tracking-tight flex flex-wrap items-center gap-2">
                 <Car className="w-5 h-5 text-[var(--accent-gold)]" />
                 <span>CÁC DÒNG XE TƯƠNG THÍCH</span>
               </h3>
 
               <div className="bg-[var(--bg-graphite)] border border-[var(--border-subtle)] p-6 rounded-xs space-y-3">
                 {product.compatible_vehicles.map((v) => (
-                  <div key={v} className="flex items-center space-x-2 text-xs text-[var(--text-primary)]">
+                  <div key={v} className="flex flex-wrap items-center gap-2 text-xs text-[var(--text-primary)]">
                     <Check className="w-4 h-4 text-[var(--accent-gold)]" />
                     <span>{v}</span>
                   </div>

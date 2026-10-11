@@ -48,9 +48,9 @@ export function useSlugData<T>(section: string, loader: (slug: string) => Promis
 
 export function PageStatus({ loading, error, missing }: { loading: boolean; error?: string; missing?: boolean }) {
   if (!loading && !error && !missing) return null;
-  return <main className="auto-container auto-section auto-empty">
-    <h1>{loading ? 'Đang tải…' : missing ? 'Không tìm thấy nội dung' : 'Không thể tải dữ liệu'}</h1>
+  return <div className="auto-container auto-section auto-empty" role="status">
+    <h2>{loading ? 'Đang tải…' : missing ? 'Không tìm thấy nội dung' : 'Không thể tải dữ liệu'}</h2>
     {error && <p>{error}</p>}
     {missing && <p>Nội dung có thể đã được di chuyển hoặc không còn tồn tại.</p>}
-  </main>;
+  </div>;
 }

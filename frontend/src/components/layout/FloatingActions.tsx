@@ -29,24 +29,28 @@ export default function FloatingActions() {
         </button>
 
         <Link
-          href="/contact"
+          href="https://zalo.me/0979707033"
+          target="_blank"
+          rel="noreferrer"
           className="flex flex-col items-center justify-center py-2 bg-[#E53935] text-white rounded-xs active:bg-red-700 transition-colors"
         >
           <MessageCircle className="w-4 h-4 mb-1" />
-          <span className="text-[10px] font-bold uppercase tracking-wider">Tư Vấn</span>
+          <span className="text-[10px] font-bold uppercase tracking-wider">Zalo</span>
         </Link>
       </div>
 
       {/* Desktop Floating Action Widget */}
       <div className="hidden md:flex fixed bottom-8 right-8 z-40 flex-col space-y-3">
         <Link
-          href="/contact"
+          href="https://zalo.me/0979707033"
+          target="_blank"
+          rel="noreferrer"
           className="w-12 h-12 bg-[#E53935] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-105 transition-transform group relative"
-          title="Tư vấn phụ kiện ô tô"
+          title="Tư vấn qua Zalo"
         >
-          <MessageCircle className="w-6 h-6 animate-pulse" />
+          <span className="text-xs font-bold">Zalo</span>
           <span className="absolute right-14 bg-[var(--bg-graphite)] text-[var(--text-primary)] border border-[var(--border-subtle)] text-xs font-bold px-3 py-1.5 rounded-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none uppercase tracking-wider">
-            Tư Vấn
+            Tư vấn qua Zalo
           </span>
         </Link>
 
