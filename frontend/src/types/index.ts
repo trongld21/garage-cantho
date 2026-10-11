@@ -1,3 +1,5 @@
+export interface ServiceCategory { id: number; name: string; services_count: number; }
+
 export interface ServiceItem {
   gallery?: string[] | null;
   id: number;

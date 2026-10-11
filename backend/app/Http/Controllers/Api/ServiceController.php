@@ -40,7 +40,7 @@ class ServiceController extends Controller
     {
         return $request->validate([
             'name' => 'required|string|max:255',
-            'category' => 'required|in:Màn hình,Đèn ô tô,Âm thanh,Camera & an toàn,Nội thất,Ngoại thất',
+            'category' => 'required|string|exists:service_categories,name',
             'summary' => 'nullable|string',
             'description' => 'nullable|string',
             'image' => 'nullable|url|max:255',

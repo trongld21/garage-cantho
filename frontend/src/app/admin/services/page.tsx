@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiService, apiError } from '@/services/api';
-import { ServiceItem } from '@/types';
+import { ServiceItem, ServiceCategory } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
@@ -13,6 +13,7 @@ import { Plus, Edit2, Trash2, RefreshCw } from 'lucide-react';
 
 export default function AdminServicesPage() {
   const [services, setServices] = useState<ServiceItem[]>([]);
+  const [categories, setCategories] = useState<ServiceCategory[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState('');
@@ -27,7 +28,8 @@ export default function AdminServicesPage() {
     setError('');
     setIsLoading(true);
     try {
-      const data = await apiService.getServices();
+      const [data, categories] = await Promise.all([apiService.getServices(), apiService.getServiceCategories()]);
+      setCategories(categories);
       setServices(data);
     } catch (err) {
       setError(apiError(err));
@@ -38,7 +40,7 @@ export default function AdminServicesPage() {
 
   useEffect(() => {
     let active = true;
-    apiService.getServices().then(data => { if (active) setServices(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
+    Promise.all([apiService.getServices(), apiService.getServiceCategories()]).then(([data, categories]) => { if (active) { setServices(data); setCategories(categories); } }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
     return () => { active = false; };
   }, []);
 
@@ -46,7 +48,7 @@ export default function AdminServicesPage() {
     setEditingService({
       name: '',
       slug: '',
-      category: 'Màn hình',
+      category: categories[0]?.name || '',
       summary: '',
       description: '',
       price_range: 'Báo giá',
@@ -58,7 +60,7 @@ export default function AdminServicesPage() {
   };
 
   const handleOpenEditModal = (service: ServiceItem) => {
-    setEditingService({ ...service, category: ['Màn hình', 'Đèn ô tô', 'Âm thanh', 'Camera & an toàn', 'Nội thất', 'Ngoại thất'].includes(service.category) ? service.category : 'Nội thất' });
+    setEditingService({ ...service });
     setIsModalOpen(true);
   };
 
@@ -201,9 +203,10 @@ export default function AdminServicesPage() {
 
               <Select
                 label="Danh Mục *"
-                value={editingService.category || 'Màn hình'}
+                required
+                value={editingService.category || ''}
                 onChange={(e) => setEditingService({ ...editingService, category: e.target.value })}
-                options={[{"value": "Màn hình", "label": "Màn hình"}, {"value": "Đèn ô tô", "label": "Đèn ô tô"}, {"value": "Âm thanh", "label": "Âm thanh"}, {"value": "Camera & an toàn", "label": "Camera & an toàn"}, {"value": "Nội thất", "label": "Nội thất"}, {"value": "Ngoại thất", "label": "Ngoại thất"}]}
+                options={[{ value: '', label: 'Chọn danh mục' }, ...categories.map(category => ({ value: category.name, label: category.name }))]}
               />
             </div>
 

@@ -11,6 +11,7 @@ Route::get('/up', fn () => response()->json(['status' => 'ok']));
 
 // Public Endpoints
 Route::get('/services', [ServiceController::class, 'index']);
+Route::get('/service-categories', [\App\Http\Controllers\Api\ServiceCategoryController::class, 'index']);
 Route::get('/services/{slug}', [ServiceController::class, 'show']);
 
 Route::get('/products', [ProductController::class, 'index']);
@@ -35,6 +36,10 @@ Route::prefix('admin')->middleware(['web', \App\Http\Middleware\RequireAdmin::cl
 
 
     // Services CRUD
+    Route::get('/service-categories', [\App\Http\Controllers\Api\ServiceCategoryController::class, 'index']);
+    Route::post('/service-categories', [\App\Http\Controllers\Api\ServiceCategoryController::class, 'store']);
+    Route::put('/service-categories/{id}', [\App\Http\Controllers\Api\ServiceCategoryController::class, 'update']);
+    Route::delete('/service-categories/{id}', [\App\Http\Controllers\Api\ServiceCategoryController::class, 'destroy']);
     Route::post('/services/images', [ServiceController::class, 'uploadImages']);
     Route::post('/services', [ServiceController::class, 'store']);
     Route::put('/services/{id}', [ServiceController::class, 'update']);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ServiceItem, ProductItem, CarItem, PostItem, BookingPayload, BookingItem } from '@/types';
+import { ServiceCategory, ServiceItem, ProductItem, CarItem, PostItem, BookingPayload, BookingItem } from '@/types';
 const client = axios.create({ baseURL: typeof window === 'undefined' ? (process.env.API_INTERNAL_URL || 'http://127.0.0.1:8000/api') : (process.env.NEXT_PUBLIC_API_URL || '/api'), headers: { Accept: 'application/json' }, timeout: 10000 });
 // Admin requests always use the same-origin proxy and Laravel session/CSRF protection.
 if (typeof window !== 'undefined') {
@@ -31,6 +31,9 @@ export function apiError(error: unknown): string {
   return 'Không thể hoàn tất thao tác. Vui lòng thử lại.';
 }
 export const apiService = {
+  async getServiceCategories(): Promise<ServiceCategory[]> { return (await client.get('/service-categories')).data.data; },
+  async saveServiceCategory(data: { id?: number; name: string }): Promise<ServiceCategory> { return (data.id ? await client.put(`/admin/service-categories/${data.id}`, data) : await client.post('/admin/service-categories', data)).data.data; },
+  async deleteServiceCategory(id: number): Promise<void> { await client.delete(`/admin/service-categories/${id}`); },
   async uploadServiceImages(files: File[]): Promise<string[]> {
     const data = new FormData();
     files.forEach(file => data.append('images[]', file));

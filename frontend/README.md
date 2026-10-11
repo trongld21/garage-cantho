@@ -81,3 +81,9 @@ Trang chi tiết có Facebook, X/Twitter, Instagram (sao chép link), sao chép 
 ## Kiểm thử bảo mật
 
 Trong `backend`: `php artisan test` kiểm tra truy cập trái phép, phân quyền, CSRF, giới hạn đăng nhập, đổi mật khẩu, hủy phiên và lọc HTML. Trong `frontend`: `npm run build -- --webpack` và `node --test tests/storefront.test.cjs`. Việc dùng CKEditor đầy đủ cần license key hợp lệ; cấu hình thiếu khóa có fallback để tiếp tục biên tập.
+# Quản lý danh mục dịch vụ
+
+Sau khi deploy, mở `/admin/categories` hoặc chọn **Danh Mục Dịch Vụ** trong menu admin để thêm, đổi tên và xóa danh mục. Form dịch vụ lấy danh mục từ database. Đổi tên sẽ cập nhật các dịch vụ đang sử dụng tên đó; chỉ xóa được danh mục không còn dịch vụ.
+
+Migration `2026_10_11_000003_create_service_categories.php` tạo danh mục mặc định và giữ lại mọi danh mục đang có trong bảng dịch vụ. DirectAdmin chạy migration tự động khi deploy; môi trường local chạy `php artisan migrate` tại thư mục `backend`.
+

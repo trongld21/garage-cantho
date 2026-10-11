@@ -20,6 +20,7 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   const navItems = [
+    { name: 'Danh Mục Dịch Vụ', href: '/admin/categories', icon: <Wrench className="w-4 h-4" /> },
     {
       name: 'Tổng Quan Dashboard',
       href: '/admin',
