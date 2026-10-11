@@ -10,7 +10,7 @@ export default function Navbar() {
   const accessoryServices = useServices();
 const links = [
   { title: 'Trang chủ', href: '/' },
-  { title: 'Dịch vụ nâng cấp', href: '/services', children: accessoryServices.map(service => [service.category, `/services/${service.slug}`]) },
+  { title: 'Dịch vụ nâng cấp', href: '/services', children: accessoryServices.map(service => [service.name, `/services/${service.slug}`]) },
   { title: 'Phụ kiện ô tô', href: '/store' },
   { title: 'Thư viện', href: '/#thu-vien' },
   { title: 'Chia sẻ', href: '/news' },
