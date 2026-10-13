@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -60,9 +61,7 @@ export function AdminSidebar() {
       {/* Top Header */}
       <div>
         <div className="p-6 border-b border-white/10 flex items-center space-x-3">
-          <div className="w-9 h-9 bg-[#C7A35A] text-[#0A0A0A] rounded-xs flex items-center justify-center font-extrabold text-sm">
-            <Wrench className="w-5 h-5" />
-          </div>
+          <Image src="/tay-do-logo.jpg" alt="Logo TD Car Upgrade" width={40} height={38} className="shrink-0 object-contain" />
           <div>
             <span className="text-sm font-extrabold text-[#F5F5F5] uppercase tracking-tight block leading-tight">
               TÂY ĐÔ <span className="text-[#C7A35A]">ADMIN</span>
