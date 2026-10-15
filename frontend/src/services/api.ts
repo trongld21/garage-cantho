@@ -46,6 +46,11 @@ export const apiService = {
   async deleteService(id: number): Promise<boolean> { await client.delete(`/admin/services/${id}`); if (typeof window !== 'undefined') window.dispatchEvent(new Event('services-updated')); return true; },
   async getProducts(category?: string, search?: string): Promise<ProductItem[]> { return (await client.get('/products', { params: { category, search } })).data.data; },
   async getProductBySlug(slug: string): Promise<ProductItem | null> { try { return (await client.get(`/products/${encodeURIComponent(slug)}`)).data.data; } catch (error) { if (axios.isAxiosError(error) && error.response?.status === 404) return null; throw error; } },
+  async uploadProductImage(file: File): Promise<string> {
+    const data = new FormData();
+    data.append('image', file);
+    return (await client.post('/admin/products/image', data, { timeout: 120000 })).data.data;
+  },
   async saveProduct(data: Partial<ProductItem>): Promise<ProductItem> { return (data.id ? await client.put(`/admin/products/${data.id}`, data) : await client.post('/admin/products', data)).data.data; },
   async deleteProduct(id: number): Promise<boolean> { await client.delete(`/admin/products/${id}`); return true; },
   async getCars(type?: 'sale' | 'rent'): Promise<CarItem[]> { return (await client.get('/cars', { params: { type } })).data.data; },

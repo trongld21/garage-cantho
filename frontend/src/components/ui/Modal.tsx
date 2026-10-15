@@ -23,6 +23,8 @@ export function Modal({
 }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const titleId = useId();
+  const onCloseRef = useRef(onClose);
+  useEffect(() => { onCloseRef.current = onClose; }, [onClose]);
   useEffect(() => {
     if (!isOpen) return;
     const previousFocus = document.activeElement as HTMLElement | null;
@@ -33,7 +35,7 @@ export function Modal({
     ) ?? []);
     const frame = requestAnimationFrame(() => dialogRef.current?.focus());
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') onClose();
+      if (event.key === 'Escape') onCloseRef.current();
       if (event.key !== 'Tab') return;
       const items = focusable();
       const first = items[0];
@@ -52,7 +54,7 @@ export function Modal({
       window.removeEventListener('keydown', handleKeyDown);
       previousFocus?.focus();
     };
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   const maxWidthClasses = {
     sm: 'max-w-sm',

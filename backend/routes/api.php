@@ -46,6 +46,7 @@ Route::prefix('admin')->middleware(['web', \App\Http\Middleware\RequireAdmin::cl
     Route::delete('/services/{id}', [ServiceController::class, 'destroy']);
 
     // Products CRUD
+    Route::post('/products/image', [ProductController::class, 'uploadImage']);
     Route::post('/products', [ProductController::class, 'store']);
     Route::put('/products/{id}', [ProductController::class, 'update']);
     Route::delete('/products/{id}', [ProductController::class, 'destroy']);

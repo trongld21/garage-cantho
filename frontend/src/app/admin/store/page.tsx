@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiService, apiError } from '@/services/api';
+import { slugForName } from '@/lib/slug';
+import { ProductImage } from '@/components/admin/ProductImage';
 import { ProductItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -16,6 +18,7 @@ export default function AdminStorePage() {
 
   const [error, setError] = useState('');
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,7 +54,7 @@ export default function AdminStorePage() {
       stock: 10,
       summary: '',
       description: '',
-      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9',
+      image: '',
       is_featured: true,
     });
     setIsModalOpen(true);
@@ -65,7 +68,7 @@ export default function AdminStorePage() {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!editingProduct) return;
-    if (saving) return;
+    if (saving || uploading) return;
     setSaving(true); setError('');
     try {
     await apiService.saveProduct(editingProduct);
@@ -186,7 +189,7 @@ export default function AdminStorePage() {
       {editingProduct && (
         <Modal
           isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => { if (!saving && !uploading) setIsModalOpen(false); }}
           title={editingProduct.id ? 'CHỈNH SỬA SẢN PHẨM' : 'THÊM SẢN PHẨM MỚI'}
         >
           <form onSubmit={handleSave} className="space-y-4">
@@ -194,7 +197,7 @@ export default function AdminStorePage() {
             <Input
               label="Tên Sản Phẩm *"
               value={editingProduct.name || ''}
-              onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value })}
+              onChange={(e) => setEditingProduct({ ...editingProduct, name: e.target.value, slug: slugForName(e.target.value, editingProduct.name, editingProduct.slug, editingProduct.id) })}
               required
             />
 
@@ -246,11 +249,8 @@ export default function AdminStorePage() {
 
             <Input label="Danh mục *" required value={editingProduct.category || ''} onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })} />
             <label className="flex gap-2 text-white"><input type="checkbox" checked={editingProduct.is_featured ?? false} onChange={e => setEditingProduct({ ...editingProduct, is_featured: e.target.checked })} />Sản phẩm nổi bật</label>
-            <Input
-              label="URL Hình Ảnh *"
-              value={editingProduct.image || ''}
-              onChange={(e) => setEditingProduct({ ...editingProduct, image: e.target.value })}
-            />
+            <ProductImage key={editingProduct.id ?? 'new'} image={editingProduct.image || ''} disabled={saving}
+              onBusy={setUploading} onChange={image => setEditingProduct(current => current ? { ...current, image } : current)} />
 
             <div className="space-y-1">
               <label className="block text-xs font-semibold text-[#A8A8A8] uppercase">Tóm Tắt Sản Phẩm</label>
@@ -273,7 +273,7 @@ export default function AdminStorePage() {
             </div>
 
             <div className="pt-4 border-t border-white/10 flex justify-end">
-              <Button disabled={saving} isLoading={saving} type="submit" variant="primary" size="md">
+              <Button disabled={saving || uploading} isLoading={saving} type="submit" variant="primary" size="md">
                 Lưu Sản Phẩm
               </Button>
             </div>

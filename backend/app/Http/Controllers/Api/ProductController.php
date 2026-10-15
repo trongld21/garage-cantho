@@ -58,6 +58,15 @@ class ProductController extends Controller
         ]);
     }
 
+    public function uploadImage(Request $request)
+    {
+        $request->validate(['image' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048']);
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        $path = $disk->putFile('products', $request->file('image'));
+        if (!$path) throw new \RuntimeException('Không thể lưu ảnh.');
+        return response()->json(['data' => url($disk->url($path))], 201);
+    }
+
     public function store(Request $request)
     {
         $data = $this->validatedData($request);

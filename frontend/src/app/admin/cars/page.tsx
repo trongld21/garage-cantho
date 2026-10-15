@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiService, apiError } from '@/services/api';
+import { slugForName } from '@/lib/slug';
 import { CarItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -201,7 +202,7 @@ export default function AdminCarsPage() {
             <Input
               label="Tên Xe đầy đủ *"
               value={editingCar.title || ''}
-              onChange={(e) => setEditingCar({ ...editingCar, title: e.target.value })}
+              onChange={(e) => setEditingCar({ ...editingCar, title: e.target.value, slug: slugForName(e.target.value, editingCar.title, editingCar.slug, editingCar.id) })}
               required
             />
 

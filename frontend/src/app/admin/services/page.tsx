@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiService, apiError } from '@/services/api';
+import { slugForName } from '@/lib/slug';
 import { ServiceItem, ServiceCategory } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -189,7 +190,7 @@ export default function AdminServicesPage() {
             <Input
               label="Tên Dịch Vụ *"
               value={editingService.name || ''}
-              onChange={(e) => setEditingService({ ...editingService, name: e.target.value })}
+              onChange={(e) => setEditingService({ ...editingService, name: e.target.value, slug: slugForName(e.target.value, editingService.name, editingService.slug, editingService.id) })}
               required
             />
 

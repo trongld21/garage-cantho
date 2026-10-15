@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { apiService, apiError } from '@/services/api';
+import { slugForName } from '@/lib/slug';
 import { PostItem } from '@/types';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
@@ -183,7 +184,7 @@ export default function AdminPostsPage() {
             <Input
               label="Tiêu Đề Bài Viết *"
               value={editingPost.title || ''}
-              onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value })}
+              onChange={(e) => setEditingPost({ ...editingPost, title: e.target.value, slug: slugForName(e.target.value, editingPost.title, editingPost.slug, editingPost.id) })}
               required
             />
 
