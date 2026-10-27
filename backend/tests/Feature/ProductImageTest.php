@@ -11,6 +11,16 @@ class ProductImageTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function test_stock_can_be_omitted_or_cleared_without_accepting_negative_values(): void
+    {
+        $this->actingAs(User::factory()->create(['is_admin' => true]));
+        $data = ['name' => 'Camera', 'slug' => 'camera', 'category' => 'Camera', 'brand' => 'Chính hãng', 'price' => 1000000];
+        $id = $this->postJson('/api/admin/products', $data)->assertCreated()->assertJsonPath('data.stock', 0)->json('data.id');
+        $this->putJson("/api/admin/products/{$id}", [...$data, 'stock' => 5])->assertOk()->assertJsonPath('data.stock', 5);
+        $this->putJson("/api/admin/products/{$id}", [...$data, 'stock' => ''])->assertOk()->assertJsonPath('data.stock', 0);
+        $this->putJson("/api/admin/products/{$id}", [...$data, 'stock' => -1])->assertUnprocessable()->assertJsonValidationErrors('stock');
+    }
+
     public function test_admin_uploads_image_and_saves_product_with_public_url(): void
     {
         Storage::fake('public');

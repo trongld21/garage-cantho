@@ -43,7 +43,7 @@ class ProductController extends Controller
 
     private function validatedData(Request $request, $id = null): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'category' => 'required|string|max:255',
             'summary' => 'nullable|string',
@@ -52,10 +52,12 @@ class ProductController extends Controller
             'brand' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
             'sale_price' => 'nullable|numeric|min:0|lte:price',
-            'stock' => 'required|integer|min:0',
+            'stock' => 'nullable|integer|min:0',
             'is_featured' => 'boolean',
             'slug' => ['required', 'string', 'max:255', 'regex:/^[a-z0-9]+(?:-[a-z0-9]+)*$/', \Illuminate\Validation\Rule::unique('products', 'slug')->ignore($id)],
         ]);
+        $data['stock'] = $data['stock'] ?? 0;
+        return $data;
     }
 
     public function uploadImage(Request $request)

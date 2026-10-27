@@ -14,6 +14,8 @@ import { Plus, Edit2, Trash2, ShoppingBag, RefreshCw } from 'lucide-react';
 
 export default function AdminStorePage() {
   const [products, setProducts] = useState<ProductItem[]>([]);
+  const [savedCategories, setSavedCategories] = useState<string[]>([]);
+  const [categoryError, setCategoryError] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const [error, setError] = useState('');
@@ -23,6 +25,10 @@ export default function AdminStorePage() {
   // Modal Form State
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState<Partial<ProductItem> | null>(null);
+  const categoryNames = Array.from(new Set([
+    ...savedCategories, ...products.map(product => product.category),
+    ...(editingProduct?.category ? [editingProduct.category] : []),
+  ].filter(Boolean)));
 
   const loadProducts = async () => {
     setError('');
@@ -39,6 +45,9 @@ export default function AdminStorePage() {
 
   useEffect(() => {
     let active = true;
+    apiService.getServiceCategories()
+      .then(data => { if (active) setSavedCategories(data.map(category => category.name)); })
+      .catch(() => { if (active) setCategoryError('Không tải được danh mục. Vui lòng tải lại trang để thử lại.'); });
     apiService.getProducts().then(data => { if (active) setProducts(data); }).catch(err => { if (active) setError(apiError(err)); }).finally(() => { if (active) setIsLoading(false); });
     return () => { active = false; };
   }, []);
@@ -47,11 +56,11 @@ export default function AdminStorePage() {
     setEditingProduct({
       name: '',
       slug: '',
-      category: 'Màn hình',
+      category: '',
       brand: 'Chính Hãng',
       price: 1000000,
       sale_price: null,
-      stock: 10,
+      stock: undefined,
       summary: '',
       description: '',
       image: '',
@@ -203,9 +212,9 @@ export default function AdminStorePage() {
 
             <div className="grid grid-cols-2 gap-4">
               <Input
-                label="Slug URL *"
+                label="Slug URL (tự sinh từ tên)"
                 value={editingProduct.slug || ''}
-                onChange={(e) => setEditingProduct({ ...editingProduct, slug: e.target.value })}
+                readOnly
                 required
               />
 
@@ -239,15 +248,22 @@ export default function AdminStorePage() {
               />
 
               <Input
-                label="Số Lượng Tồn Kho *"
+                label="Số Lượng Tồn Kho"
                 type="number"
-                value={editingProduct.stock || 0}
-                onChange={(e) => setEditingProduct({ ...editingProduct, stock: Number(e.target.value) })}
-                required
+                min={0}
+                step={1}
+                placeholder="Có thể để trống"
+                value={editingProduct.stock ?? ''}
+                onChange={(e) => setEditingProduct({ ...editingProduct, stock: e.target.value === '' ? undefined : Number(e.target.value) })}
               />
             </div>
 
-            <Input label="Danh mục *" required value={editingProduct.category || ''} onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })} />
+            <Select label="Danh mục *" required placeholder="Chọn danh mục đã lưu"
+              options={categoryNames.map(name => ({ value: name, label: name }))}
+              value={editingProduct.category || ''}
+              onChange={e => setEditingProduct({ ...editingProduct, category: e.target.value })} />
+            {categoryError && <p role="alert" className="text-sm text-red-400">{categoryError}</p>}
+            {!categoryError && categoryNames.length === 0 && <p className="text-sm text-[#A8A8A8]">Chưa có danh mục. Vui lòng tạo danh mục trong phần quản lý danh mục trước.</p>}
             <label className="flex gap-2 text-white"><input type="checkbox" checked={editingProduct.is_featured ?? false} onChange={e => setEditingProduct({ ...editingProduct, is_featured: e.target.checked })} />Sản phẩm nổi bật</label>
             <ProductImage key={editingProduct.id ?? 'new'} image={editingProduct.image || ''} disabled={saving}
               onBusy={setUploading} onChange={image => setEditingProduct(current => current ? { ...current, image } : current)} />
